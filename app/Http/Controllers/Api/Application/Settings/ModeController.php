@@ -1,0 +1,31 @@
+<?php
+
+namespace Trexz\Http\Controllers\Api\Application\Settings;
+
+use Trexz\Models\Setting;
+use Illuminate\Http\Response;
+use Trexz\Http\Controllers\Api\Application\ApplicationApiController;
+use Trexz\Http\Requests\Api\Application\Settings\UpdateApplicationModeRequest;
+
+class ModeController extends ApplicationApiController
+{
+    /**
+     * ModeController constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Update the selected Panel mode.
+     *
+     * @throws \Throwable
+     */
+    public function update(UpdateApplicationModeRequest $request): Response
+    {
+        Setting::set('settings::app:mode', $request['mode']);
+
+        return $this->returnNoContent();
+    }
+}

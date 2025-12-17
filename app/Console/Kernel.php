@@ -1,0 +1,58 @@
+<?php
+
+namespace Trexz\Console;
+
+use Trexz\Models\ActivityLog;
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Database\Console\PruneCommand;
+use Trexz\Console\Commands\AutoUpdateCommand;
+use Trexz\Console\Commands\Billing\CleanupOrdersCommand;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Trexz\Console\Commands\Schedule\ProcessRunnableCommand;
+use Trexz\Console\Commands\Billing\SuspendBillableServersCommand;
+use Trexz\Console\Commands\Maintenance\PruneOrphanedBackupsCommand;
+use Trexz\Console\Commands\Billing\CalculateOrderThreatIndexCommand;
+use Trexz\Console\Commands\Maintenance\CleanServiceBackupFilesCommand;
+
+class Kernel extends ConsoleKernel
+{
+    /**
+     * Register the commands for the application.
+     */
+    protected function commands(): void
+    {
+        $this->load(__DIR__ . '/Commands');
+    }
+
+    /**
+     * Define the application's command schedule.
+     */
+    protected function schedule(Schedule $schedule): void
+    {
+        // https://laravel.com/docs/10.x/upgrade#redis-cache-tags
+        $schedule->command('cache:prune-stale-tags')->hourly();
+
+        // Execute scheduled commands for servers every minute, as if there was a normal cron running.
+        $schedule->command(ProcessRunnableCommand::class)->everyMinute()->withoutOverlapping();
+        $schedule->command(CleanServiceBackupFilesCommand::class)->daily();
+
+        if (config('backups.prune_age')) {
+            // Every 30 minutes, run the backup pruning command so that any abandoned backups can be deleted.
+            $schedule->command(PruneOrphanedBackupsCommand::class)->everyThirtyMinutes();
+        }
+
+        if (config('activity.prune_days')) {
+            $schedule->command(PruneCommand::class, ['--model' => [ActivityLog::class]])->daily();
+        }
+
+        if (config('app.auto_update')) {
+            $schedule->command(AutoUpdateCommand::class)->daily();
+        }
+
+        if (config('modules.billing.enabled')) {
+            $schedule->command(CleanupOrdersCommand::class)->daily();
+            $schedule->command(SuspendBillableServersCommand::class)->daily();
+            $schedule->command(CalculateOrderThreatIndexCommand::class)->everyFiveMinutes();
+        }
+    }
+}
