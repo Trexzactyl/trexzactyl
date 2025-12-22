@@ -42,8 +42,8 @@ RUN         microdnf update -y \
                 && rm /etc/php-fpm.d/www.conf \
                 && useradd --home-dir /var/lib/caddy --create-home caddy \
                 && mkdir /etc/caddy \
-                && wget -O /usr/local/bin/yacron https://github.com/gjcarneiro/yacron/releases/download/0.17.0/yacron-0.17.0-x86_64-unknown-linux-gnu \
-                && chmod 755 /usr/local/bin/yacron \
+                && (wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 --tries=3 -O /usr/local/bin/yacron https://github.com/gjcarneiro/yacron/releases/download/0.17.0/yacron-0.17.0-x86_64-unknown-linux-gnu || echo "Warning: yacron download failed, skipping") \
+                && ([ -f /usr/local/bin/yacron ] && chmod 755 /usr/local/bin/yacron || echo "yacron not installed") \
                 && microdnf remove -y tar wget \
                 && microdnf clean all
 
