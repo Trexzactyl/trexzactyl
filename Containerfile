@@ -51,6 +51,12 @@ COPY        --chown=caddy:caddy --from=builder /var/www/pterodactyl /var/www/pte
 
 WORKDIR     /var/www/pterodactyl
 
+COPY        --from=docker.io/library/caddy:latest /usr/bin/caddy /usr/local/bin/caddy
+COPY        .github/docker/Caddyfile /etc/caddy/Caddyfile
+COPY        .github/docker/php-fpm.conf /etc/php-fpm.conf
+COPY        .github/docker/supervisord.conf /etc/supervisord.conf
+COPY        .github/docker/yacron.yaml /etc/yacron.yaml
+
 RUN         mkdir -p /tmp/pterodactyl/cache /tmp/pterodactyl/framework/{cache,sessions,views} storage/framework \
                 && rm -rf bootstrap/cache storage/framework/sessions storage/framework/views storage/framework/cache \
                 && ln -s /tmp/pterodactyl/cache /var/www/pterodactyl/bootstrap/cache \
@@ -66,12 +72,6 @@ ENV         USER=caddy
 RUN         composer install --no-dev --optimize-autoloader \
                 && rm -rf bootstrap/cache/*.php \
                 && rm -rf .env storage/logs/*.log
-
-COPY        --from=docker.io/library/caddy:latest /usr/bin/caddy /usr/local/bin/caddy
-COPY        .github/docker/Caddyfile /etc/caddy/Caddyfile
-COPY        .github/docker/php-fpm.conf /etc/php-fpm.conf
-COPY        .github/docker/supervisord.conf /etc/supervisord.conf
-COPY        .github/docker/yacron.yaml /etc/yacron.yaml
 
 EXPOSE      8080
 CMD         ["/usr/bin/supervisord", "--configuration=/etc/supervisord.conf"]

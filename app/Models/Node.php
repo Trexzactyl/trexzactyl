@@ -54,6 +54,7 @@ class Node extends Model
 
     public const DAEMON_TOKEN_ID_LENGTH = 16;
     public const DAEMON_TOKEN_LENGTH = 64;
+    public const DEFAULT_DAEMON_BASE = '/home/daemon-files';
 
     /**
      * The table associated with the model.
