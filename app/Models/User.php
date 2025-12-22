@@ -29,8 +29,6 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @property string $username
  * @property string $email
  * @property string|null $discord_id
- * @property string|null $name_first
- * @property string|null $name_last
  * @property string $password
  * @property string|null $remember_token
  * @property string $language
@@ -129,8 +127,6 @@ class User extends Model implements
         'username',
         'email',
         'discord_id',
-        'name_first',
-        'name_last',
         'password',
         'language',
         'use_totp',
@@ -187,8 +183,6 @@ class User extends Model implements
         'external_id' => 'sometimes|nullable|string|max:191|unique:users,external_id',
         'discord_id' => 'nullable|string|regex:/^[0-9]{17,20}$/|unique:users,discord_id',
         'username' => 'required|between:1,191|unique:users,username',
-        'name_first' => 'required|string|between:1,191',
-        'name_last' => 'required|string|between:1,191',
         'password' => 'sometimes|nullable|string',
         'root_admin' => 'boolean',
         'language' => 'string',
@@ -259,7 +253,7 @@ class User extends Model implements
      */
     public function getNameAttribute(): string
     {
-        return trim($this->name_first . ' ' . $this->name_last);
+        return $this->username;
     }
 
     /**
