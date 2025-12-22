@@ -71,10 +71,10 @@ const App = () => {
 
     React.useEffect(() => {
         if (TrexzUser) {
-            function earn() {
+            const earn = () => {
                 setTimeout(earn, 61000); // Allow 1 second for time inconsistencies.
                 earnCredits().catch(() => console.error('Failed to add credits'));
-            }
+            };
             earn();
         }
     }, [TrexzUser]);
