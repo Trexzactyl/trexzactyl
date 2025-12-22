@@ -58,11 +58,11 @@ function CreateAllocationForm({ nodeId }: { nodeId: number }) {
         <Formik
             onSubmit={submit}
             initialValues={{
-                ips: [] as string[],
+                ips: [],
                 startPort: undefined,
                 endPort: undefined,
                 alias: '',
-            }}
+            } as Values}
             validationSchema={object().shape({
                 ips: array(string()).required().min(1, 'You must select at least one ip address.'),
                 startPort: number()

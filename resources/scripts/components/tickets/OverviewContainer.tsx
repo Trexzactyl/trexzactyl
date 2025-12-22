@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { MoreHorizontal } from 'react-feather';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Spinner from '@/components/elements/Spinner';
 import { Button } from '@/components/elements/button';
 import { format, formatDistanceToNow } from 'date-fns';

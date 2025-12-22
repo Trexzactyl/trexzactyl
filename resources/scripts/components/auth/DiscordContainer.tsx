@@ -1,5 +1,5 @@
 import tw from 'twin.macro';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useFlash from '@/plugins/useFlash';
 import discordLogin from '@/api/auth/discord';

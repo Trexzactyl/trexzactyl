@@ -3,6 +3,8 @@ import { EggVariable } from '@definitions/server';
 import http from '@/api/http';
 import { Transformers as ServerTransformers } from '@definitions/server';
 
+export type { Product } from '@definitions/account/billing';
+
 export const getProducts = (id: number): Promise<Product[]> => {
     return new Promise((resolve, reject) => {
         http.get(`/api/client/billing/categories/${id}`)

@@ -21,7 +21,6 @@ import Field from '@/elements/Field';
 import SpinnerOverlay from '@/elements/SpinnerOverlay';
 import Label from '@/elements/Label';
 import type { ApplicationStore } from '@/state';
-import { WithRelationships } from '@/api/routes/admin';
 import { useStoreState } from '@/state/hooks';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 
@@ -76,7 +75,7 @@ export function ServerServiceContainer({
     noToggle,
 }: {
     selectedEggId?: number;
-    setEgg: (value: WithRelationships<Egg, 'variables'> | undefined) => void;
+    setEgg: (value: LoadedEgg | undefined) => void;
     nestId: number;
     noToggle?: boolean;
 }) {

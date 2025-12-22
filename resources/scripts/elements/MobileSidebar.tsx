@@ -58,4 +58,4 @@ const Home = () => {
     );
 };
 
-export default withSubComponents(MobileSidebar, { Link, Home });
+export default withSubComponents(MobileSidebar as any, { Link, Home });

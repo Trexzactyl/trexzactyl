@@ -13,7 +13,7 @@ import { getNests, Nest } from '@/api/store/getNests';
 import { Button } from '@/components/elements/button';
 import InputSpinner from '@/components/elements/InputSpinner';
 import StoreError from '@/components/elements/store/StoreError';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import StoreContainer from '@/components/elements/StoreContainer';
@@ -81,7 +81,9 @@ export default () => {
 
         getEggs(parseInt(e.target.value)).then((eggs) => {
             setEggs(eggs);
-            setEgg(eggs[0].id);
+            if (eggs[0]?.id !== undefined) {
+                setEgg(eggs[0].id);
+            }
         });
     };
 

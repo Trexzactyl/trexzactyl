@@ -1,6 +1,6 @@
 import tw from 'twin.macro';
 import { object, string } from 'yup';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ApplicationStore } from '@/state';
 import styled from 'styled-components/macro';
 import { httpErrorToHuman } from '@/api/http';

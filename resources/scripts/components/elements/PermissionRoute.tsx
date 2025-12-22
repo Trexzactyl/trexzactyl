@@ -1,15 +1,14 @@
-import { Route } from 'react-router-dom';
-import { RouteProps } from 'react-router';
+import { ReactNode } from 'react';
 import Can from '@/components/elements/Can';
 import { ServerError } from '@/components/elements/ScreenBlock';
 
-interface Props extends Omit<RouteProps, 'path'> {
-    path: string;
+interface Props {
     permission: string | string[] | null;
+    children: ReactNode;
 }
 
-export default ({ permission, children, ...props }: Props) => (
-    <Route {...props}>
+export default ({ permission, children }: Props) => (
+    <>
         {!permission ? (
             children
         ) : (
@@ -23,5 +22,5 @@ export default ({ permission, children, ...props }: Props) => (
                 {children}
             </Can>
         )}
-    </Route>
+    </>
 );

@@ -3,11 +3,9 @@ import tw from 'twin.macro';
 import getServers from '@/api/getServers';
 import useFlash from '@/plugins/useFlash';
 import { useStoreState } from 'easy-peasy';
-import { PaginatedResult } from '@/api/http';
 import { useLocation } from 'react-router-dom';
-import { Server } from '@/api/server/getServer';
 import Switch from '@/components/elements/Switch';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Spinner from '@/components/elements/Spinner';
 import ServerRow from '@/components/dashboard/ServerRow';
 import Pagination from '@/components/elements/Pagination';
@@ -30,10 +28,9 @@ export default () => {
     
     const [showOnlyAdmin, setShowOnlyAdmin] = usePersistedState(`${uuid}:show_all_servers`, false);
 
-    const { data: servers, error } = useSWR<PaginatedResult<Server>>(
+    const { data: servers, error } = useSWR(
         ['/api/client/servers', showOnlyAdmin && rootAdmin, page],
-        () => getServers({ page, type: showOnlyAdmin && rootAdmin ? 'admin' : undefined }),
-        { revalidateOnFocus: false }
+        () => getServers({ page, type: showOnlyAdmin && rootAdmin ? 'admin' : undefined })
     );
 
     useEffect(() => {

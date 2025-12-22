@@ -4,7 +4,7 @@ import { breakpoint } from '@/theme';
 import * as Icon from 'react-feather';
 import styled from 'styled-components/macro';
 import { useStoreState } from '@/state/hooks';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/elements/button';
 import { Dialog } from '@/components/elements/dialog';
 import GreyRowBox from '@/components/elements/GreyRowBox';

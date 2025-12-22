@@ -1,5 +1,5 @@
 import tw from 'twin.macro';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import isEqual from 'react-fast-compare';
 import Features from '@feature/Features';
 import { ServerContext } from '@/state/server';

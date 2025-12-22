@@ -119,7 +119,7 @@ const findModeByFilename = (filename: string) => {
     for (let i = 0; i < modes.length; i++) {
         const info = modes[i];
 
-        if (info.file && info.file.test(filename)) {
+        if (info && info.file && info.file.test(filename)) {
             return info;
         }
     }
@@ -130,7 +130,7 @@ const findModeByFilename = (filename: string) => {
     if (ext) {
         for (let i = 0; i < modes.length; i++) {
             const info = modes[i];
-            if (info.ext) {
+            if (info && info.ext) {
                 for (let j = 0; j < info.ext.length; j++) {
                     if (info.ext[j] === ext) {
                         return info;
@@ -146,7 +146,7 @@ const findModeByFilename = (filename: string) => {
 export default ({ style, initialContent, filename, mode, fetchContent, onContentSaved, onModeChanged }: Props) => {
     const [editor, setEditor] = useState<CodeMirror.Editor>();
 
-    const ref = useCallback((node) => {
+    const ref = useCallback((node: HTMLTextAreaElement | null) => {
         if (!node) return;
 
         const e = CodeMirror.fromTextArea(node, {
@@ -160,20 +160,15 @@ export default ({ style, initialContent, filename, mode, fetchContent, onContent
             lineNumbers: true,
             foldGutter: true,
             fixedGutter: true,
-            scrollbarStyle: 'overlay',
+            scrollbarStyle: 'overlay' as any,
             coverGutterNextToScrollbar: false,
             readOnly: false,
             showCursorWhenSelecting: false,
             autofocus: false,
-            spellcheck: true,
-            autocorrect: false,
-            autocapitalize: false,
-            lint: false,
-            // @ts-expect-error this property is actually used, the d.ts file for CodeMirror is incorrect.
             autoCloseBrackets: true,
             matchBrackets: true,
             gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-        });
+        } as any);
 
         setEditor(e);
     }, []);

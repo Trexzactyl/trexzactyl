@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useStoreState } from '@/state/hooks';
 import { Button } from '@/components/elements/button';
 import { linkDiscord, unlinkDiscord } from '@/api/account/discord';

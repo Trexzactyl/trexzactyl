@@ -6,7 +6,7 @@ interface Props {
     errors: FormikErrors<any>;
     touched: FormikTouched<any>;
     name: string;
-    children?: string | number | null | undefined;
+    children?: string | number | null;
 }
 
 const InputError = ({ errors, touched, name, children }: Props) =>
@@ -14,10 +14,10 @@ const InputError = ({ errors, touched, name, children }: Props) =>
         <p css={tw`text-xs text-red-400 pt-2`}>
             {typeof errors[name] === 'string'
                 ? capitalize(errors[name] as string)
-                : capitalize((errors[name] as unknown as string[])[0])}
+                : capitalize((errors[name] as unknown as string[])[0] || '')}
         </p>
     ) : (
-        <>{children ? <p css={tw`text-xs text-neutral-400 pt-2`}>{children}</p> : null}</>
+        <>{typeof children === 'string' || typeof children === 'number' ? <p css={tw`text-xs text-neutral-400 pt-2`}>{children}</p> : null}</>
     );
 
 export default InputError;

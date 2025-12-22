@@ -1,7 +1,7 @@
 import useFlash from '@/plugins/useFlash';
 import apiVerify from '@/api/account/verify';
 import { useStoreState } from '@/state/hooks';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { getResources } from '@/api/store/getResources';
 import Translate from '@/components/elements/Translate';

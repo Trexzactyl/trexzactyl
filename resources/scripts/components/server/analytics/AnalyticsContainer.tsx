@@ -1,6 +1,6 @@
 import Can from '@/components/elements/Can';
 import { ServerContext } from '@/state/server';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert } from '@/components/elements/alert';
 import ContentBox from '@/components/elements/ContentBox';
 import { getMessages, Message } from '@/api/server/analytics';

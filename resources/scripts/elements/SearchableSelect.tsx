@@ -194,12 +194,12 @@ export const SearchableSelect = <T extends IdObj>({
                 return;
             }
 
-            const item = items.find(i => i.id === highlighted);
-            if (!item) {
+            const currentItem = items.find(i => i.id === highlighted);
+            if (!currentItem) {
                 return;
             }
 
-            let index = items.indexOf(item);
+            let index = items.indexOf(currentItem);
             if (e.key === 'ArrowUp') {
                 if (--index < 0) {
                     return;
@@ -210,8 +210,9 @@ export const SearchableSelect = <T extends IdObj>({
                 }
             }
 
-            if (items[index]) {
-                setHighlighted(items[index].id);
+            const nextItem = items[index];
+            if (nextItem && nextItem.id !== undefined) {
+                setHighlighted(nextItem.id);
             }
             return;
         }

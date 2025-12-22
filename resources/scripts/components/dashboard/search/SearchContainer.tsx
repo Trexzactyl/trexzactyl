@@ -1,5 +1,5 @@
 import * as Icon from 'react-feather';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import useEventListener from '@/plugins/useEventListener';
 import SearchModal from '@/components/dashboard/search/SearchModal';
 import Tooltip from '@/components/elements/tooltip/Tooltip';

@@ -3,7 +3,7 @@ import type { ChangeEvent } from 'react';
 import { useEffect, useState } from 'react';
 
 import type { WithRelationships } from '@/api/routes/admin';
-import type { Egg } from '@/api/routes/admin/egg';
+import type { Egg, LoadedEgg } from '@/api/routes/admin/egg';
 import { searchEggs } from '@/api/routes/admin/egg';
 import Label from '@/elements/Label';
 import Select from '@/elements/Select';
@@ -11,7 +11,7 @@ import Select from '@/elements/Select';
 interface Props {
     nestId?: number;
     selectedEggId?: number;
-    onEggSelect: (egg: WithRelationships<Egg, 'variables'> | undefined) => void;
+    onEggSelect: (egg: LoadedEgg | undefined) => void;
 }
 
 export default ({ nestId, selectedEggId, onEggSelect }: Props) => {
@@ -34,7 +34,7 @@ export default ({ nestId, selectedEggId, onEggSelect }: Props) => {
         setEggIdValue(egg.id);
         setEggIdTouched(true);
 
-        onEggSelect(egg);
+        onEggSelect(egg as LoadedEgg);
 
         const values: Record<string, any> = {};
         egg.relationships.variables?.forEach(v => {

@@ -3,7 +3,7 @@ import { object, string } from 'yup';
 import * as Icon from 'react-feather';
 import useFlash from '@/plugins/useFlash';
 import { ServerContext } from '@/state/server';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialog } from '@/components/elements/dialog';
 import { Button } from '@/components/elements/button';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
@@ -23,7 +23,7 @@ export default () => {
     const [pluginId, setPluginId] = useState<number>(0);
     const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
 
-    const { data, error } = useSWR<Plugin>([uuid, query, '/plugins'], (uuid, query) => getPlugins(uuid, query));
+    const { data, error } = useSWR<Plugin>([uuid, query, '/plugins'], (uuid: string, query: string) => getPlugins(uuid, query));
 
     console.log(data);
 

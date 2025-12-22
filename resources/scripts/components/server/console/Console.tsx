@@ -41,17 +41,22 @@ const theme = {
     selection: '#FAF089',
 };
 
-const terminalProps: ITerminalOptions = {
+const terminalProps = {
     disableStdin: true,
     cursorStyle: 'underline',
     allowTransparency: true,
     fontSize: 12,
-    fontFamily: th('fontFamily.mono'),
+    fontFamily: th('fontFamily.mono') as string,
     rows: 50,
-    theme: theme,
-};
+    theme: theme as any,
+} as ITerminalOptions;
 
-export default () => {
+interface ConsoleProps {
+    expand?: boolean;
+    setExpand?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default ({ expand: _expand, setExpand: _setExpand }: ConsoleProps = {}) => {
     const appName = (window as any).SiteConfiguration?.name || 'Pterodactyl';
     const TERMINAL_PRELUDE = `\u001b[1m\u001b[33m${appName}: \u001b[0m`;
     const ref = useRef<HTMLDivElement>(null);
@@ -181,7 +186,7 @@ export default () => {
             }
 
             Object.keys(listeners).forEach((key: string) => {
-                instance.addListener(key, listeners[key]);
+                instance.addListener(key, listeners[key] as (...args: any[]) => void);
             });
             instance.send(SocketRequest.SEND_LOGS);
         }
@@ -189,7 +194,7 @@ export default () => {
         return () => {
             if (instance) {
                 Object.keys(listeners).forEach((key: string) => {
-                    instance.removeListener(key, listeners[key]);
+                    instance.removeListener(key, listeners[key] as (...args: any[]) => void);
                 });
             }
         };

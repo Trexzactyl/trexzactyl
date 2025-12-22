@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import { useStoreState } from '@/state/hooks';
 import { ServerContext } from '@/state/server';
-import { history } from '@/components/history';
 import StoreRouter from '@/routers/StoreRouter';
 import TicketRouter from '@/routers/TicketRouter';
 import ServerRouter from '@/routers/ServerRouter';
 import Spinner from '@/components/elements/Spinner';
-import { unstable_HistoryRouter as HistoryRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import DashboardRouter from '@/routers/DashboardRouter';
 import AuthenticationRouter from '@/routers/AuthenticationRouter';
 import { NotApproved, NotFound } from '@/components/elements/ScreenBlock';
@@ -51,7 +50,7 @@ export default () => {
     }
 
     return (
-        <HistoryRouter history={history}>
+        <BrowserRouter>
             <InterceptorSetup />
             <Routes>
                 <Route path="/auth/*" element={
@@ -95,6 +94,6 @@ export default () => {
                 } />
                 <Route path="*" element={<NotFound />} />
             </Routes>
-        </HistoryRouter>
+        </BrowserRouter>
     );
 };

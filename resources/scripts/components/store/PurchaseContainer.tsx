@@ -2,7 +2,7 @@ import tw from 'twin.macro';
 import { breakpoint } from '@/theme';
 import styled from 'styled-components/macro';
 import { useStoreState } from '@/state/hooks';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Spinner from '@/components/elements/Spinner';
 import ContentBox from '@/components/elements/ContentBox';
 import { getResources, Resources } from '@/api/store/getResources';

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import UptimeDuration from '../UptimeDuration';
 import { ServerContext } from '@/state/server';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ContentBox from '@/components/elements/ContentBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from '@/components/server/console/style.module.css';

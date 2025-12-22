@@ -2,7 +2,7 @@ import tw from 'twin.macro';
 import { ApplicationStore } from '@/state';
 import { httpErrorToHuman } from '@/api/http';
 import { ServerContext } from '@/state/server';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Actions, useStoreActions } from 'easy-peasy';
 import { Dialog } from '@/components/elements/dialog';
 import reinstallServer from '@/api/server/reinstallServer';

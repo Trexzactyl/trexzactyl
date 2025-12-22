@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import * as Icon from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useFlashKey } from '@/plugins/useFlash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Spinner from '@/components/elements/Spinner';
 import useLocationHash from '@/plugins/useLocationHash';
 import Tooltip from '@/components/elements/tooltip/Tooltip';

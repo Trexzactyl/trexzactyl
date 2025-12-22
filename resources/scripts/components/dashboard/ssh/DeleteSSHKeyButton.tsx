@@ -1,6 +1,6 @@
 import tw from 'twin.macro';
 import * as Icon from 'react-feather';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Code from '@/components/elements/Code';
 import { useFlashKey } from '@/plugins/useFlash';
 import { Dialog } from '@/components/elements/dialog';

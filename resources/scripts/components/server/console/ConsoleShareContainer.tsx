@@ -2,7 +2,7 @@ import stripAnsi from 'strip-ansi';
 import useFlash from '@/plugins/useFlash';
 import { httpErrorToHuman } from '@/api/http';
 import { ServerContext } from '@/state/server';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SocketEvent } from '@/components/server/events';
 import saveFileContents from '@/api/server/files/saveFileContents';
 

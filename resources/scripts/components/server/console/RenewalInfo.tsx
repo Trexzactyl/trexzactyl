@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import useFlash from '@/plugins/useFlash';
 import { httpErrorToHuman } from '@/api/http';
 import { useStoreState } from '@/state/hooks';
@@ -13,7 +13,7 @@ export default () => {
     const [loading, setLoading] = useState(false);
     const store = useStoreState((state) => state.storefront.data!);
     const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
-    const renewal = ServerContext.useStoreState((state) => state.server.data!.renewal);
+    const renewalDate = ServerContext.useStoreState((state) => state.server.data!.renewalDate);
 
     const doRenewal = () => {
         setLoading(true);
@@ -55,7 +55,7 @@ export default () => {
                 You will be charged {store.renewals.cost} credits to add {store.renewals.days} days until your next
                 renewal is due.
             </Dialog.Confirm>
-            in {renewal} days{' '}
+            in {renewalDate ? Math.ceil((new Date(renewalDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)) : 0} days{' '}
             <span className={'text-blue-500 text-sm cursor-pointer'} onClick={() => setOpen(true)}>
                 {'('}Renew{')'}
             </span>

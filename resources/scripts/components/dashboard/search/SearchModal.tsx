@@ -7,8 +7,8 @@ import getServers from '@/api/getServers';
 import { ApplicationStore } from '@/state';
 import styled from 'styled-components/macro';
 import Input from '@/components/elements/Input';
-import { Server } from '@/api/server/getServer';
-import React, { useEffect, useRef, useState } from 'react';
+import type { Server } from '@definitions/server';
+import { useEffect, useRef, useState } from 'react';
 import InputSpinner from '@/components/elements/InputSpinner';
 import { Actions, useStoreActions, useStoreState } from 'easy-peasy';
 import Modal, { RequiredModalProps } from '@/components/elements/Modal';
@@ -62,7 +62,10 @@ export default ({ ...props }: Props) => {
 
         // if (ref.current) ref.current.focus();
         getServers({ query: term, type: isAdmin ? 'admin-all' : undefined })
-            .then((servers) => setServers(servers.items.filter((_, index) => index < 5)))
+            .then((result) => {
+                const filteredServers = result.items.filter((_, index) => index < 5);
+                setServers(filteredServers);
+            })
             .catch((error) => {
                 console.error(error);
                 clearAndAddHttpError({ key: 'search', error });

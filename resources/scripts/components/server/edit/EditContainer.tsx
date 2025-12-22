@@ -1,7 +1,7 @@
 import tw from 'twin.macro';
 import { breakpoint } from '@/theme';
 import * as Icon from 'react-feather';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import useFlash from '@/plugins/useFlash';
 import styled from 'styled-components/macro';
 import { ServerContext } from '@/state/server';

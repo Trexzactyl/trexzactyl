@@ -51,7 +51,7 @@ export default () => {
         <Formik
             onSubmit={submit}
             initialValues={{
-                bg: server.bg,
+                bg: server.bg || '',
             }}
             validationSchema={object().shape({
                 bg: string().nullable().url(),

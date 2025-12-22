@@ -8,7 +8,7 @@ import Field from '@/components/elements/Field';
 import Portal from '@/components/elements/Portal';
 import pullFile from '@/api/server/files/pullFile';
 import { WithClassname } from '@/components/types';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { Dialog } from '@/components/elements/dialog';
 import { Button } from '@/components/elements/button/index';
@@ -104,7 +104,7 @@ export default ({ className }: WithClassname) => {
                                         <span css={tw`text-cyan-200`}>
                                             {join(
                                                 directory,
-                                                values.url.split('/')[values.url.split('/').length - 1]
+                                                values.url.split('/')[values.url.split('/').length - 1] || ''
                                             ).replace(/^(\.\.\/|\/)+/, '')}
                                         </span>
                                     </Code>

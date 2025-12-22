@@ -2,7 +2,7 @@ import tw from 'twin.macro';
 import * as Icon from 'react-feather';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import { Server } from '@/api/server/getServer';
+import type { Server } from '@definitions/server';
 import Spinner from '@/components/elements/Spinner';
 import { bytesToString, ip } from '@/lib/formatters';
 import GreyRowBox from '@/components/elements/GreyRowBox';
@@ -96,7 +96,7 @@ export default ({ server, className }: { server: Server; className?: string }) =
             to={`/server/${server.id}`}
             className={className}
             $status={stats?.status}
-            $bg={server.bg}
+            $bg={server.bg || ''}
         >
             <div css={tw`p-6`}>
                 {/* Server Name and Address */}

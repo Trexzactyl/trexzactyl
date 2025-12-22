@@ -1,7 +1,7 @@
 import tw from 'twin.macro';
 import { format } from 'date-fns';
 import * as Icon from 'react-feather';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useFlashKey } from '@/plugins/useFlash';
 import { useSSHKeys } from '@/api/account/ssh-keys';
 import ContentBox from '@/components/elements/ContentBox';

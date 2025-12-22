@@ -49,7 +49,7 @@ export default () => {
         <PanelDiv>
             <ProgressBar />
             <Link to={'/'}>
-                <img className={'p-2'} src={logo ?? 'https://avatars.githubusercontent.com/u/91636558'} />
+                <img className={'p-2'} src={logo?.toString() ?? 'https://avatars.githubusercontent.com/u/91636558'} />
             </Link>
             <div>
                 <div className={'navigation-link'}>
@@ -57,7 +57,7 @@ export default () => {
                         <SearchContainer size={32} />
                     </div>
                 </div>
-                <NavLink to={'/'} className={'navigation-link'} exact>
+                <NavLink to={'/'} className={'navigation-link'} end>
                     <Tooltip placement={'bottom'} content={'Servers'}>
                         <div className={'bg-gray-700 rounded-lg p-2 my-8'}>
                             <Icon.Server size={32} />

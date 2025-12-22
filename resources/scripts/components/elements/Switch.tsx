@@ -1,4 +1,4 @@
-import { v4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
 import tw from 'twin.macro';
 import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
@@ -47,14 +47,14 @@ export interface SwitchProps {
 }
 
 const Switch = ({ name, label, description, defaultChecked, readOnly, onChange, children }: SwitchProps) => {
-    const uuid = useMemo(() => v4(), []);
+    const id = useMemo(() => uuid(), []);
 
     return (
         <div css={tw`flex items-center`}>
             <ToggleContainer css={tw`flex-none`}>
                 {children || (
                     <Input
-                        id={uuid}
+                        id={id}
                         name={name}
                         type={'checkbox'}
                         onChange={(e) => onChange && onChange(e)}
@@ -62,12 +62,12 @@ const Switch = ({ name, label, description, defaultChecked, readOnly, onChange, 
                         disabled={readOnly}
                     />
                 )}
-                <Label htmlFor={uuid} />
+                <Label htmlFor={id} />
             </ToggleContainer>
             {(label || description) && (
                 <div css={tw`ml-4 w-full`}>
                     {label && (
-                        <Label css={[tw`cursor-pointer`, !!description && tw`mb-0`]} htmlFor={uuid}>
+                        <Label css={[tw`cursor-pointer`, !!description && tw`mb-0`]} htmlFor={id}>
                             {label}
                         </Label>
                     )}

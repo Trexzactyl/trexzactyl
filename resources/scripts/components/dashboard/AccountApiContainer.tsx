@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import * as Icon from 'react-feather';
 import Code from '@/components/elements/Code';
 import { useFlashKey } from '@/plugins/useFlash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import deleteApiKey from '@/api/account/deleteApiKey';
 import { Dialog } from '@/components/elements/dialog';
 import ContentBox from '@/components/elements/ContentBox';

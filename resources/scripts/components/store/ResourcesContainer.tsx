@@ -4,7 +4,7 @@ import * as Icon from 'react-feather';
 import { Link } from 'react-router-dom';
 import useFlash from '@/plugins/useFlash';
 import styled from 'styled-components/macro';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Spinner from '@/components/elements/Spinner';
 import { Button } from '@/components/elements/button';
 import { Dialog } from '@/components/elements/dialog';

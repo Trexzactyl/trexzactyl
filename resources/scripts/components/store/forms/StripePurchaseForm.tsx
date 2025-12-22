@@ -1,6 +1,6 @@
 import tw from 'twin.macro';
 import { Form, Formik } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import useFlash from '@/plugins/useFlash';
 import stripe from '@/api/store/gateways/stripe';
 import Select from '@/components/elements/Select';
