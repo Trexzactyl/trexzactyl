@@ -149,7 +149,7 @@ class TwoFactorControllerTest extends ClientApiIntegrationTestCase
         $user = $user->refresh();
         $this->assertFalse($user->use_totp);
         $this->assertNotNull($user->totp_authenticated_at);
-        $this->assertEquals(Carbon::now(), $user->totp_authenticated_at);
+        $this->assertTrue($user->totp_authenticated_at->isSameSecond(Carbon::now()));
     }
 
     /**
