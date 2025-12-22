@@ -3,10 +3,12 @@ name: Laravel
 on:
   push:
     branches:
+      - "master"
       - "develop"
       - "3.x-develop"
   pull_request:
     branches:
+      - "master"
       - "develop"
       - "3.x-develop"
 
