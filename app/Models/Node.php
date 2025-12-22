@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property string $daemon_token
  * @property int $daemonListen
  * @property int $daemonSFTP
- * @property string $daemonBase
+ * @property string $daemon_base
  * @property string $daemon_brand
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -85,7 +85,7 @@ class Node extends Model
         'public', 'name',
         'fqdn', 'scheme', 'behind_proxy',
         'memory', 'memory_overallocate', 'disk',
-        'disk_overallocate', 'upload_size', 'daemonBase',
+        'disk_overallocate', 'upload_size', 'daemon_base',
         'daemonSFTP', 'daemonListen', 'daemon_brand', 'deploy_fee',
         'description', 'maintenance_mode',
     ];
@@ -103,7 +103,7 @@ class Node extends Model
         'disk' => 'required|numeric|min:1',
         'disk_overallocate' => 'required|numeric|min:-1',
         'deploy_fee' => 'nullable|int|min:0',
-        'daemonBase' => 'sometimes|required|regex:/^([\/][\d\w.\-\/]+)$/',
+        'daemon_base' => 'sometimes|required|regex:/^([\/][\d\w.\-\/]+)$/',
         'daemonSFTP' => 'required|numeric|between:1,65535',
         'daemonListen' => 'required|numeric|between:1,65535',
         'daemon_brand' => 'sometimes|string|max:191',
@@ -120,7 +120,7 @@ class Node extends Model
         'behind_proxy' => false,
         'memory_overallocate' => 0,
         'disk_overallocate' => 0,
-        'daemonBase' => '/var/lib/pterodactyl/volumes',
+        'daemon_base' => '/var/lib/pterodactyl/volumes',
         'daemonSFTP' => 2022,
         'daemonListen' => 8080,
         'daemon_brand' => 'Pterodactyl',
@@ -157,7 +157,7 @@ class Node extends Model
                 'upload_limit' => $this->upload_size,
             ],
             'system' => [
-                'data' => $this->daemonBase,
+                'data' => $this->daemon_base,
                 'sftp' => [
                     'bind_port' => $this->daemonSFTP,
                 ],
