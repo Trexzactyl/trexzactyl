@@ -4,8 +4,8 @@ namespace Trexz\Tests\Integration\Api\Client\Server\ScheduleTask;
 
 use Trexz\Models\Task;
 use Trexz\Models\Schedule;
-use Illuminate\Http\Response;
 use Trexz\Models\Permission;
+use Illuminate\Http\Response;
 use Trexz\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
 
 class CreateServerScheduleTaskTest extends ClientApiIntegrationTestCase

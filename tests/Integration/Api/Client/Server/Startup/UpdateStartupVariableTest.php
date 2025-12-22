@@ -3,8 +3,8 @@
 namespace Trexz\Tests\Integration\Api\Client\Server\Startup;
 
 use Trexz\Models\User;
-use Illuminate\Http\Response;
 use Trexz\Models\Permission;
+use Illuminate\Http\Response;
 use Trexz\Models\EggVariable;
 use Trexz\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
 

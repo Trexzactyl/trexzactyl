@@ -2,8 +2,8 @@
 
 namespace Trexz\Http\Controllers\Admin\Servers;
 
-use Carbon\CarbonImmutable;
 use Trexz\Models\Server;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Trexz\Models\ServerTransfer;
 use Illuminate\Http\RedirectResponse;

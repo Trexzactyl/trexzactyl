@@ -13,8 +13,8 @@ use Illuminate\Database\Query\Expression;
 use Trexz\Contracts\Repository\RepositoryInterface;
 use Trexz\Exceptions\Model\DataValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Trexz\Exceptions\Repository\RecordNotFoundException;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 abstract class EloquentRepository extends Repository implements RepositoryInterface
 {

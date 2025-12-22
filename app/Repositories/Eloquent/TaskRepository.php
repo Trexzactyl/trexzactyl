@@ -3,8 +3,8 @@
 namespace Trexz\Repositories\Eloquent;
 
 use Trexz\Models\Task;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Trexz\Contracts\Repository\TaskRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Trexz\Exceptions\Repository\RecordNotFoundException;
 
 class TaskRepository extends EloquentRepository implements TaskRepositoryInterface

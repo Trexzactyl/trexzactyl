@@ -3,8 +3,8 @@
 namespace Trexz\Http\Requests\Api\Client\Servers\Settings;
 
 use Trexz\Models\Server;
-use Webmozart\Assert\Assert;
 use Trexz\Models\Permission;
+use Webmozart\Assert\Assert;
 use Illuminate\Validation\Rule;
 use Trexz\Contracts\Http\ClientPermissionsRequest;
 use Trexz\Http\Requests\Api\Client\ClientApiRequest;

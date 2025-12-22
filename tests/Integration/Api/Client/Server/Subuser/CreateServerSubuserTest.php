@@ -5,8 +5,8 @@ namespace Trexz\Tests\Integration\Api\Client\Server\Subuser;
 use Trexz\Models\User;
 use Trexz\Models\Subuser;
 use Illuminate\Support\Str;
-use Illuminate\Http\Response;
 use Trexz\Models\Permission;
+use Illuminate\Http\Response;
 use Illuminate\Foundation\Testing\WithFaker;
 use Trexz\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
 

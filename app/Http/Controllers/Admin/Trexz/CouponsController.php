@@ -3,8 +3,8 @@
 namespace Trexz\Http\Controllers\Admin\Trexz;
 
 use Carbon\Carbon;
-use Illuminate\View\View;
 use Trexz\Models\Coupon;
+use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Prologue\Alerts\AlertsMessageBag;
 use Trexz\Exceptions\DisplayException;

@@ -4,8 +4,8 @@ namespace Trexz\Http\Controllers\Api\Application\Nodes;
 
 use Trexz\Models\Node;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Trexz\Models\Allocation;
+use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Illuminate\Database\Eloquent\Builder;

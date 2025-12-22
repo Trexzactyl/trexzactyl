@@ -2,14 +2,14 @@
 
 namespace Trexz\Http\Controllers\Admin\Trexz;
 
-use Illuminate\View\View;
 use Trexz\Models\User;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Prologue\Alerts\AlertsMessageBag;
 use Trexz\Http\Controllers\Controller;
-use Trexz\Contracts\Repository\SettingsRepositoryInterface;
 use Trexz\Http\Requests\Admin\Trexz\ApprovalFormRequest;
+use Trexz\Contracts\Repository\SettingsRepositoryInterface;
 
 class ApprovalsController extends Controller
 {

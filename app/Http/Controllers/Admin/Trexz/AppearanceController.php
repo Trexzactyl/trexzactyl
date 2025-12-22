@@ -9,8 +9,8 @@ use Trexz\Http\Controllers\Controller;
 use Illuminate\Contracts\Config\Repository;
 use Trexz\Exceptions\Model\DataValidationException;
 use Trexz\Exceptions\Repository\RecordNotFoundException;
-use Trexz\Contracts\Repository\SettingsRepositoryInterface;
 use Trexz\Http\Requests\Admin\Trexz\AppearanceFormRequest;
+use Trexz\Contracts\Repository\SettingsRepositoryInterface;
 
 class AppearanceController extends Controller
 {

@@ -7,8 +7,8 @@ use Trexz\Models\Node;
 use Trexz\Models\Server;
 use Mockery\MockInterface;
 use Illuminate\Http\Response;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Trexz\Http\Middleware\MaintenanceMiddleware;
+use Illuminate\Contracts\Routing\ResponseFactory;
 
 class MaintenanceMiddlewareTest extends MiddlewareTestCase
 {

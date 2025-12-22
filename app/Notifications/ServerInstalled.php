@@ -6,11 +6,11 @@ use Trexz\Models\User;
 use Trexz\Events\Event;
 use Trexz\Models\Server;
 use Illuminate\Bus\Queueable;
-use Illuminate\Container\Container;
 use Trexz\Events\Server\Installed;
+use Illuminate\Container\Container;
+use Trexz\Contracts\Core\ReceivesEvents;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Trexz\Contracts\Core\ReceivesEvents;
 use Illuminate\Contracts\Notifications\Dispatcher;
 use Illuminate\Notifications\Messages\MailMessage;
 

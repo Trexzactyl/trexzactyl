@@ -2,16 +2,16 @@
 
 namespace Trexz\Http\Controllers\Admin;
 
-use Illuminate\View\View;
 use Trexz\Models\ApiKey;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Trexz\Services\Acl\Api\AdminAcl;
 use Illuminate\Http\RedirectResponse;
 use Prologue\Alerts\AlertsMessageBag;
-use Trexz\Services\Acl\Api\AdminAcl;
 use Trexz\Http\Controllers\Controller;
-use Illuminate\View\Factory as ViewFactory;
 use Trexz\Services\Api\KeyCreationService;
+use Illuminate\View\Factory as ViewFactory;
 use Trexz\Contracts\Repository\ApiKeyRepositoryInterface;
 use Trexz\Http\Requests\Admin\Api\StoreApplicationApiKeyRequest;
 

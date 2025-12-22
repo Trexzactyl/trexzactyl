@@ -2,8 +2,8 @@
 
 namespace Trexz\Http\Controllers\Api\Client;
 
-use Illuminate\Http\Request;
 use Trexz\Facades\Activity;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\JsonResponse;

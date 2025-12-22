@@ -2,8 +2,8 @@
 
 namespace Trexz\Http\Controllers\Api\Application\Locations;
 
-use Illuminate\Http\Response;
 use Trexz\Models\Location;
+use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Spatie\QueryBuilder\QueryBuilder;
 use Trexz\Services\Locations\LocationUpdateService;

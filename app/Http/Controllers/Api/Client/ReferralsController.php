@@ -3,8 +3,8 @@
 namespace Trexz\Http\Controllers\Api\Client;
 
 use Trexz\Models\User;
-use Illuminate\Http\JsonResponse;
 use Trexz\Models\ReferralUses;
+use Illuminate\Http\JsonResponse;
 use Trexz\Exceptions\DisplayException;
 use Trexz\Services\Referrals\UseReferralService;
 use Trexz\Http\Requests\Api\Client\ClientApiRequest;

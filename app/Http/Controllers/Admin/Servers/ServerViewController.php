@@ -2,9 +2,9 @@
 
 namespace Trexz\Http\Controllers\Admin\Servers;
 
-use Illuminate\View\View;
 use Trexz\Models\Nest;
 use Trexz\Models\Server;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Trexz\Exceptions\DisplayException;
 use Trexz\Http\Controllers\Controller;
@@ -14,8 +14,8 @@ use Trexz\Repositories\Eloquent\NodeRepository;
 use Trexz\Repositories\Eloquent\MountRepository;
 use Trexz\Repositories\Eloquent\ServerRepository;
 use Trexz\Traits\Controllers\JavascriptInjection;
-use Illuminate\Contracts\View\Factory as ViewFactory;
 use Trexz\Repositories\Eloquent\LocationRepository;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use Trexz\Repositories\Eloquent\DatabaseHostRepository;
 
 class ServerViewController extends Controller

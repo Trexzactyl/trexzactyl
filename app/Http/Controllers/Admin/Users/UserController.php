@@ -2,9 +2,9 @@
 
 namespace Trexz\Http\Controllers\Admin\Users;
 
-use Illuminate\View\View;
 use Trexz\Models\User;
 use Trexz\Models\Model;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Http\RedirectResponse;
@@ -15,9 +15,9 @@ use Trexz\Http\Controllers\Controller;
 use Illuminate\View\Factory as ViewFactory;
 use Trexz\Services\Users\UserUpdateService;
 use Trexz\Traits\Helpers\AvailableLanguages;
-use Illuminate\Contracts\Translation\Translator;
 use Trexz\Services\Users\UserCreationService;
 use Trexz\Services\Users\UserDeletionService;
+use Illuminate\Contracts\Translation\Translator;
 use Trexz\Http\Requests\Admin\NewUserFormRequest;
 use Trexz\Http\Requests\Admin\Users\UserFormRequest;
 use Trexz\Contracts\Repository\UserRepositoryInterface;

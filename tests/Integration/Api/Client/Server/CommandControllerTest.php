@@ -4,8 +4,8 @@ namespace Trexz\Tests\Integration\Api\Client\Server;
 
 use Trexz\Models\Server;
 use GuzzleHttp\Psr7\Request;
-use Illuminate\Http\Response;
 use Trexz\Models\Permission;
+use Illuminate\Http\Response;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use Trexz\Repositories\Wings\DaemonCommandRepository;

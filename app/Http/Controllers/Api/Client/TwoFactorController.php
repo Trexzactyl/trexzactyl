@@ -3,8 +3,8 @@
 namespace Trexz\Http\Controllers\Api\Client;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Trexz\Facades\Activity;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Trexz\Services\Users\TwoFactorSetupService;

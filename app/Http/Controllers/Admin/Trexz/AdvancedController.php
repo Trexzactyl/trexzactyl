@@ -5,11 +5,11 @@ namespace Trexz\Http\Controllers\Admin\Trexz;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Prologue\Alerts\AlertsMessageBag;
-use Illuminate\Contracts\Console\Kernel;
 use Trexz\Http\Controllers\Controller;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\View\Factory as ViewFactory;
-use Trexz\Contracts\Repository\SettingsRepositoryInterface;
 use Trexz\Http\Requests\Admin\Trexz\AdvancedFormRequest;
+use Trexz\Contracts\Repository\SettingsRepositoryInterface;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 class AdvancedController extends Controller

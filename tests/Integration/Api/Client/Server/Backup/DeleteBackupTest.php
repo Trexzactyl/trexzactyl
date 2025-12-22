@@ -4,8 +4,8 @@ namespace Trexz\Tests\Integration\Api\Client\Server\Backup;
 
 use Trexz\Models\Backup;
 use Mockery\MockInterface;
-use Illuminate\Http\Response;
 use Trexz\Models\Permission;
+use Illuminate\Http\Response;
 use Trexz\Events\ActivityLogged;
 use Illuminate\Support\Facades\Event;
 use Trexz\Repositories\Wings\DaemonBackupRepository;

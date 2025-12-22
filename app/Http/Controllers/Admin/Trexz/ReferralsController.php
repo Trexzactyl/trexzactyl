@@ -6,8 +6,8 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Prologue\Alerts\AlertsMessageBag;
 use Trexz\Http\Controllers\Controller;
-use Trexz\Contracts\Repository\SettingsRepositoryInterface;
 use Trexz\Http\Requests\Admin\Trexz\ReferralsFormRequest;
+use Trexz\Contracts\Repository\SettingsRepositoryInterface;
 
 class ReferralsController extends Controller
 {

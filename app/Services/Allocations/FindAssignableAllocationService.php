@@ -3,8 +3,8 @@
 namespace Trexz\Services\Allocations;
 
 use Trexz\Models\Server;
-use Webmozart\Assert\Assert;
 use Trexz\Models\Allocation;
+use Webmozart\Assert\Assert;
 use Trexz\Exceptions\Service\Allocation\AutoAllocationNotEnabledException;
 use Trexz\Exceptions\Service\Allocation\NoAutoAllocationSpaceAvailableException;
 

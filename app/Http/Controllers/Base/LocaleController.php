@@ -5,8 +5,8 @@ namespace Trexz\Http\Controllers\Base;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Translation\Translator;
 use Trexz\Http\Controllers\Controller;
-use Illuminate\Contracts\Translation\Loader;
 use Trexz\Http\Requests\LocaleRequest;
+use Illuminate\Contracts\Translation\Loader;
 
 class LocaleController extends Controller
 {

@@ -3,8 +3,8 @@
 namespace Trexz\Http\Controllers\Api\Application\Links;
 
 use Trexz\Facades\Activity;
-use Illuminate\Http\Response;
 use Trexz\Models\CustomLink;
+use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Trexz\Http\Requests\Api\Application\Links;

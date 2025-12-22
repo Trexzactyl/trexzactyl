@@ -10,7 +10,6 @@ class UpgradeController extends Controller
 {
     public function __construct(private ViewFactory $view)
     {
-        //
     }
 
     /**
@@ -34,6 +33,7 @@ class UpgradeController extends Controller
 
         if (preg_match('/^MemTotal:\s+(\d+)\skB$/m', $memInfo, $matches)) {
             $memKB = (int) $matches[1];
+
             return round($memKB / 1024 / 1024, 2);
         }
     }

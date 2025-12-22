@@ -18,7 +18,9 @@ class AnalyticsReviewService
         $analytics = AnalyticsData::where('server_id', $server->id)->select('cpu', 'memory', 'disk')->get();
         $size = count($analytics);
 
-        if ($size <= 1) return;
+        if ($size <= 1) {
+            return;
+        }
 
         foreach ($analytics as $data) {
             $total['cpu'] += $data->cpu;

@@ -6,8 +6,8 @@ use Trexz\Models\Server;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Trexz\Exceptions\Repository\RecordNotFoundException;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Trexz\Contracts\Repository\ServerRepositoryInterface;
 
 class ServerRepository extends EloquentRepository implements ServerRepositoryInterface

@@ -9,13 +9,13 @@ use Illuminate\Auth\AuthManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Container\Container;
 use Trexz\Events\Auth\DirectLogin;
+use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Event;
 use Trexz\Exceptions\DisplayException;
 use Trexz\Http\Controllers\Controller;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Trexz\Services\Users\UserCreationService;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 abstract class AbstractLoginController extends Controller

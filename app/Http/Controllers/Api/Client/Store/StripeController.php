@@ -4,8 +4,8 @@ namespace Trexz\Http\Controllers\Api\Client\Store;
 
 use Stripe\StripeClient;
 use Illuminate\Http\JsonResponse;
-use Stripe\Exception\ApiErrorException;
 use Trexz\Exceptions\DisplayException;
+use Stripe\Exception\ApiErrorException;
 use Trexz\Http\Controllers\Api\Client\ClientApiController;
 use Trexz\Http\Requests\Api\Client\Store\Gateways\StripeRequest;
 

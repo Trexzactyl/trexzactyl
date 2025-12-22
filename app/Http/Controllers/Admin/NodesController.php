@@ -2,11 +2,11 @@
 
 namespace Trexz\Http\Controllers\Admin;
 
-use Illuminate\View\View;
 use Trexz\Models\Node;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Trexz\Models\Allocation;
+use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Prologue\Alerts\AlertsMessageBag;
 use Trexz\Http\Controllers\Controller;
@@ -14,9 +14,9 @@ use Illuminate\View\Factory as ViewFactory;
 use Trexz\Services\Nodes\NodeUpdateService;
 use Trexz\Services\Nodes\NodeCreationService;
 use Trexz\Services\Nodes\NodeDeletionService;
-use Illuminate\Cache\Repository as CacheRepository;
 use Trexz\Services\Allocations\AssignmentService;
 use Trexz\Services\Helpers\SoftwareVersionService;
+use Illuminate\Cache\Repository as CacheRepository;
 use Trexz\Http\Requests\Admin\Node\NodeFormRequest;
 use Trexz\Contracts\Repository\NodeRepositoryInterface;
 use Trexz\Contracts\Repository\ServerRepositoryInterface;

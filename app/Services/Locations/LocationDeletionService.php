@@ -2,8 +2,8 @@
 
 namespace Trexz\Services\Locations;
 
-use Webmozart\Assert\Assert;
 use Trexz\Models\Location;
+use Webmozart\Assert\Assert;
 use Trexz\Contracts\Repository\NodeRepositoryInterface;
 use Trexz\Contracts\Repository\LocationRepositoryInterface;
 use Trexz\Exceptions\Service\Location\HasActiveNodesException;

@@ -4,15 +4,15 @@ namespace Trexz\Http\Controllers\Api\Client\Servers;
 
 use Trexz\Models\Backup;
 use Trexz\Models\Server;
-use Illuminate\Http\Request;
 use Trexz\Facades\Activity;
+use Illuminate\Http\Request;
 use Trexz\Models\Permission;
 use Illuminate\Http\JsonResponse;
 use Trexz\Services\Backups\DeleteBackupService;
 use Trexz\Services\Backups\DownloadLinkService;
-use Illuminate\Auth\Access\AuthorizationException;
 use Trexz\Repositories\Eloquent\BackupRepository;
 use Trexz\Services\Backups\InitiateBackupService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Trexz\Repositories\Wings\DaemonBackupRepository;
 use Trexz\Transformers\Api\Client\BackupTransformer;
 use Trexz\Http\Controllers\Api\Client\ClientApiController;

@@ -2,8 +2,8 @@
 
 namespace Trexz\Http\Controllers\Admin\Servers;
 
-use Illuminate\View\View;
 use Trexz\Models\Node;
+use Illuminate\View\View;
 use Trexz\Models\Location;
 use Illuminate\Http\RedirectResponse;
 use Prologue\Alerts\AlertsMessageBag;

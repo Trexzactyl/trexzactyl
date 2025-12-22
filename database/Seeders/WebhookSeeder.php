@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Trexz\Models\WebhookEvent;
+use Illuminate\Database\Seeder;
 
 class WebhookSeeder extends Seeder
 {

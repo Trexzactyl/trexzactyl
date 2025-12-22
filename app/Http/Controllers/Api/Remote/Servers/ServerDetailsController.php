@@ -4,8 +4,8 @@ namespace Trexz\Http\Controllers\Api\Remote\Servers;
 
 use Trexz\Models\Backup;
 use Trexz\Models\Server;
-use Illuminate\Http\Request;
 use Trexz\Facades\Activity;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Trexz\Http\Controllers\Controller;
 use Illuminate\Database\ConnectionInterface;

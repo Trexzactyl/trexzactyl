@@ -4,8 +4,8 @@ namespace Trexz\Tests\Integration\Services\Schedules;
 
 use Exception;
 use Trexz\Models\Task;
-use Carbon\CarbonImmutable;
 use Trexz\Models\Schedule;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Bus;
 use Trexz\Jobs\Schedule\RunTaskJob;
 use Trexz\Exceptions\DisplayException;

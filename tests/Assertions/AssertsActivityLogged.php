@@ -4,8 +4,8 @@ namespace Trexz\Tests\Assertions;
 
 use PHPUnit\Framework\Assert;
 use Trexz\Events\ActivityLogged;
-use Illuminate\Support\Facades\Event;
 use Trexz\Models\ActivityLogSubject;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Database\Eloquent\Model;
 
 trait AssertsActivityLogged

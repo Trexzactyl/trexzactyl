@@ -3,8 +3,8 @@
 namespace Trexz\Http\Controllers\Api\Client;
 
 use Trexz\Models\Ticket;
-use Illuminate\Http\Request;
 use Trexz\Facades\Activity;
+use Illuminate\Http\Request;
 use Trexz\Models\TicketMessage;
 use Illuminate\Http\JsonResponse;
 use Trexz\Exceptions\DisplayException;

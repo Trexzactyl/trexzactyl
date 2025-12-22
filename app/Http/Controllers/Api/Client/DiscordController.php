@@ -37,6 +37,7 @@ class DiscordController extends ClientApiController
         }
         $user->discord_id = null;
         $user->skipValidation()->save();
+
         return new JsonResponse([], JsonResponse::HTTP_NO_CONTENT);
     }
 
@@ -60,14 +61,14 @@ class DiscordController extends ClientApiController
         }
 
         $discord = json_decode(Http::withHeaders(['Authorization' => 'Bearer ' . $req->access_token])->asForm()->get('https://discord.com/api/users/@me')->body());
-        
+
         // Check if this Discord ID is already linked to another account
         $existingUser = User::where('discord_id', $discord->id)->first();
         if ($existingUser && $existingUser->id !== Auth::user()->id) {
             // Discord account is already linked to a different user
             return redirect('/account?error=discord_already_linked');
         }
-        
+
         // Use skipValidation to avoid unique constraint error
         $user = User::find(Auth::user()->id);
         $user->discord_id = $discord->id;

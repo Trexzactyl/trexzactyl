@@ -2,8 +2,8 @@
 
 namespace Trexz\Listeners\Auth;
 
-use Illuminate\Http\Request;
 use Trexz\Facades\Activity;
+use Illuminate\Http\Request;
 use Illuminate\Auth\Events\PasswordReset;
 
 class PasswordResetListener

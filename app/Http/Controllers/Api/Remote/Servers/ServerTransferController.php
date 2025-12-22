@@ -2,10 +2,10 @@
 
 namespace Trexz\Http\Controllers\Api\Remote\Servers;
 
-use Illuminate\Http\Response;
 use Trexz\Models\Allocation;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Trexz\Models\ServerTransfer;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Trexz\Http\Controllers\Controller;
 use Illuminate\Database\ConnectionInterface;

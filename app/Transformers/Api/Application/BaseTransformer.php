@@ -2,14 +2,14 @@
 
 namespace Trexz\Transformers\Api\Application;
 
+use Trexz\Models\ApiKey;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
-use Trexz\Models\ApiKey;
 use Illuminate\Http\Request;
 use Webmozart\Assert\Assert;
 use Illuminate\Container\Container;
-use Illuminate\Database\Eloquent\Model;
 use Trexz\Services\Acl\Api\AdminAcl;
+use Illuminate\Database\Eloquent\Model;
 use League\Fractal\TransformerAbstract;
 
 /**

@@ -4,8 +4,8 @@ namespace Trexz\Http\Requests\Api\Client\Servers\Databases;
 
 use Trexz\Models\Server;
 use Trexz\Models\Database;
-use Webmozart\Assert\Assert;
 use Trexz\Models\Permission;
+use Webmozart\Assert\Assert;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\Query\Builder;
 use Trexz\Contracts\Http\ClientPermissionsRequest;

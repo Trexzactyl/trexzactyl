@@ -2,8 +2,8 @@
 
 namespace Trexz\Http\Controllers\Admin;
 
-use Illuminate\View\View;
 use Trexz\Models\Ticket;
+use Illuminate\View\View;
 use Illuminate\View\Factory;
 use Trexz\Models\TicketMessage;
 use Illuminate\Http\RedirectResponse;

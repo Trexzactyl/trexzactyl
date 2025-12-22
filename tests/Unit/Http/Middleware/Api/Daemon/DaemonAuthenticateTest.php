@@ -7,10 +7,10 @@ use Trexz\Models\Node;
 use Mockery\MockInterface;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Trexz\Repositories\Eloquent\NodeRepository;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Trexz\Exceptions\Repository\RecordNotFoundException;
 use Trexz\Http\Middleware\Api\Daemon\DaemonAuthenticate;
 use Trexz\Tests\Unit\Http\Middleware\MiddlewareTestCase;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 

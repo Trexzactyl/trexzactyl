@@ -4,8 +4,8 @@ namespace Trexz\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Trexz\Http\ViewComposers\AssetComposer;
-use Trexz\Http\ViewComposers\ThemeComposer;
 use Trexz\Http\ViewComposers\StoreComposer;
+use Trexz\Http\ViewComposers\ThemeComposer;
 use Trexz\Http\ViewComposers\TrexzComposer;
 
 class ViewComposerServiceProvider extends ServiceProvider

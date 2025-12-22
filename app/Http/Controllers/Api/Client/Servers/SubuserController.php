@@ -3,8 +3,8 @@
 namespace Trexz\Http\Controllers\Api\Client\Servers;
 
 use Trexz\Models\Server;
-use Illuminate\Http\Request;
 use Trexz\Facades\Activity;
+use Illuminate\Http\Request;
 use Trexz\Models\Permission;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;

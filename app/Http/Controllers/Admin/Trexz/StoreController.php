@@ -7,8 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Prologue\Alerts\AlertsMessageBag;
 use Trexz\Http\Controllers\Controller;
 use Trexz\Exceptions\Model\DataValidationException;
-use Trexz\Exceptions\Repository\RecordNotFoundException;
 use Trexz\Http\Requests\Admin\Trexz\StoreFormRequest;
+use Trexz\Exceptions\Repository\RecordNotFoundException;
 use Trexz\Contracts\Repository\SettingsRepositoryInterface;
 
 class StoreController extends Controller

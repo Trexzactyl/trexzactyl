@@ -2,8 +2,8 @@
 
 namespace Trexz\Http\Controllers\Admin\Nodes;
 
-use Illuminate\View\View;
 use Trexz\Models\Node;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Trexz\Models\Allocation;
 use Illuminate\Support\Collection;
@@ -11,9 +11,9 @@ use Trexz\Http\Controllers\Controller;
 use Trexz\Repositories\Eloquent\NodeRepository;
 use Trexz\Repositories\Eloquent\ServerRepository;
 use Trexz\Traits\Controllers\JavascriptInjection;
-use Illuminate\Contracts\View\Factory as ViewFactory;
 use Trexz\Services\Helpers\SoftwareVersionService;
 use Trexz\Repositories\Eloquent\LocationRepository;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use Trexz\Repositories\Eloquent\AllocationRepository;
 
 class NodeViewController extends Controller

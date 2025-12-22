@@ -2,8 +2,8 @@
 
 namespace Trexz\Http\Controllers\Admin\Nodes;
 
-use Illuminate\View\View;
 use Trexz\Models\Node;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Trexz\Http\Controllers\Controller;

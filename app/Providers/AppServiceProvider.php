@@ -2,8 +2,8 @@
 
 namespace Trexz\Providers;
 
-use Carbon\Carbon;
 use Trexz\Models;
+use Carbon\Carbon;
 use Trexz\Models\User;
 use Illuminate\Support\Str;
 use Laravel\Cashier\Cashier;

@@ -3,9 +3,9 @@
 namespace Trexz\Tests\Integration\Api\Client\Server;
 
 use Trexz\Models\User;
-use Illuminate\Http\Response;
 use Trexz\Models\Allocation;
 use Trexz\Models\Permission;
+use Illuminate\Http\Response;
 use Trexz\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
 
 class NetworkAllocationControllerTest extends ClientApiIntegrationTestCase

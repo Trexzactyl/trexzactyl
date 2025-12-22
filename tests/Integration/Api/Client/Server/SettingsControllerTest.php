@@ -3,8 +3,8 @@
 namespace Trexz\Tests\Integration\Api\Client\Server;
 
 use Trexz\Models\Server;
-use Illuminate\Http\Response;
 use Trexz\Models\Permission;
+use Illuminate\Http\Response;
 use Trexz\Repositories\Wings\DaemonServerRepository;
 use Trexz\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
 

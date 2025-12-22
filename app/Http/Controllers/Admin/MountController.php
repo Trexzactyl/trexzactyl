@@ -3,12 +3,12 @@
 namespace Trexz\Http\Controllers\Admin;
 
 use Ramsey\Uuid\Uuid;
-use Illuminate\View\View;
 use Trexz\Models\Nest;
 use Trexz\Models\Mount;
+use Illuminate\View\View;
+use Trexz\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Trexz\Models\Location;
 use Illuminate\Http\RedirectResponse;
 use Prologue\Alerts\AlertsMessageBag;
 use Trexz\Http\Controllers\Controller;

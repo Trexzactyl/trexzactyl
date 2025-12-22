@@ -4,8 +4,8 @@ namespace Trexz\Http\Controllers\Api\Remote;
 
 use Trexz\Models\User;
 use Trexz\Models\Server;
-use Illuminate\Http\Request;
 use Trexz\Facades\Activity;
+use Illuminate\Http\Request;
 use Trexz\Models\Permission;
 use Illuminate\Http\JsonResponse;
 use phpseclib3\Crypt\PublicKeyLoader;
