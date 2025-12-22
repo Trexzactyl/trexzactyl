@@ -11,7 +11,7 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::table('nodes', function (Blueprint $table) {
-            $table->string('daemon_brand')->default('Pterodactyl')->after('daemonBase');
+            $table->string('daemon_brand')->default('Pterodactyl')->after('daemon_base');
         });
     }
 
