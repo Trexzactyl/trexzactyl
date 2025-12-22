@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useStoreState } from '@/state/hooks';
 import { ServerContext } from '@/state/server';
 import { history } from '@/components/history';
@@ -6,11 +6,22 @@ import StoreRouter from '@/routers/StoreRouter';
 import TicketRouter from '@/routers/TicketRouter';
 import ServerRouter from '@/routers/ServerRouter';
 import Spinner from '@/components/elements/Spinner';
-import { Router, Switch, Route } from 'react-router';
+import { unstable_HistoryRouter as HistoryRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import DashboardRouter from '@/routers/DashboardRouter';
 import AuthenticationRouter from '@/routers/AuthenticationRouter';
 import { NotApproved, NotFound } from '@/components/elements/ScreenBlock';
 import AuthenticatedRoute from '@/components/elements/AuthenticatedRoute';
+import { setupInterceptors } from '@/api/interceptors';
+
+const InterceptorSetup = () => {
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        setupInterceptors(navigate);
+    }, [navigate]);
+    
+    return null;
+};
 
 export default () => {
     const authenticated = useStoreState((state) => state.user?.data);
@@ -40,41 +51,50 @@ export default () => {
     }
 
     return (
-        <Router history={history}>
-            <Switch>
-                <Route path={'/auth'}>
+        <HistoryRouter history={history}>
+            <InterceptorSetup />
+            <Routes>
+                <Route path="/auth/*" element={
                     <Spinner.Suspense>
                         <AuthenticationRouter />
                     </Spinner.Suspense>
-                </Route>
-                <AuthenticatedRoute path={'/server/:id'}>
-                    <Spinner.Suspense>
-                        <ServerContext.Provider>
-                            <ServerRouter />
-                        </ServerContext.Provider>
-                    </Spinner.Suspense>
-                </AuthenticatedRoute>
-                {store && (
-                    <AuthenticatedRoute path={'/store'}>
+                } />
+                <Route path="/server/:id/*" element={
+                    <AuthenticatedRoute>
                         <Spinner.Suspense>
-                            <StoreRouter />
+                            <ServerContext.Provider>
+                                <ServerRouter />
+                            </ServerContext.Provider>
                         </Spinner.Suspense>
                     </AuthenticatedRoute>
+                } />
+                {store && (
+                    <Route path="/store/*" element={
+                        <AuthenticatedRoute>
+                            <Spinner.Suspense>
+                                <StoreRouter />
+                            </Spinner.Suspense>
+                        </AuthenticatedRoute>
+                    } />
                 )}
                 {tickets && (
-                    <AuthenticatedRoute path={'/tickets'}>
+                    <Route path="/tickets/*" element={
+                        <AuthenticatedRoute>
+                            <Spinner.Suspense>
+                                <TicketRouter />
+                            </Spinner.Suspense>
+                        </AuthenticatedRoute>
+                    } />
+                )}
+                <Route path="/*" element={
+                    <AuthenticatedRoute>
                         <Spinner.Suspense>
-                            <TicketRouter />
+                            <DashboardRouter />
                         </Spinner.Suspense>
                     </AuthenticatedRoute>
-                )}
-                <AuthenticatedRoute path={'/'}>
-                    <Spinner.Suspense>
-                        <DashboardRouter />
-                    </Spinner.Suspense>
-                </AuthenticatedRoute>
-                <Route path={'*'} component={NotFound} />
-            </Switch>
-        </Router>
+                } />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </HistoryRouter>
     );
 };

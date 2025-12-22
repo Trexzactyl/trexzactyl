@@ -32,7 +32,8 @@ export default () => {
 
     const { data: servers, error } = useSWR<PaginatedResult<Server>>(
         ['/api/client/servers', showOnlyAdmin && rootAdmin, page],
-        () => getServers({ page, type: showOnlyAdmin && rootAdmin ? 'admin' : undefined })
+        () => getServers({ page, type: showOnlyAdmin && rootAdmin ? 'admin' : undefined }),
+        { revalidateOnFocus: false }
     );
 
     useEffect(() => {

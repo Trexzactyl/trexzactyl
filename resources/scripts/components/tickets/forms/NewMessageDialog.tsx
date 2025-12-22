@@ -1,9 +1,8 @@
-import React from 'react';
 import tw from 'twin.macro';
 import { object, string } from 'yup';
 import styled from 'styled-components';
 import useFlash from '@/plugins/useFlash';
-import { useRouteMatch } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { httpErrorToHuman } from '@/api/http';
 import { createMessage } from '@/api/account/tickets';
 import { Textarea } from '@/components/elements/Input';
@@ -22,8 +21,8 @@ const CustomTextarea = styled(Textarea)`
 `;
 
 export default ({ open, onClose }: DialogProps) => {
-    const match = useRouteMatch<{ id: string }>();
-    const id = parseInt(match.params.id);
+    const { id: idParam } = useParams<{ id: string }>();
+    const id = parseInt(idParam || '0');
 
     const { addError, clearFlashes, addFlash } = useFlash();
 

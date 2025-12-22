@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import useFlash from '@/plugins/useFlash';
-import { useRouteMatch } from 'react-router';
-import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Alert } from '@/components/elements/alert';
 import Spinner from '@/components/elements/Spinner';
 import { Button } from '@/components/elements/button';
@@ -12,8 +12,8 @@ import { Ticket, getTicket, getMessages, deleteTicket, TicketMessage } from '@/a
 
 export default () => {
     const { clearFlashes } = useFlash();
-    const match = useRouteMatch<{ id: string }>();
-    const id = parseInt(match.params.id);
+    const { id: idParam } = useParams<{ id: string }>();
+    const id = parseInt(idParam || '0');
 
     const [visible, setVisible] = useState(false);
     const [ticket, setTicket] = useState<Ticket>();

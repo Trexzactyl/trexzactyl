@@ -14,6 +14,10 @@ export interface UserData {
     state: string;
     createdAt: Date;
     updatedAt: Date;
+    approved: boolean;
+    verified: boolean;
+    discordId: string;
+    referralCode: string;
 }
 
 export interface UserStore {

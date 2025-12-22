@@ -1,5 +1,4 @@
 import tw from 'twin.macro';
-import * as React from 'react';
 import { breakpoint } from '@/theme';
 import styled from 'styled-components/macro';
 import ContentBox from '@/components/elements/ContentBox';

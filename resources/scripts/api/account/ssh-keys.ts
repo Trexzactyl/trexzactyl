@@ -1,10 +1,10 @@
 import { AxiosError } from 'axios';
-import useSWR, { ConfigInterface } from 'swr';
+import useSWR, { SWRConfiguration } from 'swr';
 import { useUserSWRKey } from '@/plugins/useSWRKey';
 import http, { FractalResponseList } from '@/api/http';
 import { SSHKey, Transformers } from '@definitions/user';
 
-const useSSHKeys = (config?: ConfigInterface<SSHKey[], AxiosError>) => {
+const useSSHKeys = (config?: SWRConfiguration<SSHKey[], AxiosError>) => {
     const key = useUserSWRKey(['account', 'ssh-keys']);
 
     return useSWR(

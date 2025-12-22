@@ -1,4 +1,3 @@
-import React from 'react';
 import tw from 'twin.macro';
 import { capitalize } from '@/lib/strings';
 import { FormikErrors, FormikTouched } from 'formik';

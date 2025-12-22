@@ -1,5 +1,4 @@
 import http from '@/api/http';
-import * as React from 'react';
 import { useState } from 'react';
 import * as Icon from 'react-feather';
 import tw, { theme } from 'twin.macro';
@@ -70,7 +69,7 @@ export default () => {
             >
                 <RightNavigation>
                     <SearchContainer size={20} />
-                    <NavLink to={'/'} exact>
+                    <NavLink to={'/'} end>
                         <Icon.Server size={20} />
                     </NavLink>
                     <NavLink to={'/account'}>

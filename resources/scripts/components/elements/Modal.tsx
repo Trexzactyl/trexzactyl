@@ -14,6 +14,7 @@ export interface RequiredModalProps {
 }
 
 export interface ModalProps extends RequiredModalProps {
+    children?: React.ReactNode;
     dismissable?: boolean;
     closeOnEscape?: boolean;
     closeOnBackground?: boolean;

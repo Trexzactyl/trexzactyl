@@ -23,6 +23,24 @@ export interface SiteSettings {
             admin: boolean;
         };
     };
+    registration: {
+        enabled: boolean;
+        email?: boolean;
+        discord?: boolean;
+    };
+    storefront: {
+        enabled: boolean;
+    };
+    tickets: {
+        enabled: boolean;
+    };
+    approvals: {
+        enabled: boolean;
+    };
+    alert: {
+        type: 'success' | 'info' | 'warning' | 'danger';
+        message: string;
+    };
 }
 
 export interface SettingsStore {

@@ -4,11 +4,9 @@ import '@/assets/tailwind.css';
 import { store } from '@/state';
 import { StoreProvider } from 'easy-peasy';
 import { hot } from 'react-hot-loader/root';
-import { history } from '@/components/history';
 import { SiteSettings } from '@/state/settings';
 import IndexRouter from '@/routers/IndexRouter';
 import earnCredits from '@/api/account/earnCredits';
-import { setupInterceptors } from '@/api/interceptors';
 import { StorefrontSettings } from '@/state/storefront';
 import GlobalStylesheet from '@/assets/css/GlobalStylesheet';
 import { EverestSettings } from '@/state/everest';
@@ -36,8 +34,6 @@ interface ExtendedWindow extends Window {
     };
 }
 
-setupInterceptors(history);
-
 const App = () => {
     const { TrexzUser, SiteConfiguration, StoreConfiguration, TrexzConfiguration } = window as ExtendedWindow;
 
@@ -53,6 +49,9 @@ const App = () => {
             rootAdmin: TrexzUser.root_admin,
             useTotp: TrexzUser.use_totp,
             referralCode: TrexzUser.referral_code,
+            avatarURL: '',
+            roleName: '',
+            state: '',
             createdAt: new Date(TrexzUser.created_at),
             updatedAt: new Date(TrexzUser.updated_at),
         });

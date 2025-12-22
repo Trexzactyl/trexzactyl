@@ -6,9 +6,9 @@ import register from '@/api/auth/register';
 import { useStoreState } from 'easy-peasy';
 import { Formik, FormikHelpers } from 'formik';
 import Field from '@/components/elements/Field';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/elements/button/index';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import LoginFormContainer from '@/components/auth/LoginFormContainer';
 
@@ -18,7 +18,8 @@ interface Values {
     password: string;
 }
 
-const RegisterContainer = ({ history }: RouteComponentProps) => {
+const RegisterContainer = () => {
+    const navigate = useNavigate();
     const ref = useRef<Reaptcha>(null);
     const [token, setToken] = useState('');
 
@@ -49,7 +50,7 @@ const RegisterContainer = ({ history }: RouteComponentProps) => {
         register({ ...values, recaptchaData: token })
             .then((response) => {
                 if (response.complete) {
-                    history.replace('/auth/login');
+                    navigate('/auth/login', { replace: true });
                     addFlash({
                         key: 'auth:register',
                         type: 'success',
@@ -58,7 +59,7 @@ const RegisterContainer = ({ history }: RouteComponentProps) => {
                     return;
                 }
 
-                history.replace('/auth/register');
+                navigate('/auth/register', { replace: true });
             })
             .catch((error) => {
                 console.error(error);

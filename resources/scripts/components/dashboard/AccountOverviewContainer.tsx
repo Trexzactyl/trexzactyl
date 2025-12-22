@@ -1,5 +1,4 @@
 import tw from 'twin.macro';
-import * as React from 'react';
 import { breakpoint } from '@/theme';
 import styled from 'styled-components/macro';
 import { useStoreState } from '@/state/hooks';
@@ -29,7 +28,7 @@ const Container = styled.div`
 `;
 
 export default () => {
-    const { state } = useLocation<undefined | { twoFactorRedirect?: boolean }>();
+    const { state } = useLocation() as { state?: { twoFactorRedirect?: boolean } };
     const discord = useStoreState((state) => state.settings.data!.registration.discord);
     const referrals = useStoreState((state) => state.storefront.data!.referrals.enabled);
 

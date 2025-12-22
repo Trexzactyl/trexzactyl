@@ -1,4 +1,3 @@
-import React from 'react';
 import tw from 'twin.macro';
 import http from '@/api/http';
 import * as Icon from 'react-feather';

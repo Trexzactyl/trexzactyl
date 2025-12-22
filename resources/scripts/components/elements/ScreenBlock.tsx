@@ -1,4 +1,3 @@
-import React from 'react';
 import tw from 'twin.macro';
 import * as Icon from 'react-feather';
 import NotFoundSvg from '@/assets/images/not_found.svg';

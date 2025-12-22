@@ -3,7 +3,7 @@ import { differenceInHours, format, formatDistanceToNow } from 'date-fns';
 import { FileObject } from '@/api/server/files/loadDirectory';
 import FileDropdownMenu from '@/components/server/files/FileDropdownMenu';
 import { ServerContext } from '@/state/server';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import tw from 'twin.macro';
 import * as Icon from 'react-feather';
 import React, { memo } from 'react';
@@ -14,18 +14,18 @@ import { join } from 'path';
 import { bytesToString } from '@/lib/formatters';
 import styles from './style.module.css';
 
-const Clickable: React.FC<{ file: FileObject }> = memo(({ file, children }) => {
+const Clickable: React.FC<{ file: FileObject; children?: React.ReactNode }> = memo(({ file, children }) => {
     const [canReadContents] = usePermissions(['file.read-content']);
     const directory = ServerContext.useStoreState((state) => state.files.directory);
 
-    const match = useRouteMatch();
+    const location = useLocation();
 
     return !canReadContents || (file.isFile && !file.isEditable()) ? (
         <div className={styles.details}>{children}</div>
     ) : (
         <NavLink
             className={styles.details}
-            to={`${match.url}${file.isFile ? '/edit' : ''}#${encodePathSegments(join(directory, file.name))}`}
+            to={`${location.pathname}${file.isFile ? '/edit' : ''}#${encodePathSegments(join(directory, file.name))}`}
         >
             {children}
         </NavLink>

@@ -1,4 +1,3 @@
-import React from 'react';
 import tw from 'twin.macro';
 import Can from '@/components/elements/Can';
 import { ServerContext } from '@/state/server';

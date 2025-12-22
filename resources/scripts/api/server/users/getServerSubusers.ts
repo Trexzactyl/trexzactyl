@@ -1,4 +1,4 @@
-import { Subuser } from '@/state/server/subusers';
+import { Subuser } from '@definitions/server';
 import http, { FractalResponseData } from '@/api/http';
 
 export const rawDataToServerSubuser = (data: FractalResponseData): Subuser => ({

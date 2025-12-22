@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { ExclamationIcon, InformationCircleIcon } from '@heroicons/react/outline';
 
 interface AlertProps {
-    type: 'success' | 'info' | 'warning' | 'danger';
+    type: 'success' | 'info' | 'warning' | 'danger' | 'error';
     className?: string;
     children: React.ReactNode;
 }
@@ -17,7 +17,7 @@ export default ({ type, className, children }: AlertProps) => {
                     ['border-green-500 bg-green-500/25']: type === 'success',
                     ['border-blue-500 bg-blue-500/25']: type === 'info',
                     ['border-yellow-500 bg-yellow-500/25']: type === 'warning',
-                    ['border-red-500 bg-red-500/25']: type === 'danger',
+                    ['border-red-500 bg-red-500/25']: type === 'danger' || type === 'error',
                 },
                 className
             )}

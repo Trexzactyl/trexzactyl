@@ -1,5 +1,4 @@
 import tw from 'twin.macro';
-import * as React from 'react';
 import Reaptcha from 'reaptcha';
 import { object, string } from 'yup';
 import { Link } from 'react-router-dom';

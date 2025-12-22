@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-export type FlashMessageType = 'success' | 'info' | 'warning' | 'error';
+export type FlashMessageType = 'success' | 'info' | 'warning' | 'error' | 'danger';
 
 interface Props {
     title?: string;
@@ -15,6 +15,7 @@ interface Props {
 const styling = (type?: FlashMessageType): TwStyle | string => {
     switch (type) {
         case 'error':
+        case 'danger':
             return tw`bg-red-600/25`;
         case 'info':
             return tw`bg-blue-600/25`;
@@ -30,6 +31,7 @@ const styling = (type?: FlashMessageType): TwStyle | string => {
 const getBackground = (type?: FlashMessageType): TwStyle | string => {
     switch (type) {
         case 'error':
+        case 'danger':
             return tw`bg-red-500`;
         case 'info':
             return tw`bg-primary-500`;

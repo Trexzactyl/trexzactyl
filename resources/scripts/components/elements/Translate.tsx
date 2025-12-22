@@ -1,4 +1,3 @@
-import React from 'react';
 import { Trans, TransProps, useTranslation } from 'react-i18next';
 
 type Props = Omit<TransProps, 't'>;

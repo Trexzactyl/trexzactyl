@@ -6,9 +6,9 @@ import useFlash from '@/plugins/useFlash';
 import { useStoreState } from 'easy-peasy';
 import { Formik, FormikHelpers } from 'formik';
 import Field from '@/components/elements/Field';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/elements/button/index';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoginFormContainer from '@/components/auth/LoginFormContainer';
 
 interface Values {
@@ -16,7 +16,8 @@ interface Values {
     password: string;
 }
 
-const LoginContainer = ({ history }: RouteComponentProps) => {
+const LoginContainer = () => {
+    const navigate = useNavigate();
     const ref = useRef<Reaptcha>(null);
     const [token, setToken] = useState('');
     const name = useStoreState((state) => state.settings.data?.name);
@@ -55,7 +56,7 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                     return;
                 }
 
-                history.replace('/auth/login/checkpoint', { token: response.confirmationToken });
+                navigate('/auth/login/checkpoint', { replace: true, state: { token: response.confirmationToken } });
             })
             .catch((error) => {
                 console.error(error);

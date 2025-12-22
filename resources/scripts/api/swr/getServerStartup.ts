@@ -1,4 +1,4 @@
-import useSWR, { ConfigInterface } from 'swr';
+import useSWR, { SWRConfiguration } from 'swr';
 import http, { FractalResponseList } from '@/api/http';
 import { ServerEggVariable } from '@/api/server/types';
 import { rawDataToServerEggVariable } from '@/api/transformers';
@@ -9,7 +9,7 @@ interface Response {
     dockerImages: Record<string, string>;
 }
 
-export default (uuid: string, initialData?: Response | null, config?: ConfigInterface<Response>) =>
+export default (uuid: string, initialData?: Response | null, config?: SWRConfiguration<Response>) =>
     useSWR(
         [uuid, '/startup'],
         async (): Promise<Response> => {

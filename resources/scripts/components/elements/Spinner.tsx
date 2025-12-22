@@ -1,5 +1,5 @@
 import tw from 'twin.macro';
-import React, { Suspense } from 'react';
+import React, { Suspense, ReactNode } from 'react';
 import ErrorBoundary from '@/components/elements/ErrorBoundary';
 import styled, { css, keyframes } from 'styled-components/macro';
 
@@ -9,6 +9,7 @@ interface Props {
     size?: SpinnerSize;
     centered?: boolean;
     isBlue?: boolean;
+    children?: ReactNode;
 }
 
 interface Spinner extends React.FC<Props> {

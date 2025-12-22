@@ -1,4 +1,3 @@
-import React from 'react';
 import { Alert } from '@/components/elements/alert';
 import PageContentBlock from '@/components/elements/PageContentBlock';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Field, FieldProps } from 'formik';
 import Switch, { SwitchProps } from '@/components/elements/Switch';
 import FormikFieldWrapper from '@/components/elements/FormikFieldWrapper';

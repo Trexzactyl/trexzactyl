@@ -1,7 +1,8 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import PageContentBlock, { PageContentBlockProps } from '@/components/elements/PageContentBlock';
 
 interface Props extends PageContentBlockProps {
+    children?: ReactNode;
     title: string;
 }
 

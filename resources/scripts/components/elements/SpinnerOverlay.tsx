@@ -1,9 +1,10 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import tw from 'twin.macro';
 import Fade from '@/components/elements/Fade';
 import Spinner, { SpinnerSize } from '@/components/elements/Spinner';
 
 interface Props {
+    children?: ReactNode;
     visible: boolean;
     fixed?: boolean;
     size?: SpinnerSize;

@@ -1,6 +1,3 @@
-import React from 'react';
-import { useStoreState } from 'easy-peasy';
-import useWindowDimensions from '@/plugins/useWindowDimensions';
 import ResourceBar from '@/components/elements/store/ResourceBar';
 import StoreBanner from '@/components/elements/store/StoreBanner';
 import PageContentBlock from '@/components/elements/PageContentBlock';

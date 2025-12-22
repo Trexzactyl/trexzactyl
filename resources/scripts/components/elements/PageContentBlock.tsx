@@ -1,5 +1,5 @@
 import tw from 'twin.macro';
-import React, { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useStoreState } from '@/state/hooks';
 import { Alert } from '@/components/elements/alert';
 import { CSSTransition } from 'react-transition-group';
@@ -7,6 +7,7 @@ import FlashMessageRender from '@/components/FlashMessageRender';
 import ContentContainer from '@/components/elements/ContentContainer';
 
 export interface PageContentBlockProps {
+    children?: ReactNode;
     title?: string;
     description?: string | null;
     className?: string;

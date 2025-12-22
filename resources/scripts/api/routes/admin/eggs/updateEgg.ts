@@ -3,7 +3,7 @@ import { Egg, rawDataToEgg } from '@/api/routes/admin/eggs/getEgg';
 
 type Egg2 = Omit<Omit<Partial<Egg>, 'configFiles'>, 'configStartup'> & { configFiles?: string; configStartup?: string };
 
-export default (id: number, egg: Partial<Egg2>): Promise<Egg> => {
+export default (id: number, egg: Egg2): Promise<Egg> => {
     return new Promise((resolve, reject) => {
         http.patch(`/api/application/eggs/${id}`, {
             nest_id: egg.nestId,

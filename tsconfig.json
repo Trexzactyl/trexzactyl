@@ -60,5 +60,5 @@
         "useDefineForClassFields": true
     },
     "include": ["./resources/scripts/**/*", "vite.config.ts"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules", "**/*.spec.ts", "**/*.spec.tsx", "resources/scripts/setup-tests.ts"]
 }

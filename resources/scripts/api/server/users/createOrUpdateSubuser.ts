@@ -1,5 +1,5 @@
 import http from '@/api/http';
-import { Subuser } from '@/state/server/subusers';
+import { Subuser } from '@definitions/server';
 import { rawDataToServerSubuser } from '@/api/server/users/getServerSubusers';
 
 interface Params {

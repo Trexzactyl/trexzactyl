@@ -1,9 +1,9 @@
 import React from 'react';
 import tw from 'twin.macro';
-import { Route } from 'react-router';
 import styled from 'styled-components/macro';
 import Fade from '@/components/elements/Fade';
 import { SwitchTransition } from 'react-transition-group';
+import { Location } from 'react-router-dom';
 
 const StyledSwitchTransition = styled(SwitchTransition)`
     ${tw`relative`};
@@ -13,17 +13,18 @@ const StyledSwitchTransition = styled(SwitchTransition)`
     }
 `;
 
-const TransitionRouter: React.FC = ({ children }) => {
+interface Props {
+    children: React.ReactNode;
+    location: Location;
+}
+
+const TransitionRouter: React.FC<Props> = ({ children, location }) => {
     return (
-        <Route
-            render={({ location }) => (
-                <StyledSwitchTransition>
-                    <Fade timeout={150} key={location.pathname + location.search} in appear unmountOnExit>
-                        <section>{children}</section>
-                    </Fade>
-                </StyledSwitchTransition>
-            )}
-        />
+        <StyledSwitchTransition>
+            <Fade timeout={150} key={location.pathname + location.search} in appear unmountOnExit>
+                <section>{children}</section>
+            </Fade>
+        </StyledSwitchTransition>
     );
 };
 
