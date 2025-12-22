@@ -30,8 +30,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property int $upload_size
  * @property string $daemon_token_id
  * @property string $daemon_token
- * @property int $daemon_listen
- * @property int $daemon_sftp
+ * @property int $listen_port_http
+ * @property int $listen_port_sftp
  * @property string $daemon_base
  * @property string $daemon_brand
  * @property \Carbon\Carbon $created_at
@@ -70,8 +70,8 @@ class Node extends Model
     protected $casts = [
         'memory' => 'integer',
         'disk' => 'integer',
-        'daemon_listen' => 'integer',
-        'daemon_sftp' => 'integer',
+        'listen_port_http' => 'integer',
+        'listen_port_sftp' => 'integer',
         'behind_proxy' => 'boolean',
         'deployable' => 'boolean',
         'public' => 'boolean',
@@ -86,7 +86,7 @@ class Node extends Model
         'fqdn', 'scheme', 'behind_proxy',
         'memory', 'memory_overallocate', 'disk',
         'disk_overallocate', 'upload_size', 'daemon_base',
-        'daemon_sftp', 'daemon_listen', 'daemon_brand', 'deploy_fee',
+        'listen_port_sftp', 'listen_port_http', 'daemon_brand', 'deploy_fee',
         'description', 'maintenance_mode',
     ];
 
@@ -104,8 +104,8 @@ class Node extends Model
         'disk_overallocate' => 'required|numeric|min:-1',
         'deploy_fee' => 'nullable|int|min:0',
         'daemon_base' => 'sometimes|required|regex:/^([\/][\d\w.\-\/]+)$/',
-        'daemon_sftp' => 'required|numeric|between:1,65535',
-        'daemon_listen' => 'required|numeric|between:1,65535',
+        'listen_port_sftp' => 'required|numeric|between:1,65535',
+        'listen_port_http' => 'required|numeric|between:1,65535',
         'daemon_brand' => 'sometimes|string|max:191',
         'maintenance_mode' => 'boolean',
         'upload_size' => 'int|between:1,1024',
@@ -121,8 +121,8 @@ class Node extends Model
         'memory_overallocate' => 0,
         'disk_overallocate' => 0,
         'daemon_base' => '/var/lib/pterodactyl/volumes',
-        'daemon_sftp' => 2022,
-        'daemon_listen' => 8080,
+        'listen_port_sftp' => 2022,
+        'listen_port_http' => 8080,
         'daemon_brand' => 'Pterodactyl',
         'maintenance_mode' => false,
     ];
@@ -132,7 +132,7 @@ class Node extends Model
      */
     public function getConnectionAddress(): string
     {
-        return sprintf('%s://%s:%s', $this->scheme, $this->fqdn, $this->daemon_listen);
+        return sprintf('%s://%s:%s', $this->scheme, $this->fqdn, $this->listen_port_http);
     }
 
     /**
@@ -148,7 +148,7 @@ class Node extends Model
             'token' => Container::getInstance()->make(Encrypter::class)->decrypt($this->daemon_token),
             'api' => [
                 'host' => '0.0.0.0',
-                'port' => $this->daemon_listen,
+                'port' => $this->listen_port_http,
                 'ssl' => [
                     'enabled' => (!$this->behind_proxy && $this->scheme === 'https'),
                     'cert' => '/etc/letsencrypt/live/' . Str::lower($this->fqdn) . '/fullchain.pem',
@@ -159,7 +159,7 @@ class Node extends Model
             'system' => [
                 'data' => $this->daemon_base,
                 'sftp' => [
-                    'bind_port' => $this->daemon_sftp,
+                    'bind_port' => $this->listen_port_sftp,
                 ],
             ],
             'allowed_mounts' => $this->mounts->pluck('source')->toArray(),
