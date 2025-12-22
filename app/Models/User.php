@@ -153,9 +153,8 @@ class User extends Model implements
         'root_admin' => 'boolean',
         'use_totp' => 'boolean',
         'gravatar' => 'boolean',
+        'totp_authenticated_at' => 'datetime',
     ];
-
-    protected $dates = ['totp_authenticated_at'];
 
     /**
      * The attributes excluded from the model's JSON form.
