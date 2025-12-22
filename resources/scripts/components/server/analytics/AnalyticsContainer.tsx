@@ -49,10 +49,10 @@ export default () => {
     const [messages, setMessages] = useState<Message[]>();
     const [stats, setStats] = useState<Stats>({ memory: 0, cpu: 0, disk: 0, uptime: 0 });
 
-    const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
-    const instance = ServerContext.useStoreState((state) => state.socket.instance);
-    const connected = ServerContext.useStoreState((state) => state.socket.connected);
-    const limits = ServerContext.useStoreState((state) => state.server.data!.limits);
+    const uuid = ServerContext.useStoreState(state => state.server.data!.uuid);
+    const instance = ServerContext.useStoreState(state => state.socket.instance);
+    const connected = ServerContext.useStoreState(state => state.socket.connected);
+    const limits = ServerContext.useStoreState(state => state.server.data!.limits);
 
     const cpuUsed = ((stats.cpu / limits.cpu) * 100).toFixed(2);
     const diskUsed = ((stats.disk / 1024 / 1024 / limits.disk) * 100).toFixed(2);
@@ -76,7 +76,7 @@ export default () => {
     };
 
     useEffect(() => {
-        getMessages(uuid).then((data) => {
+        getMessages(uuid).then(data => {
             setMessages(data);
         });
 
@@ -117,7 +117,7 @@ export default () => {
                             <p className={'text-gray-400 text-center'}>No metrics are currently available.</p>
                         ) : (
                             <>
-                                {messages.slice(0, 6).map((message) => (
+                                {messages.slice(0, 6).map(message => (
                                     <Alert type={message.type} key={message.id} className={'mb-2'}>
                                         <div>
                                             {message.title}{' '}

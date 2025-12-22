@@ -29,8 +29,8 @@ export default () => {
     const doRefresh = () => {
         clearFlashes('tickets');
 
-        getTicket(id).then((data) => setTicket(data));
-        getMessages(id).then((data) => setMessages(data));
+        getTicket(id).then(data => setTicket(data));
+        getMessages(id).then(data => setMessages(data));
     };
 
     const doDeletion = () => {
@@ -86,7 +86,7 @@ export default () => {
                 <p className={'text-gray-400 text-center'}>No one has replied to this ticket yet.</p>
             ) : (
                 <>
-                    {messages.map((message) => (
+                    {messages.map(message => (
                         <div key={message.id}>
                             {message.content === ticket.content ? undefined : (
                                 <>

@@ -8,7 +8,7 @@ import styled, { css } from 'styled-components/macro';
 const Container = styled.div<{ visible?: boolean }>`
     ${tw`relative`};
 
-    ${(props) =>
+    ${props =>
         props.visible &&
         css`
             & ${Select} {

@@ -7,7 +7,7 @@ export default (): Promise<ReferralCode> => {
             .then(({ data }) =>
                 resolve({
                     ...rawDataToReferralCode(data.attributes),
-                })
+                }),
             )
             .catch(reject);
     });

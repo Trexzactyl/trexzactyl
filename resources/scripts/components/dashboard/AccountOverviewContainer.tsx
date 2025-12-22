@@ -29,8 +29,8 @@ const Container = styled.div`
 
 export default () => {
     const { state } = useLocation() as { state?: { twoFactorRedirect?: boolean } };
-    const discord = useStoreState((state) => state.settings.data!.registration.discord);
-    const referrals = useStoreState((state) => state.storefront.data!.referrals.enabled);
+    const discord = useStoreState(state => state.settings.data!.registration.discord);
+    const referrals = useStoreState(state => state.storefront.data!.referrals.enabled);
 
     return (
         <PageContentBlock title={'Account Overview'} description={'View and update account details.'}>

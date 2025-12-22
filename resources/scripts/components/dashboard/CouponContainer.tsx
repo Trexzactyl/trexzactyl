@@ -25,7 +25,7 @@ export default () => {
             .then(() => {
                 addFlash({ type: 'success', key: 'coupons', message: 'Successfully redeemed the coupon.' });
             })
-            .catch((err) => {
+            .catch(err => {
                 addFlash({ type: 'danger', key: 'coupons', message: httpErrorToHuman(err) });
             })
             .then(() => {

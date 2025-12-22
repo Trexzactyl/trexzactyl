@@ -33,11 +33,11 @@ function statusToColor(status: ServerStatus): string {
 
 function ServerConsoleContainer() {
     const user = useStoreState(state => state.user.data);
-    
+
     if (!user) {
         return null;
     }
-    
+
     const uuid = ServerContext.useStoreState(state => state.server.data!.uuid);
     const name = ServerContext.useStoreState(state => state.server.data!.name);
     const description = ServerContext.useStoreState(state => state.server.data!.description);

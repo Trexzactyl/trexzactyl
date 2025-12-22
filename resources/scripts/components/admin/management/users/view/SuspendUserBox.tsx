@@ -17,7 +17,7 @@ export default () => {
 
     const submit = () => {
         if (!user) return;
-        
+
         suspendUser(user.id)
             .then(() => {
                 addFlash({

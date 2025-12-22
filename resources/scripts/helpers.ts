@@ -55,7 +55,7 @@ export function fileBitsToString(mode: string, directory: boolean): string {
 export function encodePathSegments(path: string): string {
     return path
         .split('/')
-        .map((s) => encodeURIComponent(s))
+        .map(s => encodeURIComponent(s))
         .join('/');
 }
 

@@ -21,11 +21,11 @@ function DashboardRouter() {
     const theme = useStoreState(state => state.theme.data!);
     const [links, setLinks] = useState<CustomLink[] | null>();
     const flags = useStoreState(state => state.everest.data!);
-    
+
     if (!user || !user.email) {
         return null;
     }
-    
+
     const [collapsed, setCollapsed] = usePersistedState<boolean>(`sidebar_user_${user.uuid}`, false);
 
     useEffect(() => {

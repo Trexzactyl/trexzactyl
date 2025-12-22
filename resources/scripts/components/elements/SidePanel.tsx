@@ -9,11 +9,11 @@ import Tooltip from '@/components/elements/tooltip/Tooltip';
 import SearchContainer from '@/components/dashboard/search/SearchContainer';
 
 export default () => {
-    const logo = useStoreState((state) => state.settings.data?.logo);
-    const tickets = useStoreState((state) => state.settings.data!.tickets);
-    const store = useStoreState((state) => state.storefront.data!.enabled);
-    const rootAdmin = useStoreState((state) => state.user.data?.rootAdmin);
-    
+    const logo = useStoreState(state => state.settings.data?.logo);
+    const tickets = useStoreState(state => state.settings.data!.tickets);
+    const store = useStoreState(state => state.storefront.data!.enabled);
+    const rootAdmin = useStoreState(state => state.user.data?.rootAdmin);
+
     if (rootAdmin === undefined) {
         return null;
     }

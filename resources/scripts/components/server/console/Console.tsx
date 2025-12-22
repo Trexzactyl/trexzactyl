@@ -68,9 +68,9 @@ export default ({ expand: _expand, setExpand: _setExpand }: ConsoleProps = {}) =
     const [historyIndex, setHistoryIndex] = useState(-1);
     const isConsoleDetached = location.pathname.endsWith('/console');
     const [canSendCommands] = usePermissions(['control.console']);
-    const serverId = ServerContext.useStoreState((state) => state.server.data!.id);
-    const { connected, instance } = ServerContext.useStoreState((state) => state.socket);
-    const isTransferring = ServerContext.useStoreState((state) => state.server.data!.isTransferring);
+    const serverId = ServerContext.useStoreState(state => state.server.data!.id);
+    const { connected, instance } = ServerContext.useStoreState(state => state.socket);
+    const isTransferring = ServerContext.useStoreState(state => state.server.data!.isTransferring);
     const [history, setHistory] = usePersistedState<string[]>(`${serverId}:command_history`, []);
 
     const zIndex = `
@@ -96,7 +96,7 @@ export default ({ expand: _expand, setExpand: _setExpand }: ConsoleProps = {}) =
 
     const handleDaemonErrorOutput = (line: string) =>
         terminal.writeln(
-            TERMINAL_PRELUDE + '\u001b[1m\u001b[41m' + line.replace(/(?:\r\n|\r|\n)$/im, '') + '\u001b[0m'
+            TERMINAL_PRELUDE + '\u001b[1m\u001b[41m' + line.replace(/(?:\r\n|\r|\n)$/im, '') + '\u001b[0m',
         );
 
     const handlePowerChangeEvent = (state: string) =>
@@ -123,7 +123,7 @@ export default ({ expand: _expand, setExpand: _setExpand }: ConsoleProps = {}) =
 
         const command = e.currentTarget.value;
         if (e.key === 'Enter' && command.length > 0) {
-            setHistory((prevHistory) => [command, ...prevHistory!].slice(0, 32));
+            setHistory(prevHistory => [command, ...prevHistory!].slice(0, 32));
             setHistoryIndex(-1);
 
             instance && instance.send('send command', command);
@@ -165,7 +165,7 @@ export default ({ expand: _expand, setExpand: _setExpand }: ConsoleProps = {}) =
             if (terminal.element) {
                 fitAddon.fit();
             }
-        }, 100)
+        }, 100),
     );
 
     useEffect(() => {
@@ -175,7 +175,7 @@ export default ({ expand: _expand, setExpand: _setExpand }: ConsoleProps = {}) =
             [SocketEvent.INSTALL_OUTPUT]: handleConsoleOutput,
             [SocketEvent.TRANSFER_LOGS]: handleConsoleOutput,
             [SocketEvent.TRANSFER_STATUS]: handleTransferStatus,
-            [SocketEvent.DAEMON_MESSAGE]: (line) => handleConsoleOutput(line, true),
+            [SocketEvent.DAEMON_MESSAGE]: line => handleConsoleOutput(line, true),
             [SocketEvent.DAEMON_ERROR]: handleDaemonErrorOutput,
         };
 

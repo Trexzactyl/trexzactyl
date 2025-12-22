@@ -21,7 +21,7 @@ const PageContentBlock: React.FC<PageContentBlockProps> = ({
     className,
     children,
 }) => {
-    const alert = useStoreState((state) => state.settings.data!.alert);
+    const alert = useStoreState(state => state.settings.data!.alert);
 
     useEffect(() => {
         if (title) {

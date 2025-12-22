@@ -5,9 +5,9 @@ import { linkDiscord, unlinkDiscord } from '@/api/account/discord';
 import useFlash from '@/plugins/useFlash';
 
 export default () => {
-    const discordId = useStoreState((state) => state.user.data?.discordId);
+    const discordId = useStoreState(state => state.user.data?.discordId);
     const { clearFlashes, addFlash } = useFlash();
-    
+
     if (discordId === undefined) {
         return null;
     }
@@ -30,7 +30,7 @@ export default () => {
 
     const link = () => {
         clearFlashes('account:discord');
-        linkDiscord().then((data) => {
+        linkDiscord().then(data => {
             window.location.href = data;
         });
     };

@@ -14,7 +14,7 @@ export default () => {
     const { clearAndAddHttpError } = useFlash();
     const [visible, setVisible] = useState<boolean>(false);
     const user = Context.useStoreState(state => state.user?.id);
-    
+
     if (!user) {
         return null;
     }

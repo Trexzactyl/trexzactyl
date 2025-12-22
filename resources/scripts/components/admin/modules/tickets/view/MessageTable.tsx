@@ -58,69 +58,58 @@ const MessagesTable = ({ ticketId }: { ticketId: number }) => {
                                 <TableBody>
                                     {messages !== undefined &&
                                         messages.items.length > 0 &&
-                                        [...messages.items]
-                                            .reverse()
-                                            .map(message => (
-                                                <TableRow key={message.id}>
+                                        [...messages.items].reverse().map(message => (
+                                            <TableRow key={message.id}>
+                                                <td css={tw`px-6 text-sm text-neutral-200 text-left whitespace-nowrap`}>
+                                                    <CopyOnClick text={message.id}>
+                                                        <code css={tw`font-mono bg-neutral-900 rounded py-1 px-2`}>
+                                                            {message.id}
+                                                        </code>
+                                                    </CopyOnClick>
+                                                </td>
+                                                {message.author ? (
                                                     <td
                                                         css={tw`px-6 text-sm text-neutral-200 text-left whitespace-nowrap`}
                                                     >
-                                                        <CopyOnClick text={message.id}>
-                                                            <code css={tw`font-mono bg-neutral-900 rounded py-1 px-2`}>
-                                                                {message.id}
-                                                            </code>
-                                                        </CopyOnClick>
-                                                    </td>
-                                                    {message.author ? (
-                                                        <td
-                                                            css={tw`px-6 text-sm text-neutral-200 text-left whitespace-nowrap`}
+                                                        <Link
+                                                            to={`/admin/users/${message.author.id}`}
+                                                            style={{ color: colors.primary }}
+                                                            className={'hover:brightness-125 duration-300'}
                                                         >
-                                                            <Link
-                                                                to={`/admin/users/${message.author.id}`}
-                                                                style={{ color: colors.primary }}
-                                                                className={'hover:brightness-125 duration-300'}
-                                                            >
-                                                                {message.author.email}
-                                                            </Link>
-                                                        </td>
-                                                    ) : (
-                                                        <td
-                                                            css={tw`px-6 text-sm text-neutral-200 text-left whitespace-nowrap`}
+                                                            {message.author.email}
+                                                        </Link>
+                                                    </td>
+                                                ) : (
+                                                    <td
+                                                        css={tw`px-6 text-sm text-neutral-200 text-left whitespace-nowrap`}
+                                                    >
+                                                        <Link
+                                                            to={`/admin/users`}
+                                                            style={{ color: colors.primary }}
+                                                            className={'hover:brightness-125 duration-300'}
                                                         >
-                                                            <Link
-                                                                to={`/admin/users`}
-                                                                style={{ color: colors.primary }}
-                                                                className={'hover:brightness-125 duration-300'}
-                                                            >
-                                                                Ticket Owner
-                                                            </Link>
-                                                        </td>
-                                                    )}
-                                                    <td
-                                                        css={tw`px-6 text-sm text-neutral-200 text-left whitespace-nowrap`}
-                                                    >
-                                                        {message.message.slice(0, 64)}
-                                                        {message.message.length > 64 && '...'}
+                                                            Ticket Owner
+                                                        </Link>
                                                     </td>
-                                                    <td
-                                                        css={tw`px-6 text-sm text-neutral-200 text-left whitespace-nowrap`}
-                                                    >
-                                                        {Math.abs(differenceInHours(message.created_at, new Date())) >
-                                                        48
-                                                            ? format(message.created_at!, 'MMM do, yyyy h:mma')
-                                                            : formatDistanceToNow(message.created_at!, {
-                                                                  addSuffix: true,
-                                                              })}
-                                                    </td>
-                                                    <td
-                                                        css={tw`px-6 text-sm text-neutral-200 text-left whitespace-nowrap`}
-                                                    >
-                                                        <Button onClick={() => setVisible(message.message)}>
-                                                            Read Message
-                                                        </Button>
-                                                    </td>
-                                                </TableRow>
-                                            ))}
+                                                )}
+                                                <td css={tw`px-6 text-sm text-neutral-200 text-left whitespace-nowrap`}>
+                                                    {message.message.slice(0, 64)}
+                                                    {message.message.length > 64 && '...'}
+                                                </td>
+                                                <td css={tw`px-6 text-sm text-neutral-200 text-left whitespace-nowrap`}>
+                                                    {Math.abs(differenceInHours(message.created_at, new Date())) > 48
+                                                        ? format(message.created_at!, 'MMM do, yyyy h:mma')
+                                                        : formatDistanceToNow(message.created_at!, {
+                                                              addSuffix: true,
+                                                          })}
+                                                </td>
+                                                <td css={tw`px-6 text-sm text-neutral-200 text-left whitespace-nowrap`}>
+                                                    <Button onClick={() => setVisible(message.message)}>
+                                                        Read Message
+                                                    </Button>
+                                                </td>
+                                            </TableRow>
+                                        ))}
                                 </TableBody>
                             </table>
 

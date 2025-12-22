@@ -18,19 +18,18 @@ export default () => {
 
     const [page, setPage] = useState(!isNaN(defaultPage) && defaultPage > 0 ? defaultPage : 1);
     const { clearFlashes, clearAndAddHttpError } = useFlash();
-    const uuid = useStoreState((state) => state.user.data?.uuid);
-    const username = useStoreState((state) => state.user.data?.username);
-    const rootAdmin = useStoreState((state) => state.user.data?.rootAdmin);
-    
+    const uuid = useStoreState(state => state.user.data?.uuid);
+    const username = useStoreState(state => state.user.data?.username);
+    const rootAdmin = useStoreState(state => state.user.data?.rootAdmin);
+
     if (!uuid || !username || rootAdmin === undefined) {
         return null;
     }
-    
+
     const [showOnlyAdmin, setShowOnlyAdmin] = usePersistedState(`${uuid}:show_all_servers`, false);
 
-    const { data: servers, error } = useSWR(
-        ['/api/client/servers', showOnlyAdmin && rootAdmin, page],
-        () => getServers({ page, type: showOnlyAdmin && rootAdmin ? 'admin' : undefined })
+    const { data: servers, error } = useSWR(['/api/client/servers', showOnlyAdmin && rootAdmin, page], () =>
+        getServers({ page, type: showOnlyAdmin && rootAdmin ? 'admin' : undefined }),
     );
 
     useEffect(() => {
@@ -82,7 +81,7 @@ export default () => {
                                 <Switch
                                     name={'show_all_servers'}
                                     defaultChecked={showOnlyAdmin}
-                                    onChange={() => setShowOnlyAdmin((s) => !s)}
+                                    onChange={() => setShowOnlyAdmin(s => !s)}
                                 />
                             </div>
                         </>
@@ -108,7 +107,7 @@ export default () => {
                     {({ items }) =>
                         items.length > 0 ? (
                             <div css={tw`grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6`}>
-                                {items.map((server) => (
+                                {items.map(server => (
                                     <ServerRow
                                         key={server.uuid}
                                         server={server}
@@ -124,15 +123,15 @@ export default () => {
                                 >
                                     <svg
                                         css={tw`w-16 h-16 text-neutral-600`}
-                                        fill='none'
-                                        stroke='currentColor'
-                                        viewBox='0 0 24 24'
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
                                     >
                                         <path
-                                            strokeLinecap='round'
-                                            strokeLinejoin='round'
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
                                             strokeWidth={1.5}
-                                            d='M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01'
+                                            d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"
                                         />
                                     </svg>
                                 </div>

@@ -10,18 +10,18 @@ export default () => {
     const [log, setLog] = useState<string[]>([]);
 
     const { addFlash, clearFlashes } = useFlash();
-    const status = ServerContext.useStoreState((state) => state.status.value);
-    const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
-    const { connected, instance } = ServerContext.useStoreState((state) => state.socket);
+    const status = ServerContext.useStoreState(state => state.status.value);
+    const uuid = ServerContext.useStoreState(state => state.server.data!.uuid);
+    const { connected, instance } = ServerContext.useStoreState(state => state.socket);
 
     const addLog = (data: string) => {
-        setLog((prevLog) => [...prevLog, data.startsWith('>') ? data.substring(1) : data]);
+        setLog(prevLog => [...prevLog, data.startsWith('>') ? data.substring(1) : data]);
     };
 
     const submit = () => {
         clearFlashes('console:share');
 
-        const data = stripAnsi(log.map((it) => it.replace('\r', '')).join('\n')) || '';
+        const data = stripAnsi(log.map(it => it.replace('\r', '')).join('\n')) || '';
 
         saveFileContents(uuid, '/share/console-' + new Date().toLocaleTimeString() + '.txt', data)
             .then(() => {
@@ -31,7 +31,7 @@ export default () => {
                     message: 'Your server logs have been saved to the /share folder.',
                 });
             })
-            .catch((error) => {
+            .catch(error => {
                 addFlash({ key: 'console:share', type: 'danger', message: httpErrorToHuman(error) });
             });
     };

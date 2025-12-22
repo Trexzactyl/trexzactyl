@@ -38,7 +38,7 @@ export default () => {
     const { addFlash, clearFlashes, clearAndAddHttpError } = useFlash();
 
     useEffect(() => {
-        getCosts().then((costs) => setCosts(costs));
+        getCosts().then(costs => setCosts(costs));
     }, []);
 
     const purchase = (resource: string) => {
@@ -53,7 +53,7 @@ export default () => {
                     message: 'Resource has been added to your account.',
                 });
             })
-            .catch((error) => clearAndAddHttpError({ key: 'store:resources', error }));
+            .catch(error => clearAndAddHttpError({ key: 'store:resources', error }));
     };
 
     if (!costs) return <Spinner size={'large'} centered />;

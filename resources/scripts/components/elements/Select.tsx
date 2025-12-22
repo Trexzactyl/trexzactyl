@@ -25,7 +25,7 @@ const Select = styled.select<Props>`
         display: none;
     }
 
-    ${(props) =>
+    ${props =>
         !props.hideDropdownArrow &&
         css`
             ${tw`bg-neutral-800 border-neutral-700 text-neutral-200`};

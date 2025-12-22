@@ -17,7 +17,7 @@ interface Props {
 export default ({ subuser }: Props) => {
     const uuid = useStoreState(state => state.user?.data?.uuid);
     const [visible, setVisible] = useState(false);
-    
+
     if (!uuid) {
         return null;
     }

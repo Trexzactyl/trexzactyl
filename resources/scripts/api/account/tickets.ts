@@ -59,7 +59,7 @@ export const getTicket = (id: number): Promise<Ticket> => {
 export const deleteTicket = (id: number): Promise<void> => {
     return new Promise((resolve, reject) => {
         http.delete(`/api/client/account/tickets/${id}`)
-            .then((data) => resolve(data.data))
+            .then(data => resolve(data.data))
             .catch(reject);
     });
 };
@@ -67,7 +67,7 @@ export const deleteTicket = (id: number): Promise<void> => {
 export const createTicket = (title: string, description: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         http.post('/api/client/account/tickets', { title, description })
-            .then((data) => resolve(data.data))
+            .then(data => resolve(data.data))
             .catch(reject);
     });
 };
@@ -77,7 +77,7 @@ export const createTicket = (title: string, description: string): Promise<string
 export const createMessage = (id: number, description: string): Promise<void> => {
     return new Promise((resolve, reject) => {
         http.post(`/api/client/account/tickets/${id}/messages`, { description })
-            .then((data) => resolve(data.data))
+            .then(data => resolve(data.data))
             .catch(reject);
     });
 };

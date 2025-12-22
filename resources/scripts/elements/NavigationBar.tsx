@@ -36,7 +36,7 @@ const NavigationBar = () => {
     const theme = useStoreState(state => state.theme.data!);
     const user = useStoreState(state => state.user.data);
     const activityEnabled = useStoreState(state => state.settings.data!.activity.enabled.account);
-    
+
     if (!user) {
         return null;
     }

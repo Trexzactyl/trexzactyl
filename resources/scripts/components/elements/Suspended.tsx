@@ -23,10 +23,10 @@ export default () => {
     const [confirmDialog, setConfirmDialog] = useState(false);
 
     const { clearFlashes, clearAndAddHttpError } = useFlash();
-    const store = useStoreState((state) => state.storefront.data!);
-    const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
-    const serverName = ServerContext.useStoreState((state) => state.server.data!.name);
-    const renewable = ServerContext.useStoreState((state) => state.server.data?.renewable);
+    const store = useStoreState(state => state.storefront.data!);
+    const uuid = ServerContext.useStoreState(state => state.server.data!.uuid);
+    const serverName = ServerContext.useStoreState(state => state.server.data!.name);
+    const renewable = ServerContext.useStoreState(state => state.server.data?.renewable);
 
     const doRenewal = () => {
         clearFlashes('server:renewal');
@@ -38,7 +38,7 @@ export default () => {
                 // @ts-expect-error this is valid
                 window.location = '/';
             })
-            .catch((error) => {
+            .catch(error => {
                 clearAndAddHttpError({ key: 'server:renewal', error });
                 setSubmit(false);
             });
@@ -57,7 +57,7 @@ export default () => {
                 // @ts-expect-error this is valid
                 window.location = '/store';
             })
-            .catch((error) => {
+            .catch(error => {
                 clearAndAddHttpError({ key: 'server:renewal', error });
                 setSubmit(false);
             });
@@ -92,7 +92,7 @@ export default () => {
                             <p className={'my-2 text-gray-400'}>
                                 Type <Code>{serverName}</Code> below.
                             </p>
-                            <Input type={'text'} value={name} onChange={(n) => setName(n.target.value)} />
+                            <Input type={'text'} value={name} onChange={n => setName(n.target.value)} />
                         </>
                     )}
                     <Button

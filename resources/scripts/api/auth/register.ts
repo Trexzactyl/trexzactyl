@@ -22,9 +22,9 @@ export default ({ username, email, password, recaptchaData }: RegisterData): Pro
                     email: email,
                     password: password,
                     'g-recaptcha-response': recaptchaData,
-                })
+                }),
             )
-            .then((response) => {
+            .then(response => {
                 if (!(response.data instanceof Object)) {
                     return reject(new Error('Unable to register account. Please contact an administrator.'));
                 }

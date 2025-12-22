@@ -23,5 +23,5 @@ export default (uuid: string, initialData?: Response | null, config?: SWRConfigu
                 dockerImages: data.meta.docker_images || {},
             };
         },
-        { initialData: initialData || undefined, errorRetryCount: 3, ...(config || {}) }
+        { initialData: initialData || undefined, errorRetryCount: 3, ...(config || {}) },
     );

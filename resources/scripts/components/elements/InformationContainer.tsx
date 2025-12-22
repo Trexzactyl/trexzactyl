@@ -22,20 +22,20 @@ export default () => {
     const [bal, setBal] = useState(0);
     const [activity, setActivity] = useState<Activity>();
     const properties = wrapProperties(activity?.properties);
-    const user = useStoreState((state) => state.user.data);
-    const store = useStoreState((state) => state.storefront.data!);
-    
+    const user = useStoreState(state => state.user.data);
+    const store = useStoreState(state => state.storefront.data!);
+
     if (!user) {
         return null;
     }
 
     useEffect(() => {
-        getResources().then((d) => setBal(d.balance));
-        getLatestActivity().then((d) => setActivity(d));
+        getResources().then(d => setBal(d.balance));
+        getLatestActivity().then(d => setActivity(d));
     }, []);
 
     const verify = () => {
-        apiVerify().then((data) => {
+        apiVerify().then(data => {
             if (data.success)
                 addFlash({ type: 'info', key: 'dashboard', message: 'Verification email has been resent.' });
         });

@@ -32,7 +32,7 @@ export default ({ className, titles }: RowProps) => {
     const [resources, setResources] = useState<Resources>();
 
     useEffect(() => {
-        getResources().then((resources) => setResources(resources));
+        getResources().then(resources => setResources(resources));
     }, []);
 
     if (!resources) return <Spinner size={'large'} centered />;

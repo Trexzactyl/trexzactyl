@@ -9,7 +9,7 @@ import ErrorBoundary from '@/components/elements/ErrorBoundary';
 import ServerContentBlock from '@/components/elements/ServerContentBlock';
 
 const ExternalConsole = () => {
-    const eggFeatures = ServerContext.useStoreState((state) => state.server.data!.eggFeatures, isEqual);
+    const eggFeatures = ServerContext.useStoreState(state => state.server.data!.eggFeatures, isEqual);
 
     return (
         <ServerContentBlock title={'Console'}>

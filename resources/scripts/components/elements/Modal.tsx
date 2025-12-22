@@ -33,7 +33,7 @@ const ModalContainer = styled.div<{ alignTop?: boolean }>`
     ${breakpoint('lg')`max-width: 50%`};
 
     ${tw`relative flex flex-col w-full m-auto`};
-    ${(props) =>
+    ${props =>
         props.alignTop &&
         css`
             margin-top: 20%;
@@ -91,9 +91,9 @@ const Modal: React.FC<ModalProps> = ({
     return (
         <Fade in={render} timeout={150} appear={appear || true} unmountOnExit onExited={() => onDismissed()}>
             <ModalMask
-                onClick={(e) => e.stopPropagation()}
-                onContextMenu={(e) => e.stopPropagation()}
-                onMouseDown={(e) => {
+                onClick={e => e.stopPropagation()}
+                onContextMenu={e => e.stopPropagation()}
+                onMouseDown={e => {
                     if (isDismissable && closeOnBackground) {
                         e.stopPropagation();
                         if (e.target === e.currentTarget) {

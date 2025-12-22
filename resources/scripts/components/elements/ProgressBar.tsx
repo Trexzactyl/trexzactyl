@@ -16,9 +16,9 @@ export default () => {
     const interval = useRef<Timer>(null) as React.MutableRefObject<Timer>;
     const timeout = useRef<Timer>(null) as React.MutableRefObject<Timer>;
     const [visible, setVisible] = useState(false);
-    const progress = useStoreState((state) => state.progress.progress);
-    const continuous = useStoreState((state) => state.progress.continuous);
-    const setProgress = useStoreActions((actions) => actions.progress.setProgress);
+    const progress = useStoreState(state => state.progress.progress);
+    const continuous = useStoreState(state => state.progress.continuous);
+    const setProgress = useStoreActions(actions => actions.progress.setProgress);
 
     useEffect(() => {
         return () => {

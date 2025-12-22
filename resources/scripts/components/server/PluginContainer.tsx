@@ -21,9 +21,11 @@ export default () => {
     const [open, setOpen] = useState(false);
     const { clearFlashes, addFlash, clearAndAddHttpError } = useFlash();
     const [pluginId, setPluginId] = useState<number>(0);
-    const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
+    const uuid = ServerContext.useStoreState(state => state.server.data!.uuid);
 
-    const { data, error } = useSWR<Plugin>([uuid, query, '/plugins'], (uuid: string, query: string) => getPlugins(uuid, query));
+    const { data, error } = useSWR<Plugin>([uuid, query, '/plugins'], (uuid: string, query: string) =>
+        getPlugins(uuid, query),
+    );
 
     console.log(data);
 
@@ -49,9 +51,9 @@ export default () => {
                     key: 'server:plugins',
                     type: 'success',
                     message: 'Plugin installed successfully.',
-                })
+                }),
             )
-            .catch((error) => clearAndAddHttpError(error));
+            .catch(error => clearAndAddHttpError(error));
     };
 
     return (

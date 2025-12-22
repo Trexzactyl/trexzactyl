@@ -13,7 +13,7 @@ export default () => {
     const [visible, setVisible] = useState<'enable' | 'disable' | null>(null);
     const isEnabled = useStoreState((state: ApplicationStore) => state.user.data?.useTotp);
     const { clearAndAddHttpError } = useFlashKey('account:two-step');
-    
+
     if (isEnabled === undefined) {
         return null;
     }

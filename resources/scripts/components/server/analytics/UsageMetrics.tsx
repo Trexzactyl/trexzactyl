@@ -33,12 +33,12 @@ const getStatusFromUsage = (usage: number): string => {
 };
 
 export default () => {
-    const status = ServerContext.useStoreState((state) => state.status.value);
+    const status = ServerContext.useStoreState(state => state.status.value);
     const [stats, setStats] = useState<Stats>({ memory: 0, cpu: 0, disk: 0, uptime: 0 });
 
-    const instance = ServerContext.useStoreState((state) => state.socket.instance);
-    const connected = ServerContext.useStoreState((state) => state.socket.connected);
-    const limits = ServerContext.useStoreState((state) => state.server.data!.limits);
+    const instance = ServerContext.useStoreState(state => state.socket.instance);
+    const connected = ServerContext.useStoreState(state => state.socket.connected);
+    const limits = ServerContext.useStoreState(state => state.server.data!.limits);
 
     const cpuUsed = ((stats.cpu / limits.cpu) * 100).toFixed(2);
     const diskUsed = ((stats.disk / 1024 / 1024 / limits.disk) * 100).toFixed(2);

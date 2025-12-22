@@ -28,7 +28,7 @@ const SpinnerComponent = styled.div<Props>`
     border-radius: 50%;
     animation: ${spin} 1s cubic-bezier(0.55, 0.25, 0.25, 0.7) infinite;
 
-    ${(props) =>
+    ${props =>
         props.size === 'small'
             ? tw`w-4 h-4 border-2`
             : props.size === 'large'
@@ -38,8 +38,8 @@ const SpinnerComponent = styled.div<Props>`
               `
             : null};
 
-    border-color: ${(props) => (!props.isBlue ? 'rgba(255, 255, 255, 0.2)' : 'hsla(212, 92%, 43%, 0.2)')};
-    border-top-color: ${(props) => (!props.isBlue ? 'rgb(255, 255, 255)' : 'hsl(212, 92%, 43%)')};
+    border-color: ${props => (!props.isBlue ? 'rgba(255, 255, 255, 0.2)' : 'hsla(212, 92%, 43%, 0.2)')};
+    border-top-color: ${props => (!props.isBlue ? 'rgb(255, 255, 255)' : 'hsl(212, 92%, 43%)')};
 `;
 
 const Spinner: Spinner = ({ centered, ...props }) =>

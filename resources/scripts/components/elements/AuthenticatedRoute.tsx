@@ -8,7 +8,7 @@ interface Props {
 
 export default ({ children }: Props) => {
     const location = useLocation();
-    const isAuthenticated = useStoreState((state) => !!state.user.data?.uuid);
+    const isAuthenticated = useStoreState(state => !!state.user.data?.uuid);
 
     if (!isAuthenticated) {
         return <Navigate to="/auth/login" state={{ from: location }} replace />;

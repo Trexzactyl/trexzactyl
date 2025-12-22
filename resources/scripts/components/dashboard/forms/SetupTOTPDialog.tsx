@@ -32,11 +32,11 @@ const ConfigureTwoFactorForm = ({ onTokens }: Props) => {
     useEffect(() => {
         getTwoFactorTokenData()
             .then(setToken)
-            .catch((error) => clearAndAddHttpError(error));
+            .catch(error => clearAndAddHttpError(error));
     }, []);
 
     useEffect(() => {
-        setProps((state) => ({ ...state, preventExternalClose: submitting }));
+        setProps(state => ({ ...state, preventExternalClose: submitting }));
     }, [submitting]);
 
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,11 +48,11 @@ const ConfigureTwoFactorForm = ({ onTokens }: Props) => {
         setSubmitting(true);
         clearAndAddHttpError();
         enableAccountTwoFactor(value, password)
-            .then((tokens) => {
+            .then(tokens => {
                 updateUserData({ useTotp: true });
                 onTokens(tokens);
             })
-            .catch((error) => {
+            .catch(error => {
                 clearAndAddHttpError(error);
                 setSubmitting(false);
             });
@@ -81,7 +81,7 @@ const ConfigureTwoFactorForm = ({ onTokens }: Props) => {
                 aria-labelledby={'totp-code-description'}
                 variant={Input.Text.Variants.Loose}
                 value={value}
-                onChange={(e) => setValue(e.currentTarget.value)}
+                onChange={e => setValue(e.currentTarget.value)}
                 className={'mt-3'}
                 placeholder={'000000'}
                 type={'text'}
@@ -97,7 +97,7 @@ const ConfigureTwoFactorForm = ({ onTokens }: Props) => {
                 className={'mt-1'}
                 type={'password'}
                 value={password}
-                onChange={(e) => setPassword(e.currentTarget.value)}
+                onChange={e => setPassword(e.currentTarget.value)}
             />
             <Dialog.Footer>
                 <Button.Text onClick={close}>Cancel</Button.Text>

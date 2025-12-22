@@ -19,13 +19,13 @@ export default () => {
         setSubmitting(true);
 
         paypal(amount)
-            .then((url) => {
+            .then(url => {
                 setSubmitting(false);
 
                 // @ts-expect-error this is valid
                 window.location.href = url;
             })
-            .catch((error) => {
+            .catch(error => {
                 setSubmitting(false);
 
                 clearAndAddHttpError({ key: 'store:paypal', error });
@@ -46,7 +46,7 @@ export default () => {
             >
                 <Form>
                     <SpinnerOverlay size={'large'} visible={submitting} />
-                    <Select name={'amount'} disabled={submitting} onChange={(e) => setAmount(parseInt(e.target.value))}>
+                    <Select name={'amount'} disabled={submitting} onChange={e => setAmount(parseInt(e.target.value))}>
                         <option key={'paypal:placeholder'} hidden>
                             Choose an amount...
                         </option>

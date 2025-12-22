@@ -18,7 +18,7 @@ const PIDLimitModalFeature = () => {
     const { clearFlashes } = useFlash();
     const { connected, instance } = ServerContext.useStoreState(state => state.socket);
     const isAdmin = useStoreState(state => state.user.data?.rootAdmin);
-    
+
     if (isAdmin === undefined) {
         return null;
     }

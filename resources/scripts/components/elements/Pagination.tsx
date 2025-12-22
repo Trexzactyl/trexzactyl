@@ -52,7 +52,7 @@ function Pagination<T>({ data: { items, pagination }, onPageSelect, children }: 
                             <Icon.ChevronLeft />
                         </Block>
                     )}
-                    {pages.map((i) => (
+                    {pages.map(i => (
                         <Block key={`block_page_${i}`} onClick={() => onPageSelect(i)}>
                             {i}
                         </Block>

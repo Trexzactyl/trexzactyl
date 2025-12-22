@@ -13,7 +13,7 @@ export const DropdownButtonRow = styled.button<{ danger?: boolean }>`
     transition: 150ms all ease;
 
     &:hover {
-        ${(props) => (props.danger ? tw`text-red-700 bg-red-100` : tw`text-neutral-700 bg-neutral-100`)};
+        ${props => (props.danger ? tw`text-red-700 bg-red-100` : tw`text-neutral-700 bg-neutral-100`)};
     }
 `;
 
@@ -77,7 +77,7 @@ class DropdownMenu extends React.PureComponent<Props, State> {
     };
 
     triggerMenu = (posX: number) =>
-        this.setState((s) => ({
+        this.setState(s => ({
             posX: !s.visible ? posX : s.posX,
             visible: !s.visible,
         }));
@@ -89,7 +89,7 @@ class DropdownMenu extends React.PureComponent<Props, State> {
                 <Fade timeout={150} in={this.state.visible} unmountOnExit>
                     <div
                         ref={this.menu}
-                        onClick={(e) => {
+                        onClick={e => {
                             e.stopPropagation();
                             this.setState({ visible: false });
                         }}

@@ -11,9 +11,9 @@ import ChangeBackgroundBox from '@/components/server/settings/ChangeBackgroundBo
 import { useStoreState } from 'easy-peasy';
 
 export default () => {
-    const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
-    const node = ServerContext.useStoreState((state) => state.server.data!.node);
-    const deletion = useStoreState((state) => state.storefront.data!.deletion.enabled);
+    const uuid = ServerContext.useStoreState(state => state.server.data!.uuid);
+    const node = ServerContext.useStoreState(state => state.server.data!.node);
+    const deletion = useStoreState(state => state.storefront.data!.deletion.enabled);
     return (
         <ServerContentBlock
             title={'Settings'}

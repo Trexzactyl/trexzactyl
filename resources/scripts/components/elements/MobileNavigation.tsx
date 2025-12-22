@@ -44,10 +44,10 @@ const RightNavigation = styled.div`
 
 export default () => {
     const [isLoggingOut, setIsLoggingOut] = useState(false);
-    const tickets = useStoreState((state) => state.settings.data!.tickets);
-    const store = useStoreState((state) => state.storefront.data!.enabled);
+    const tickets = useStoreState(state => state.settings.data!.tickets);
+    const store = useStoreState(state => state.storefront.data!.enabled);
     const rootAdmin = useStoreState((state: ApplicationStore) => state.user.data?.rootAdmin);
-    
+
     if (rootAdmin === undefined) {
         return null;
     }

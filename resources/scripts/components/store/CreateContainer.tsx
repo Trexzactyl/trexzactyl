@@ -52,8 +52,8 @@ export default () => {
     const [loading, setLoading] = useState(false);
     const [resources, setResources] = useState<Resources>();
 
-    const user = useStoreState((state) => state.user.data);
-    
+    const user = useStoreState(state => state.user.data);
+
     if (!user) {
         return null;
     }
@@ -69,17 +69,17 @@ export default () => {
     useEffect(() => {
         clearFlashes();
 
-        getResources().then((resources) => setResources(resources));
+        getResources().then(resources => setResources(resources));
 
-        getEggs().then((eggs) => setEggs(eggs));
-        getNests().then((nests) => setNests(nests));
-        getNodes().then((nodes) => setNodes(nodes));
+        getEggs().then(eggs => setEggs(eggs));
+        getNests().then(nests => setNests(nests));
+        getNodes().then(nodes => setNodes(nodes));
     }, []);
 
     const changeNest = (e: ChangeEvent<HTMLSelectElement>) => {
         setNest(parseInt(e.target.value));
 
-        getEggs(parseInt(e.target.value)).then((eggs) => {
+        getEggs(parseInt(e.target.value)).then(eggs => {
             setEggs(eggs);
             if (eggs[0]?.id !== undefined) {
                 setEgg(eggs[0].id);
@@ -92,7 +92,7 @@ export default () => {
         clearFlashes('store:create');
 
         createServer(values, egg, nest, node)
-            .then((data) => {
+            .then(data => {
                 if (!data.id) return;
 
                 setLoading(false);
@@ -100,7 +100,7 @@ export default () => {
                 // @ts-expect-error this is valid
                 window.location = `/server/${data.id}`;
             })
-            .catch((error) => {
+            .catch(error => {
                 setLoading(false);
                 clearAndAddHttpError({ key: 'store:create', error });
             });
@@ -227,9 +227,9 @@ export default () => {
                     <h3 className={'text-2xl text-neutral-500'}>Choose a node and server type.</h3>
                     <StoreContainer className={'lg:grid lg:grid-cols-3 my-10 gap-4'}>
                         <TitledGreyBox title={'Available Nodes'} icon={faLayerGroup} className={'mt-8 sm:mt-0'}>
-                            <Select name={'node'} onChange={(e) => setNode(parseInt(e.target.value))}>
+                            <Select name={'node'} onChange={e => setNode(parseInt(e.target.value))}>
                                 {!node && <option>Select a node...</option>}
-                                {nodes.map((n) => (
+                                {nodes.map(n => (
                                     <option key={n.id} value={n.id}>
                                         {n.name} ({n.location}) |{' '}
                                         {100 - parseInt(((n?.used / n?.total) * 100).toFixed(0))}% free | {n.deployFee}{' '}
@@ -240,9 +240,9 @@ export default () => {
                             <p className={'mt-1 text-xs text-gray-400'}>Select a node to deploy your server to.</p>
                         </TitledGreyBox>
                         <TitledGreyBox title={'Server Nest'} icon={faCube} className={'mt-8 sm:mt-0'}>
-                            <Select name={'nest'} onChange={(nest) => changeNest(nest)}>
+                            <Select name={'nest'} onChange={nest => changeNest(nest)}>
                                 {!nest && <option>Select a nest...</option>}
-                                {nests.map((n) => (
+                                {nests.map(n => (
                                     <option key={n.id} value={n.id}>
                                         {n.name}
                                     </option>
@@ -251,9 +251,9 @@ export default () => {
                             <p className={'mt-1 text-xs text-gray-400'}>Select a nest to use for your server.</p>
                         </TitledGreyBox>
                         <TitledGreyBox title={'Server Egg'} icon={faEgg} className={'mt-8 sm:mt-0'}>
-                            <Select name={'egg'} onChange={(e) => setEgg(parseInt(e.target.value))}>
+                            <Select name={'egg'} onChange={e => setEgg(parseInt(e.target.value))}>
                                 {!egg && <option>Select an egg...</option>}
-                                {eggs.map((e) => (
+                                {eggs.map(e => (
                                     <option key={e.id} value={e.id}>
                                         {e.name}
                                     </option>

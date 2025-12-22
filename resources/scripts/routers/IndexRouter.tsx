@@ -14,22 +14,22 @@ import { setupInterceptors } from '@/api/interceptors';
 
 const InterceptorSetup = () => {
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         setupInterceptors(navigate);
     }, [navigate]);
-    
+
     return null;
 };
 
 export default () => {
-    const authenticated = useStoreState((state) => state.user?.data);
-    const approved = useStoreState((state) => state.user.data?.approved);
-    const store = useStoreState((state) => state.storefront.data?.enabled);
-    const tickets = useStoreState((state) => state.settings.data?.tickets);
-    const approvals = useStoreState((state) => state.settings.data?.approvals);
-    const settingsLoaded = useStoreState((state) => state.settings.data !== undefined);
-    const storefrontLoaded = useStoreState((state) => state.storefront.data !== undefined);
+    const authenticated = useStoreState(state => state.user?.data);
+    const approved = useStoreState(state => state.user.data?.approved);
+    const store = useStoreState(state => state.storefront.data?.enabled);
+    const tickets = useStoreState(state => state.settings.data?.tickets);
+    const approvals = useStoreState(state => state.settings.data?.approvals);
+    const settingsLoaded = useStoreState(state => state.settings.data !== undefined);
+    const storefrontLoaded = useStoreState(state => state.storefront.data !== undefined);
 
     // Wait for settings to load before rendering
     if (!settingsLoaded || !storefrontLoaded) {
@@ -53,45 +53,60 @@ export default () => {
         <BrowserRouter>
             <InterceptorSetup />
             <Routes>
-                <Route path="/auth/*" element={
-                    <Spinner.Suspense>
-                        <AuthenticationRouter />
-                    </Spinner.Suspense>
-                } />
-                <Route path="/server/:id/*" element={
-                    <AuthenticatedRoute>
+                <Route
+                    path="/auth/*"
+                    element={
                         <Spinner.Suspense>
-                            <ServerContext.Provider>
-                                <ServerRouter />
-                            </ServerContext.Provider>
+                            <AuthenticationRouter />
                         </Spinner.Suspense>
-                    </AuthenticatedRoute>
-                } />
-                {store && (
-                    <Route path="/store/*" element={
+                    }
+                />
+                <Route
+                    path="/server/:id/*"
+                    element={
                         <AuthenticatedRoute>
                             <Spinner.Suspense>
-                                <StoreRouter />
+                                <ServerContext.Provider>
+                                    <ServerRouter />
+                                </ServerContext.Provider>
                             </Spinner.Suspense>
                         </AuthenticatedRoute>
-                    } />
+                    }
+                />
+                {store && (
+                    <Route
+                        path="/store/*"
+                        element={
+                            <AuthenticatedRoute>
+                                <Spinner.Suspense>
+                                    <StoreRouter />
+                                </Spinner.Suspense>
+                            </AuthenticatedRoute>
+                        }
+                    />
                 )}
                 {tickets && (
-                    <Route path="/tickets/*" element={
+                    <Route
+                        path="/tickets/*"
+                        element={
+                            <AuthenticatedRoute>
+                                <Spinner.Suspense>
+                                    <TicketRouter />
+                                </Spinner.Suspense>
+                            </AuthenticatedRoute>
+                        }
+                    />
+                )}
+                <Route
+                    path="/*"
+                    element={
                         <AuthenticatedRoute>
                             <Spinner.Suspense>
-                                <TicketRouter />
+                                <DashboardRouter />
                             </Spinner.Suspense>
                         </AuthenticatedRoute>
-                    } />
-                )}
-                <Route path="/*" element={
-                    <AuthenticatedRoute>
-                        <Spinner.Suspense>
-                            <DashboardRouter />
-                        </Spinner.Suspense>
-                    </AuthenticatedRoute>
-                } />
+                    }
+                />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>

@@ -20,9 +20,9 @@ const schema = Yup.object().shape({
 });
 
 export default () => {
-    const code = useStoreState((state) => state.user.data?.referralCode);
+    const code = useStoreState(state => state.user.data?.referralCode);
     const { clearFlashes, addFlash } = useStoreActions((actions: Actions<ApplicationStore>) => actions.flashes);
-    
+
     if (code === undefined) {
         return null;
     }
@@ -36,15 +36,15 @@ export default () => {
                     type: 'success',
                     key: 'account:referral',
                     message: 'You are now using a referral code.',
-                })
+                }),
             )
-            .catch((error) =>
+            .catch(error =>
                 addFlash({
                     type: 'danger',
                     key: 'account:referral',
                     title: 'Error',
                     message: httpErrorToHuman(error),
-                })
+                }),
             )
             .then(() => {
                 resetForm();

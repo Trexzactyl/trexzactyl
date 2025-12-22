@@ -32,15 +32,15 @@ export default () => {
                     type: 'success',
                     key: 'account:username',
                     message: 'Your username has been changed.',
-                })
+                }),
             )
-            .catch((error) =>
+            .catch(error =>
                 addFlash({
                     type: 'danger',
                     key: 'account:username',
                     title: 'Error',
                     message: httpErrorToHuman(error),
-                })
+                }),
             )
             .then(() => {
                 resetForm();

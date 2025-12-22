@@ -28,12 +28,12 @@ const Container = styled.div`
 
 export default () => {
     const [resources, setResources] = useState<Resources>();
-    const earn = useStoreState((state) => state.storefront.data!.earn);
-    const paypal = useStoreState((state) => state.storefront.data!.gateways?.paypal);
-    const stripe = useStoreState((state) => state.storefront.data!.gateways?.stripe);
+    const earn = useStoreState(state => state.storefront.data!.earn);
+    const paypal = useStoreState(state => state.storefront.data!.gateways?.paypal);
+    const stripe = useStoreState(state => state.storefront.data!.gateways?.stripe);
 
     useEffect(() => {
-        getResources().then((resources) => setResources(resources));
+        getResources().then(resources => setResources(resources));
     }, []);
 
     if (!resources) return <Spinner size={'large'} centered />;

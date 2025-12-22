@@ -38,15 +38,15 @@ export default () => {
                     type: 'success',
                     key: 'account:email',
                     message: 'Your primary email has been updated.',
-                })
+                }),
             )
-            .catch((error) =>
+            .catch(error =>
                 addFlash({
                     type: 'danger',
                     key: 'account:email',
                     title: 'Error',
                     message: httpErrorToHuman(error),
-                })
+                }),
             )
             .then(() => {
                 resetForm();

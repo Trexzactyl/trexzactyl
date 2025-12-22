@@ -40,25 +40,25 @@ export default () => {
     const [codes, setCodes] = useState<ReferralCode[]>([]);
     const [activity, setActivity] = useState<ReferralActivity[]>([]);
     const { clearFlashes, clearAndAddHttpError } = useFlashKey('referrals');
-    const reward = useStoreState((state) => state.storefront.data?.referrals.reward);
+    const reward = useStoreState(state => state.storefront.data?.referrals.reward);
 
     useEffect(() => {
         clearFlashes();
         setLoading(true);
 
         getReferralCodes()
-            .then((codes) => {
+            .then(codes => {
                 setCodes(codes);
                 setLoading(false);
             })
-            .catch((error) => clearAndAddHttpError(error));
+            .catch(error => clearAndAddHttpError(error));
 
         getReferralActivity()
-            .then((activity) => {
+            .then(activity => {
                 setActivity(activity);
                 setLoading(false);
             })
-            .catch((error) => clearAndAddHttpError(error));
+            .catch(error => clearAndAddHttpError(error));
     }, []);
 
     const doCreation = () => {
@@ -67,14 +67,14 @@ export default () => {
 
         createReferralCode()
             .then(() => {
-                getReferralCodes().then((codes) => setCodes(codes));
+                getReferralCodes().then(codes => setCodes(codes));
                 addFlash({
                     type: 'success',
                     key: 'referrals',
                     message: 'Referral code has been created.',
                 });
             })
-            .catch((error) => clearAndAddHttpError(error))
+            .catch(error => clearAndAddHttpError(error))
             .then(() => {
                 setLoading(false);
             });
@@ -86,14 +86,14 @@ export default () => {
 
         deleteReferralCode(code)
             .then(() => {
-                getReferralCodes().then((codes) => setCodes(codes));
+                getReferralCodes().then(codes => setCodes(codes));
                 addFlash({
                     type: 'success',
                     key: 'referrals',
                     message: 'Referral code has been deleted.',
                 });
             })
-            .catch((error) => clearAndAddHttpError(error))
+            .catch(error => clearAndAddHttpError(error))
             .then(() => {
                 setLoading(false);
                 setCode('');

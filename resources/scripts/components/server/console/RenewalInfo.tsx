@@ -11,9 +11,9 @@ export default () => {
     const [open, setOpen] = useState(false);
     const { addFlash, clearFlashes } = useFlash();
     const [loading, setLoading] = useState(false);
-    const store = useStoreState((state) => state.storefront.data!);
-    const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
-    const renewalDate = ServerContext.useStoreState((state) => state.server.data!.renewalDate);
+    const store = useStoreState(state => state.storefront.data!);
+    const uuid = ServerContext.useStoreState(state => state.server.data!.uuid);
+    const renewalDate = ServerContext.useStoreState(state => state.server.data!.renewalDate);
 
     const doRenewal = () => {
         setLoading(true);
@@ -30,7 +30,7 @@ export default () => {
                     message: 'Server has been renewed.',
                 });
             })
-            .catch((error) => {
+            .catch(error => {
                 setOpen(false);
                 setLoading(false);
 
@@ -55,7 +55,8 @@ export default () => {
                 You will be charged {store.renewals.cost} credits to add {store.renewals.days} days until your next
                 renewal is due.
             </Dialog.Confirm>
-            in {renewalDate ? Math.ceil((new Date(renewalDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)) : 0} days{' '}
+            in {renewalDate ? Math.ceil((new Date(renewalDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)) : 0}{' '}
+            days{' '}
             <span className={'text-blue-500 text-sm cursor-pointer'} onClick={() => setOpen(true)}>
                 {'('}Renew{')'}
             </span>

@@ -15,8 +15,8 @@ export default () => {
 
     const { addFlash, clearFlashes, clearAndAddHttpError } = useFlash();
 
-    const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
-    const serverName = ServerContext.useStoreState((state) => state.server.data!.name);
+    const uuid = ServerContext.useStoreState(state => state.server.data!.uuid);
+    const serverName = ServerContext.useStoreState(state => state.server.data!.name);
 
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -34,7 +34,7 @@ export default () => {
                 // @ts-expect-error this is valid
                 window.location = '/';
             })
-            .catch((error) => clearAndAddHttpError({ key: 'settings', error }));
+            .catch(error => clearAndAddHttpError({ key: 'settings', error }));
     };
 
     return (
@@ -66,7 +66,7 @@ export default () => {
                             <p className={'my-2 text-gray-400'}>
                                 Type <Code>{serverName}</Code> below.
                             </p>
-                            <Input type={'text'} value={name} onChange={(n) => setName(n.target.value)} />
+                            <Input type={'text'} value={name} onChange={n => setName(n.target.value)} />
                         </>
                     )}
                     <Button

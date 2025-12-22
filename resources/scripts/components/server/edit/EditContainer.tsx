@@ -37,7 +37,7 @@ export default () => {
     const [resource, setResource] = useState('');
     const [amount, setAmount] = useState(0);
 
-    const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
+    const uuid = ServerContext.useStoreState(state => state.server.data!.uuid);
     const { clearFlashes, addFlash, clearAndAddHttpError } = useFlash();
 
     const edit = (resource: string, amount: number) => {
@@ -53,7 +53,7 @@ export default () => {
                     message: 'Server resources have been edited successfully.',
                 });
             })
-            .catch((error) => clearAndAddHttpError({ key: 'server:edit', error }));
+            .catch(error => clearAndAddHttpError({ key: 'server:edit', error }));
     };
 
     return (

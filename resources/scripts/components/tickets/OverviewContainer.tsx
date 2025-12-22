@@ -14,7 +14,7 @@ export default () => {
     const [tickets, setTickets] = useState<Ticket[]>();
 
     useEffect(() => {
-        getTickets().then((d) => setTickets(d));
+        getTickets().then(d => setTickets(d));
     }, []);
 
     if (!tickets) return <Spinner centered />;
@@ -27,7 +27,7 @@ export default () => {
         >
             <NewTicketDialog open={visible} onClose={() => setVisible(false)} />
             <div className={'my-10'}>
-                {tickets.map((ticket) => (
+                {tickets.map(ticket => (
                     <Link to={`/tickets/${ticket.id}`} key={ticket.id}>
                         <GreyRowBox className={'flex-wrap md:flex-nowrap items-center my-1'}>
                             <div className={'flex items-center truncate w-full md:flex-1'}>

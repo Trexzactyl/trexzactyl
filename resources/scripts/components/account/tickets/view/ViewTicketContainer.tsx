@@ -26,7 +26,7 @@ export const statusToColor = (status: string): string => {
 export default () => {
     const email = useStoreState(state => state.user.data?.email);
     const { colors } = useStoreState(state => state.theme.data!);
-    
+
     if (!email) {
         return null;
     }
@@ -61,32 +61,28 @@ export default () => {
                                 'There are no messages assigned to this ticket.'
                             ) : (
                                 <>
-                                    {[...ticket.relationships.messages]
-                                        .reverse()
-                                        .map(message => (
-                                            <div key={message.id} className={'mb-4'}>
-                                                <div
-                                                    key={message.id}
-                                                    style={{ backgroundColor: colors.headers }}
-                                                    className={'flex p-4 rounded-lg'}
-                                                >
-                                                    <p className={'mr-2 font-semibold text-primary-400'}>
-                                                        {message.author.email === email
-                                                            ? 'You'
-                                                            : 'Support - Administrator'}
-                                                        :
-                                                    </p>
-                                                    {message.message.toString()}
-                                                </div>
-                                                <p className={'text-2xs text-gray-300 mt-1 text-right'}>
-                                                    Sent&nbsp;
-                                                    {formatDistanceToNow(message.createdAt, {
-                                                        includeSeconds: true,
-                                                        addSuffix: true,
-                                                    })}
+                                    {[...ticket.relationships.messages].reverse().map(message => (
+                                        <div key={message.id} className={'mb-4'}>
+                                            <div
+                                                key={message.id}
+                                                style={{ backgroundColor: colors.headers }}
+                                                className={'flex p-4 rounded-lg'}
+                                            >
+                                                <p className={'mr-2 font-semibold text-primary-400'}>
+                                                    {message.author.email === email ? 'You' : 'Support - Administrator'}
+                                                    :
                                                 </p>
+                                                {message.message.toString()}
                                             </div>
-                                        ))}
+                                            <p className={'text-2xs text-gray-300 mt-1 text-right'}>
+                                                Sent&nbsp;
+                                                {formatDistanceToNow(message.createdAt, {
+                                                    includeSeconds: true,
+                                                    addSuffix: true,
+                                                })}
+                                            </p>
+                                        </div>
+                                    ))}
                                 </>
                             )}
                         </ContentBox>

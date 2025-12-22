@@ -13,7 +13,14 @@ export interface PageContentBlockProps {
     showFlashKey?: string;
 }
 
-const PageContentBlock: React.FC<PageContentBlockProps> = ({ title, header, description, showFlashKey, className, children }) => {
+const PageContentBlock: React.FC<PageContentBlockProps> = ({
+    title,
+    header,
+    description,
+    showFlashKey,
+    className,
+    children,
+}) => {
     useEffect(() => {
         if (title) {
             document.title = title;

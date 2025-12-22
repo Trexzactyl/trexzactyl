@@ -21,8 +21,8 @@ export default () => {
     const [token, setToken] = useState('');
 
     const { clearFlashes, addFlash } = useFlash();
-    const recaptchaEnabled = useStoreState((state) => state.settings.data?.recaptcha?.enabled || false);
-    const siteKey = useStoreState((state) => state.settings.data?.recaptcha?.siteKey || '');
+    const recaptchaEnabled = useStoreState(state => state.settings.data?.recaptcha?.enabled || false);
+    const siteKey = useStoreState(state => state.settings.data?.recaptcha?.siteKey || '');
 
     useEffect(() => {
         clearFlashes();
@@ -34,7 +34,7 @@ export default () => {
         // If there is no token in the state yet, request the token and then abort this submit request
         // since it will be re-submitted when the recaptcha data is returned by the component.
         if (recaptchaEnabled && !token) {
-            ref.current!.execute().catch((error) => {
+            ref.current!.execute().catch(error => {
                 console.error(error);
 
                 setSubmitting(false);
@@ -45,11 +45,11 @@ export default () => {
         }
 
         requestPasswordResetEmail(email, token)
-            .then((response) => {
+            .then(response => {
                 resetForm();
                 addFlash({ type: 'success', title: 'Success', message: response });
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error(error);
                 addFlash({ type: 'danger', title: 'Error', message: httpErrorToHuman(error) });
             })
@@ -92,7 +92,7 @@ export default () => {
                             ref={ref}
                             size={'invisible'}
                             sitekey={siteKey || '_invalid_key'}
-                            onVerify={(response) => {
+                            onVerify={response => {
                                 setToken(response);
                                 submitForm();
                             }}

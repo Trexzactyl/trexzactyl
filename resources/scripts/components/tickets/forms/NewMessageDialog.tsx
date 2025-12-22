@@ -40,7 +40,7 @@ export default ({ open, onClose }: DialogProps) => {
                     message: 'Your message has been sent successfully.',
                 });
             })
-            .catch((error) => {
+            .catch(error => {
                 setSubmitting(false);
 
                 addError({ key: 'tickets', message: httpErrorToHuman(error) });

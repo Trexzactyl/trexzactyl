@@ -38,7 +38,7 @@ const EditSubuserModal = ({ subuser }: Props) => {
 
     const isRootAdmin = useStoreState(state => state.user.data?.rootAdmin);
     const permissions = useStoreState(state => state.permissions.data);
-    
+
     if (isRootAdmin === undefined) {
         return null;
     }

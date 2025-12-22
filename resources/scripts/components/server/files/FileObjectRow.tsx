@@ -16,7 +16,7 @@ import styles from './style.module.css';
 
 const Clickable: React.FC<{ file: FileObject; children?: React.ReactNode }> = memo(({ file, children }) => {
     const [canReadContents] = usePermissions(['file.read-content']);
-    const directory = ServerContext.useStoreState((state) => state.files.directory);
+    const directory = ServerContext.useStoreState(state => state.files.directory);
 
     const location = useLocation();
 
@@ -36,7 +36,7 @@ const FileObjectRow = ({ file }: { file: FileObject }) => (
     <div
         className={styles.file_row}
         key={file.name}
-        onContextMenu={(e) => {
+        onContextMenu={e => {
             e.preventDefault();
             window.dispatchEvent(new CustomEvent(`Jexactyl:files:ctx:${file.key}`, { detail: e.clientX }));
         }}

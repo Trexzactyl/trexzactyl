@@ -28,11 +28,6 @@ import Creatable from 'react-select/creatable';
 import tw, { theme } from 'twin.macro';
 import Label from '@/elements/Label';
 
-
-
-
-
-
 type T = any;
 
 export const SelectStyle: StylesConfig<T, any, any> = {
@@ -248,9 +243,7 @@ interface SelectFieldProps {
     isSearchable?: boolean;
 
     isCreatable?: boolean;
-    isValidNewOption?:
-        | ((inputValue: string, value: any, options: ReadonlyArray<any>) => boolean)
-        | undefined;
+    isValidNewOption?: ((inputValue: string, value: any, options: ReadonlyArray<any>) => boolean) | undefined;
 
     className?: string;
 }

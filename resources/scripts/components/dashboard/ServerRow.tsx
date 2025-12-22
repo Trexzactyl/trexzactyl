@@ -63,8 +63,8 @@ export default ({ server, className }: { server: Server; className?: string }) =
 
     const getStats = () =>
         getServerResourceUsage(server.uuid)
-            .then((data) => setStats(data))
-            .catch((error) => console.error(error));
+            .then(data => setStats(data))
+            .catch(error => console.error(error));
 
     useEffect(() => {
         setIsSuspended(stats?.isSuspended || server.status === 'suspended');
@@ -104,8 +104,8 @@ export default ({ server, className }: { server: Server; className?: string }) =
                     <h3 css={tw`text-xl font-bold text-white mb-1 truncate`}>{server.name}</h3>
                     <p css={tw`text-sm text-neutral-400`}>
                         {server.allocations
-                            .filter((alloc) => alloc.isDefault)
-                            .map((allocation) => (
+                            .filter(alloc => alloc.isDefault)
+                            .map(allocation => (
                                 <span key={allocation.ip + allocation.port.toString()}>
                                     {allocation.alias || ip(allocation.ip)}:{allocation.port}
                                 </span>

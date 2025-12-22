@@ -24,8 +24,8 @@ const RegisterContainer = () => {
     const [token, setToken] = useState('');
 
     const { clearFlashes, clearAndAddHttpError, addFlash } = useFlash();
-    const recaptchaEnabled = useStoreState((state) => state.settings.data?.recaptcha?.enabled || false);
-    const siteKey = useStoreState((state) => state.settings.data?.recaptcha?.siteKey || '');
+    const recaptchaEnabled = useStoreState(state => state.settings.data?.recaptcha?.enabled || false);
+    const siteKey = useStoreState(state => state.settings.data?.recaptcha?.siteKey || '');
 
     useEffect(() => {
         clearFlashes();
@@ -37,7 +37,7 @@ const RegisterContainer = () => {
         // If there is no token in the state yet, request the token and then abort this submit request
         // since it will be re-submitted when the recaptcha data is returned by the component.
         if (recaptchaEnabled && !token) {
-            ref.current!.execute().catch((error) => {
+            ref.current!.execute().catch(error => {
                 console.error(error);
 
                 setSubmitting(false);
@@ -48,7 +48,7 @@ const RegisterContainer = () => {
         }
 
         register({ ...values, recaptchaData: token })
-            .then((response) => {
+            .then(response => {
                 if (response.complete) {
                     navigate('/auth/login', { replace: true });
                     addFlash({
@@ -61,7 +61,7 @@ const RegisterContainer = () => {
 
                 navigate('/auth/register', { replace: true });
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error(error);
 
                 setToken('');
@@ -108,7 +108,7 @@ const RegisterContainer = () => {
                             ref={ref}
                             size={'invisible'}
                             sitekey={siteKey || '_invalid_key'}
-                            onVerify={(response) => {
+                            onVerify={response => {
                                 setToken(response);
                                 submitForm();
                             }}

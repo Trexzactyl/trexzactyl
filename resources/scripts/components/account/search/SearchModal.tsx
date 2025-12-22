@@ -48,7 +48,7 @@ const SearchWatcher = () => {
 export default ({ ...props }: Props) => {
     const isAdmin = useStoreState(state => state.user.data?.rootAdmin);
     const [servers, setServers] = useState<Server[]>([]);
-    
+
     if (isAdmin === undefined) {
         return null;
     }

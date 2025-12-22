@@ -27,14 +27,14 @@ export default ({ open, onClose }: DialogProps) => {
         clearFlashes('tickets');
 
         createTicket(values.title, values.description)
-            .then((data) => {
+            .then(data => {
                 resetForm();
                 setSubmitting(false);
 
                 // @ts-expect-error this is valid
                 window.location = `/tickets/${data.id}`;
             })
-            .catch((error) => {
+            .catch(error => {
                 setSubmitting(false);
 
                 addError({ key: 'tickets', message: httpErrorToHuman(error) });

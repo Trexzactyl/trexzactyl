@@ -15,12 +15,12 @@ const SelectAllPermissions: React.FC<Props> = memo(({ isEditable, permissions })
     const onCheckboxClicked = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             if (e.currentTarget.checked) {
-                setValue([...value, ...permissions.filter((p) => !value.includes(p))]);
+                setValue([...value, ...permissions.filter(p => !value.includes(p))]);
             } else {
-                setValue(value.filter((p) => !permissions.includes(p)));
+                setValue(value.filter(p => !permissions.includes(p)));
             }
         },
-        [permissions, value]
+        [permissions, value],
     );
 
     return (
@@ -29,7 +29,7 @@ const SelectAllPermissions: React.FC<Props> = memo(({ isEditable, permissions })
                 <Input
                     css={tw`mr-1`}
                     type={'checkbox'}
-                    checked={permissions.every((p) => value.includes(p))}
+                    checked={permissions.every(p => value.includes(p))}
                     onChange={onCheckboxClicked}
                 />
             )}

@@ -42,7 +42,7 @@ function ServerRouter() {
 
     const rootAdmin = useStoreState(state => state.user.data?.rootAdmin);
     const user = useStoreState(state => state.user.data);
-    
+
     if (rootAdmin === undefined || !user) {
         return null;
     }

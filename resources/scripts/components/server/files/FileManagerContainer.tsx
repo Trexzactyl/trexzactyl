@@ -52,7 +52,7 @@ export default () => {
 
     const sftp = ServerContext.useStoreState(state => state.server.data!.sftpDetails);
     const username = useStoreState(state => state.user.data?.username);
-    
+
     if (!username) {
         return null;
     }
