@@ -1,8 +1,8 @@
-# Trexz
+# trexzactyl
 
-[![Latest Release](https://img.shields.io/github/v/release/ryanwtf88/Trexz?style=for-the-badge)](https://github.com/ryanwtf88/Trexz/releases)
-[![Stars](https://img.shields.io/github/stars/ryanwtf88/Trexz?style=for-the-badge)](https://github.com/ryanwtf88/Trexz/stargazers)
-[![Forks](https://img.shields.io/github/forks/ryanwtf88/Trexz?style=for-the-badge)](https://github.com/ryanwtf88/Trexz/network)
+[![Latest Release](https://img.shields.io/github/v/release/ryanwtf88/trexzactyl?style=for-the-badge)](https://github.com/ryanwtf88/trexzactyl/releases)
+[![Stars](https://img.shields.io/github/stars/ryanwtf88/trexzactyl?style=for-the-badge)](https://github.com/ryanwtf88/trexzactyl/stargazers)
+[![Forks](https://img.shields.io/github/forks/ryanwtf88/trexzactyl?style=for-the-badge)](https://github.com/ryanwtf88/trexzactyl/network)
 
 **Game panel & billing system — fast, secure, and customizable**
 
@@ -23,7 +23,7 @@ Trexz is a modern, high-performance **game server management panel** forked from
 ## Useful Links
 
 - Website & Documentation: [docs.trexz.xyz](https://docs.trexz.xyz)  
-- GitHub Repository: [ryanwtf88/Trexz](https://github.com/ryanwtf88/Trexz)
+- GitHub Repository: [ryanwtf88/trexzactyl](https://github.com/ryanwtf88/trexzactyl)
 - Discord: [discord.gg/W2GheK3F9m](https://discord.gg/W2GheK3F9m)
 
 ## Contribution
