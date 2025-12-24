@@ -15,6 +15,10 @@ on:
     types:
       - published
 
+permissions:
+  packages: write
+  contents: read
+
 jobs:
   push:
     name: Push
@@ -27,7 +31,7 @@ jobs:
         id: metadata
         uses: docker/metadata-action@v4
         with:
-          images: ghcr.io/ryanwtf88/trexz
+          images: ghcr.io/${{ github.repository }}
           flavor: |
             latest=false
           tags: |
