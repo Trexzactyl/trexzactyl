@@ -76,7 +76,7 @@
     @yield('below-container')
     @show
     @section('scripts')
-    {!! $asset->js('main.js') !!}
+    {!! $asset->js('resources/scripts/index.tsx') !!}
     @show
 </body>
 
