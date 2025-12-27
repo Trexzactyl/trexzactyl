@@ -31,10 +31,15 @@ class AssetHashService
      */
     public function url(string $resource): string
     {
-        $file = last(explode('/', $resource));
-        $data = Arr::get($this->manifest(), $file) ?? $file;
-
-        return str_replace($file, Arr::get($data, 'src') ?? $file, $resource);
+        $data = Arr::get($this->manifest(), $resource);
+        
+        if (!$data) {
+            return $resource;
+        }
+        
+        $file = Arr::get($data, 'file') ?? $resource;
+        // Prepend 'build/' to the path since Vite builds to public/build/
+        return '/build/' . ltrim($file, '/');
     }
 
     /**
@@ -42,9 +47,7 @@ class AssetHashService
      */
     public function integrity(string $resource): string
     {
-        $file = last(explode('/', $resource));
-        $data = array_get($this->manifest(), $file, $file);
-
+        $data = Arr::get($this->manifest(), $resource);
         return Arr::get($data, 'integrity') ?? '';
     }
 
@@ -90,6 +93,7 @@ class AssetHashService
         }
         
         $attributes = [
+            'type' => 'module',
             'src' => $this->url($resource),
             'crossorigin' => 'anonymous',
         ];
