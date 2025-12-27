@@ -105,7 +105,7 @@ export default () => {
             <AdminBox title={'Version Information'} icon={faDesktop}>
                 {settings.debug && (
                     <Alert type={'warning'} className={'mb-3'}>
-                        Jexactyl is running in debug mode. Do not use in production.
+                        Trexz is running in debug mode. Do not use in production.
                     </Alert>
                 )}
                 {loading ? (
@@ -125,7 +125,7 @@ export default () => {
                         </div>
                         {versionData?.panel.current.startsWith('v4.0.0-') && (
                             <Alert type={'danger'} className={'mt-4'}>
-                                You are running a beta release of Jexactyl v4, which may include several bugs or weird
+                                You are running a beta release of Trexz v4, which may include several bugs or weird
                                 glitches. Do NOT use this software in production unless you don&apos;t care about losing
                                 data.
                             </Alert>
@@ -141,7 +141,7 @@ export default () => {
                             link={'/admin/settings'}
                             title={'Enable automatic updates'}
                             description={
-                                'By setting up automatic updates, you can keep Jexactyl stable and secure in the background.'
+                                'By setting up automatic updates, you can keep Trexz stable and secure in the background.'
                             }
                         />
                     )}
@@ -162,7 +162,7 @@ export default () => {
                                     icon={faLayerGroup}
                                     link={'/admin/nodes/new'}
                                     title={'Add your first node'}
-                                    description={"Nodes are physical servers which Jexactyl's servers run on."}
+                                    description={"Nodes are physical servers which Trexz's servers run on."}
                                 />
                             )}
                             {metricData.servers < 1 && (
@@ -186,7 +186,7 @@ export default () => {
                     <SuggestionCard
                         icon={faHeart}
                         link={'https://donate.stripe.com/6oE02Zftd9cC34IbIS'}
-                        title={'Donate to Jexactyl'}
+                        title={'Donate to Trexz'}
                         action={'Donate'}
                         description={
                             'Support the project by leaving a donation to help us pay for testing servers and domains.'

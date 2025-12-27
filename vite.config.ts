@@ -67,6 +67,7 @@ export default defineConfig({
             ),
             '@server': resolve(dirname(fileURLToPath(import.meta.url)), 'resources', 'scripts', 'components', 'server'),
             '@admin': resolve(dirname(fileURLToPath(import.meta.url)), 'resources', 'scripts', 'components', 'admin'),
+            '@elements': resolve(dirname(fileURLToPath(import.meta.url)), 'resources', 'scripts', 'elements'),
 
             react: 'preact/compat',
             'react-dom': 'preact/compat',

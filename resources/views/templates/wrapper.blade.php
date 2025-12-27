@@ -41,6 +41,11 @@
             window.TrexzConfiguration = {!! json_encode($trexzConfiguration) !!};
         </script>
     @endif
+    @if(!empty($themeConfiguration))
+        <script>
+            window.ThemeConfiguration = {!! json_encode($themeConfiguration) !!};
+        </script>
+    @endif
     @show
 
     @if(!empty($siteConfiguration['background']))

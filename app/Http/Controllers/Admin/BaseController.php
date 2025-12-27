@@ -17,6 +17,6 @@ class BaseController extends Controller
             throw new AccessDeniedHttpException('You do not have permission to access this resource.');
         }
 
-        return view('templates/base.core');
+        return view('templates.base.core');
     }
 }

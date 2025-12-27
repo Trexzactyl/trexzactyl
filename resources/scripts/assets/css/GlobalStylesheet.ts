@@ -1,10 +1,29 @@
 import tw from 'twin.macro';
 import { createGlobalStyle } from 'styled-components';
 
-export default createGlobalStyle`
+interface Props {
+    colors?: {
+        primary: string;
+        secondary: string;
+        background: string;
+        headers: string;
+        sidebar: string;
+    };
+}
+
+export default createGlobalStyle<Props>`
+    :root {
+        --color-primary: ${props => props.colors?.primary || '#3b82f6'};
+        --color-secondary: ${props => props.colors?.secondary || '#1f2937'};
+        --color-background: ${props => props.colors?.background || '#111827'};
+        --color-headers: ${props => props.colors?.headers || '#1f2937'};
+        --color-sidebar: ${props => props.colors?.sidebar || '#1f2937'};
+    }
+
     body {
         ${tw`font-sans text-neutral-200`};
         letter-spacing: 0.015em;
+        background-color: var(--color-background);
     }
 
     h1, h2, h3, h4, h5, h6 {

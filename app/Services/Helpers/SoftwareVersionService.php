@@ -12,8 +12,8 @@ use Trexz\Exceptions\Service\Helper\CdnVersionFetchingException;
 
 class SoftwareVersionService
 {
-    public const VERSION_CACHE_KEY = 'pterodactyl:versioning_data';
-    public const GIT_VERSION_CACHE_KEY = 'pterodactyl:git_data';
+    public const VERSION_CACHE_KEY = 'trexz:versioning_data';
+    public const GIT_VERSION_CACHE_KEY = 'trexz:git_data';
 
     private static array $result;
 
@@ -34,19 +34,19 @@ class SoftwareVersionService
     }
 
     /**
-     * Returns the latest version of the panel from the CDN servers.
+     * Returns the latest version of the panel from GitHub.
      */
     public function getLatestPanel(): string
     {
-        return Arr::get(self::$result, 'panel') ?? 'error';
+        return Arr::get(self::$result, 'panel') ?? '1.0.0';
     }
 
     /**
-     * Returns the latest version of the Wings from the CDN servers.
+     * Returns the latest version of the Wings from GitHub.
      */
     public function getLatestWings(): string
     {
-        return Arr::get(self::$result, 'wings') ?? 'error';
+        return Arr::get(self::$result, 'wings') ?? '1.0.0';
     }
 
     /**
@@ -54,7 +54,7 @@ class SoftwareVersionService
      */
     public function getDiscord(): string
     {
-        return Arr::get(self::$result, 'discord') ?? 'https://pterodactyl.io/discord';
+        return Arr::get(self::$result, 'discord') ?? 'https://discord.gg/trexz';
     }
 
     /**
@@ -62,7 +62,7 @@ class SoftwareVersionService
      */
     public function getDonations(): string
     {
-        return Arr::get(self::$result, 'donations') ?? 'https://github.com/sponsors/matthewpi';
+        return Arr::get(self::$result, 'donations') ?? 'https://github.com/sponsors/trexz';
     }
 
     /**
@@ -71,7 +71,7 @@ class SoftwareVersionService
     public function isLatestPanel(): bool
     {
         $version = $this->getCurrentVersion();
-        if ($version === 'canary') {
+        if ($version === 'canary' || $version === 'dev') {
             return true;
         }
 
@@ -91,7 +91,7 @@ class SoftwareVersionService
     }
 
     /**
-     * ?
+     * Get version data for the overview.
      */
     public function getVersionData(): array
     {
@@ -147,21 +147,43 @@ class SoftwareVersionService
     }
 
     /**
-     * Keeps the versioning cache up-to-date with the latest results from the CDN.
+     * Keeps the versioning cache up-to-date with the latest results from GitHub.
      */
     protected function cacheVersionData(): array
     {
         return $this->cache->remember(self::VERSION_CACHE_KEY, CarbonImmutable::now()->addMinutes(config('trexz.cdn.cache_time', 60)), function () {
             try {
-                $response = Http::get(config('trexz.cdn.url'));
+                $response = Http::timeout(5)->get(config('trexz.cdn.url'));
 
-                if ($response->status() === 200) {
-                    return json_decode($response->body(), true);
+                if ($response->successful()) {
+                    $data = $response->json();
+                    
+                    // Parse GitHub release format
+                    if (isset($data['tag_name'])) {
+                        return [
+                            'panel' => ltrim($data['tag_name'], 'v'),
+                            'wings' => ltrim($data['tag_name'], 'v'), // Can be different if you have wings releases
+                            'discord' => 'https://discord.gg/trexz',
+                            'donations' => 'https://github.com/sponsors/trexz',
+                        ];
+                    }
+                    
+                    // Legacy format support
+                    if (isset($data['panel'])) {
+                        return $data;
+                    }
                 }
 
-                throw new CdnVersionFetchingException();
-            } catch (Exception) {
-                return [];
+                // Fallback values
+                return [
+                    'panel' => $this->getCurrentVersion(),
+                    'wings' => $this->getCurrentVersion(),
+                ];
+            } catch (Exception $e) {
+                return [
+                    'panel' => $this->getCurrentVersion(),
+                    'wings' => $this->getCurrentVersion(),
+                ];
             }
         });
     }

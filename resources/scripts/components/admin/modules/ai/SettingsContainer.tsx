@@ -52,7 +52,7 @@ export default () => {
                                 />
                             </div>
                             <p className={'text-gray-400 text-xs mt-1.5'}>
-                                If enabled, standard Jexactyl users will be able to interact with Jexactyl AI as well as
+                                If enabled, standard Trexz users will be able to interact with Trexz AI as well as
                                 administrators.
                             </p>
                         </div>

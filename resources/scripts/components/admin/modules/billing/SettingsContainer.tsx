@@ -51,7 +51,7 @@ export default () => {
             {open === 'link' && <SetupLink setOpen={setOpen} />}
             {open === 'setup' && <SetupStripe extOpen />}
             <AdminBox title={'Add PayPal integration'} icon={faPaypal}>
-                Adding PayPal to Jexactyl allows users to purchase products via another channel, improving order success
+                Adding PayPal to Trexz allows users to purchase products via another channel, improving order success
                 rate and global payment availability.
                 <p className={'text-gray-400 mt-2'}>
                     PayPal module is currently{' '}
@@ -76,7 +76,7 @@ export default () => {
                 </div>
             </AdminBox>
             <AdminBox title={'Add Link integration'} icon={faStripe}>
-                Adding Link to Jexactyl allows users to purchase products via another channel, improving order success
+                Adding Link to Trexz allows users to purchase products via another channel, improving order success
                 rate and global payment availability.
                 <p className={'text-gray-400 mt-2'}>
                     Link module is currently{' '}
@@ -121,7 +121,7 @@ export default () => {
             <AdminBox title={'Import/Export Configuration'} icon={faExchange}>
                 <FlashMessageRender byKey={'billing:config'} className={'mb-2'} />
                 Use the below options to either export your current billing configurations, or use the Import button to
-                import a pre-created set of categories and products to Jexactyl.
+                import a pre-created set of categories and products to Trexz.
                 <div className={'text-right mt-3'}>
                     <ExportConfigButton />
                     <ImportConfigButton />

@@ -40,3 +40,4 @@ docker-compose.yaml
 Caddyfile
 *.pem
 
+panel.tar.gz

@@ -38,7 +38,7 @@ const FileObjectRow = ({ file }: { file: FileObject }) => (
         key={file.name}
         onContextMenu={e => {
             e.preventDefault();
-            window.dispatchEvent(new CustomEvent(`Jexactyl:files:ctx:${file.key}`, { detail: e.clientX }));
+            window.dispatchEvent(new CustomEvent(`Trexz:files:ctx:${file.key}`, { detail: e.clientX }));
         }}
     >
         <SelectFileCheckbox name={file.name} />

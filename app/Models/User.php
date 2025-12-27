@@ -3,6 +3,7 @@
 namespace Trexz\Models;
 
 use Trexz\Rules\Username;
+use Trexz\Models\ServerGroup;
 use Trexz\Facades\Activity;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rules\In;
@@ -287,6 +288,11 @@ class User extends Model implements
     public function sshKeys(): HasMany
     {
         return $this->hasMany(UserSSHKey::class);
+    }
+
+    public function serverGroups(): HasMany
+    {
+        return $this->hasMany(ServerGroup::class);
     }
 
     /**

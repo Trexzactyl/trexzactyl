@@ -4,6 +4,7 @@ import { ServerContext } from '@/state/server';
 import StoreRouter from '@/routers/StoreRouter';
 import TicketRouter from '@/routers/TicketRouter';
 import ServerRouter from '@/routers/ServerRouter';
+import AdminRouter from '@/routers/AdminRouter';
 import Spinner from '@/components/elements/Spinner';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import DashboardRouter from '@/routers/DashboardRouter';
@@ -25,6 +26,8 @@ const InterceptorSetup = () => {
 export default () => {
     const authenticated = useStoreState(state => state.user?.data);
     const approved = useStoreState(state => state.user.data?.approved);
+    const rootAdmin = useStoreState(state => state.user.data?.rootAdmin);
+    const adminRoleId = useStoreState(state => state.user.data?.adminRoleId);
     const store = useStoreState(state => state.storefront.data?.enabled);
     const tickets = useStoreState(state => state.settings.data?.tickets);
     const approvals = useStoreState(state => state.settings.data?.approvals);
@@ -49,6 +52,8 @@ export default () => {
         );
     }
 
+    const isAdmin = rootAdmin || adminRoleId;
+
     return (
         <BrowserRouter>
             <InterceptorSetup />
@@ -61,6 +66,18 @@ export default () => {
                         </Spinner.Suspense>
                     }
                 />
+                {isAdmin && (
+                    <Route
+                        path="/admin/*"
+                        element={
+                            <AuthenticatedRoute>
+                                <Spinner.Suspense>
+                                    <AdminRouter />
+                                </Spinner.Suspense>
+                            </AuthenticatedRoute>
+                        }
+                    />
+                )}
                 <Route
                     path="/server/:id/*"
                     element={

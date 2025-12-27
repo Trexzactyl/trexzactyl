@@ -10,12 +10,14 @@ import earnCredits from '@/api/account/earnCredits';
 import { StorefrontSettings } from '@/state/storefront';
 import GlobalStylesheet from '@/assets/css/GlobalStylesheet';
 import { EverestSettings } from '@/state/everest';
-// ... imports
+import { SiteTheme } from '@/state/theme';
+import '@/i18n';
 
 interface ExtendedWindow extends Window {
     SiteConfiguration?: SiteSettings;
     StoreConfiguration?: StorefrontSettings;
     TrexzConfiguration?: EverestSettings;
+    ThemeConfiguration?: SiteTheme;
     TrexzUser?: {
         uuid: string;
         username: string;
@@ -35,7 +37,7 @@ interface ExtendedWindow extends Window {
 }
 
 const App = () => {
-    const { TrexzUser, SiteConfiguration, StoreConfiguration, TrexzConfiguration } = window as ExtendedWindow;
+    const { TrexzUser, SiteConfiguration, StoreConfiguration, TrexzConfiguration, ThemeConfiguration } = window as ExtendedWindow;
 
     if (TrexzUser && !store.getState().user.data) {
         store.getActions().user.setUserData({
@@ -69,6 +71,10 @@ const App = () => {
         store.getActions().everest.setEverest(TrexzConfiguration);
     }
 
+    if (ThemeConfiguration && !store.getState().theme.data) {
+        store.getActions().theme.setTheme(ThemeConfiguration);
+    }
+
     React.useEffect(() => {
         if (TrexzUser) {
             const earn = () => {
@@ -79,9 +85,11 @@ const App = () => {
         }
     }, [TrexzUser]);
 
+    const themeColors = store.getState().theme.data?.colors;
+
     return (
         <>
-            <GlobalStylesheet />
+            <GlobalStylesheet colors={themeColors} />
             <StoreProvider store={store}>
                 <div css={tw`mx-auto w-auto`}>
                     <IndexRouter />

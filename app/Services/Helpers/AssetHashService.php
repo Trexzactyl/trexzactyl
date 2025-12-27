@@ -78,6 +78,17 @@ class AssetHashService
      */
     public function js(string $resource): string
     {
+        $manifest = $this->manifest();
+        $data = Arr::get($manifest, $resource);
+        $output = '';
+        
+        // Load CSS files first if they exist for this entry point
+        if ($data && isset($data['css'])) {
+            foreach ($data['css'] as $cssFile) {
+                $output .= '<link rel="stylesheet" href="/build/' . ltrim($cssFile, '/') . '" crossorigin="anonymous">' . "\n";
+            }
+        }
+        
         $attributes = [
             'src' => $this->url($resource),
             'crossorigin' => 'anonymous',
@@ -87,7 +98,7 @@ class AssetHashService
             $attributes['integrity'] = $this->integrity($resource);
         }
 
-        $output = '<script';
+        $output .= '<script';
         foreach ($attributes as $key => $value) {
             $output .= " $key=\"$value\"";
         }
