@@ -6,10 +6,15 @@ import { capitalize } from '@/lib/strings';
 import { Dialog } from '@/elements/dialog';
 
 export default () => {
-    const { uuid: user } = useStoreState(s => s.user.data!);
-    const { alert } = useStoreState(s => s.everest.data!);
+    const user = useStoreState(s => s.user.data);
+    const everest = useStoreState(s => s.everest.data);
+    const [open, setOpen] = usePersistedState(`alert_${everest?.alert?.uuid || 'default'}_${user?.uuid || 'default'}`, true);
 
-    const [open, setOpen] = usePersistedState(`alert_${alert.uuid}_${user}`, true);
+    if (!user || !everest || !everest.alert) {
+        return null;
+    }
+
+    const alert = everest.alert;
 
     return (
         <>

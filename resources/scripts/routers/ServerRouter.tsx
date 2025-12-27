@@ -47,15 +47,14 @@ function ServerRouter() {
         return null;
     }
     const [error, setError] = useState('');
-    const theme = useStoreState(state => state.theme.data!);
-    const name = useStoreState(state => state.settings.data!.name);
-    const logo = useStoreState(state => state.settings.data!.logo);
+    const theme = useStoreState(state => state.theme.data);
+    const name = useStoreState(state => state.settings.data?.name);
+    const logo = useStoreState(state => state.settings.data?.logo);
     const inConflictState = ServerContext.useStoreState(state => state.server.inConflictState);
     const getServer = ServerContext.useStoreActions(actions => actions.server.getServer);
-    const clearServerState = ServerContext.useStoreActions(actions => actions.clearServerState);
-    const [collapsed, setCollapsed] = usePersistedState<boolean>(`sidebar_user_${user.uuid}`, false);
+    const [collapsed, setCollapsed] = usePersistedState<boolean>(`sidebar_user_${user?.uuid || "default"}`, false);
     const server = ServerContext.useStoreState(state => state.server.data);
-    const activityEnabled = useStoreState(state => state.settings.data!.activity.enabled.server);
+    const activityEnabled = useStoreState(state => state.settings.data?.activity.enabled.server);
     const billable = server?.billingProductId;
     const status = ServerContext.useStoreState(state => state.status.value);
 

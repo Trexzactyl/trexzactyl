@@ -36,6 +36,14 @@ export default function NodeSettingsContainer({ node }: { node?: Node }) {
                     type={'text'}
                     disabled={node !== undefined}
                 />
+            <div css={tw`mb-6`}>
+                <Field
+                    id={'daemonBrand'}
+                    name={'daemonBrand'}
+                    label={'Daemon Brand Name'}
+                    type={'text'}
+                />
+            </div>
             </div>
 
             <div css={tw`mt-6`}>

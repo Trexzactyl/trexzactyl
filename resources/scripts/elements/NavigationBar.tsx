@@ -33,16 +33,12 @@ const NavigationBar = () => {
     const [currentPage, setCurrentPage] = useState(0);
 
     const location = useLocation();
-    const theme = useStoreState(state => state.theme.data!);
+    const theme = useStoreState(state => state.theme.data);
     const user = useStoreState(state => state.user.data);
-    const activityEnabled = useStoreState(state => state.settings.data!.activity.enabled.account);
+    const activityEnabled = useStoreState(state => state.settings.data?.activity.enabled.account);
 
-    if (!user) {
-        return null;
-    }
+    // MUST call hooks before conditional return
     const { data } = useActivityLogs({ page: 1 }, { revalidateOnMount: true, revalidateOnFocus: false });
-
-    const pathnames = location.pathname.split('/').filter(Boolean);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -56,6 +52,13 @@ const NavigationBar = () => {
         }, 75);
         return () => clearInterval(interval);
     }, []);
+
+    // NOW check after all hooks are called
+    if (!user || !theme) {
+        return null;
+    }
+
+    const pathnames = location.pathname.split('/').filter(Boolean);
 
     const renderBreadcrumbs = () => (
         <ol className="w-1/3 text-gray-400 text-sm inline-flex space-x-2">

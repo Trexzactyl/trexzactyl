@@ -51,14 +51,8 @@ interface CreateValues {
 export default () => {
     const [loading, setLoading] = useState(false);
     const [resources, setResources] = useState<Resources>();
-
     const user = useStoreState(state => state.user.data);
-
-    if (!user) {
-        return null;
-    }
     const { clearFlashes, clearAndAddHttpError } = useFlash();
-
     const [egg, setEgg] = useState<number>(0);
     const [eggs, setEggs] = useState<Egg[]>();
     const [nest, setNest] = useState<number>(0);
@@ -68,13 +62,16 @@ export default () => {
 
     useEffect(() => {
         clearFlashes();
-
         getResources().then(resources => setResources(resources));
-
         getEggs().then(eggs => setEggs(eggs));
         getNests().then(nests => setNests(nests));
         getNodes().then(nodes => setNodes(nodes));
     }, []);
+
+    if (!user) {
+        return null;
+    }
+
 
     const changeNest = (e: ChangeEvent<HTMLSelectElement>) => {
         setNest(parseInt(e.target.value));

@@ -24,6 +24,7 @@ export interface Node {
     disk: number;
     diskOverallocate: number;
     uploadSize: number;
+    daemonBrand: string;
     daemonBase: string;
     deployable: boolean;
     deployableFree: boolean;
@@ -57,17 +58,16 @@ export const rawDataToNode = ({ attributes, meta }: FractalResponseData): Node =
     memory: attributes.memory,
     memoryOverallocate: attributes.memory_overallocate,
     disk: attributes.disk,
-    diskOverallocate: attributes.disk_overallocate,
-    uploadSize: attributes.upload_size,
     daemonBase: attributes.daemon_base,
+    daemonBrand: attributes.daemon_brand,
     deployable: attributes.deployable,
     deployableFree: attributes.deployable_free,
     createdAt: new Date(attributes.created_at),
     updatedAt: new Date(attributes.updated_at),
 
-    memoryUsedPercent: meta?.utilization.memory ?? 0,
-    diskUsedPercent: meta?.utilization.disk ?? 0,
-    allocationsUsedPercent: meta?.utilization.allocations ?? 0,
+    memoryUsedPercent: meta?.utilization?.memory ?? 0,
+    diskUsedPercent: meta?.utilization?.disk ?? 0,
+    allocationsUsedPercent: meta?.utilization?.allocations ?? 0,
 
     relations: {
         // eslint-disable-next-line camelcase

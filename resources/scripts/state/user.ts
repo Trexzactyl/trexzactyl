@@ -34,8 +34,14 @@ const user: UserStore = {
     }),
 
     updateUserData: action((state, payload) => {
-        // @ts-expect-error limitation of Typescript, can't do much about that currently unfortunately.
-        state.data = { ...state.data, ...payload };
+        // Fixed: Only spread if state.data exists, otherwise just use payload
+        if (state.data) {
+            // @ts-expect-error limitation of Typescript, can't do much about that currently unfortunately.
+            state.data = { ...state.data, ...payload };
+        } else {
+            // @ts-expect-error limitation of Typescript
+            state.data = payload as UserData;
+        }
     }),
 
     updateUserEmail: thunk(async (actions, payload) => {

@@ -38,6 +38,7 @@ interface Values {
     publicPortHTTP: number;
     listenPortSFTP: number;
     publicPortSFTP: number;
+    daemonBrand: string;
 }
 
 export default () => {
@@ -92,6 +93,7 @@ export default () => {
                 public: node.public ? 'true' : 'false',
                 deployable: node.deployable ? 'true' : 'false',
                 deployableFree: node.deployableFree ? 'true' : 'false',
+                daemonBrand: node.daemonBrand,
                 daemonBase: node.daemonBase,
 
                 listenPortHTTP: node.listenPortHTTP,

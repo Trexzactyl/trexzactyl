@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 `;
 
 const DiscordFormContainer = ({ children }: { children: React.ReactNode }) => {
-    const name = useStoreState(state => state.settings.data!.name);
+    const name = useStoreState(state => state.settings.data?.name);
 
     return (
         <div>

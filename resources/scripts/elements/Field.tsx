@@ -40,8 +40,8 @@ const StyledInput = styled(Input)`
 
 const Field = forwardRef<HTMLInputElement, Props>(
     ({ id, name, light = false, label, description, validate, icon, type = 'text', ...props }, ref) => {
-        const theme = useStoreState(state => state.theme.data!);
-        const bgColor = theme.colors.secondary;
+        const theme = useStoreState(state => state.theme.data);
+        const bgColor = theme?.colors?.secondary || '#27272a';
 
         return (
             <FormikField name={name} validate={validate}>

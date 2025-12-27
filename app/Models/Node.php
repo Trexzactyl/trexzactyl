@@ -228,4 +228,20 @@ class Node extends Model
 
         return ($this->sum_memory + $memory) <= $memoryLimit && ($this->sum_disk + $disk) <= $diskLimit;
     }
-}
+    
+    /**
+     * Returns the percentage of memory and disk allocated on this node.
+     */
+    public function getPercentUtilization(): array
+    {
+        $resources = $this->servers()->select(['memory', 'disk'])->get();
+        
+        $memoryAllocated = $resources->sum('memory');
+        $diskAllocated = $resources->sum('disk');
+        
+        return [
+            'memory' => $this->memory > 0 ? round(($memoryAllocated / $this->memory) * 100, 2) : 0,
+            'disk' => $this->disk > 0 ? round(($diskAllocated / $this->disk) * 100, 2) : 0,
+        ];
+    }
+    }

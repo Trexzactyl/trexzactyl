@@ -33,6 +33,7 @@ function statusToColor(status: ServerStatus): string {
 
 function ServerConsoleContainer() {
     const user = useStoreState(state => state.user.data);
+    const [expand, setExpand] = usePersistedState<boolean>(`console_expand_${user?.uuid || 'default'}`, false);
 
     if (!user) {
         return null;
@@ -42,7 +43,6 @@ function ServerConsoleContainer() {
     const name = ServerContext.useStoreState(state => state.server.data!.name);
     const description = ServerContext.useStoreState(state => state.server.data!.description);
     const isInstalling = ServerContext.useStoreState(state => state.server.isInstalling);
-    const [expand, setExpand] = usePersistedState<boolean>(`console_expand_${user.uuid}`, false);
     const isTransferring = ServerContext.useStoreState(state => state.server.data!.isTransferring);
     const eggFeatures = ServerContext.useStoreState(state => state.server.data!.eggFeatures, isEqual);
     const isNodeUnderMaintenance = ServerContext.useStoreState(state => state.server.data!.isNodeUnderMaintenance);

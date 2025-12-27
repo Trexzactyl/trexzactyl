@@ -37,22 +37,21 @@ export default () => {
     const billing = useStoreState(state => state.everest.data?.billing?.enabled);
     const activityEnabled = useStoreState(state => state.settings.data?.activity?.enabled?.account);
 
-    // Early return if required data is not loaded
-    if (!user || !user.email || !name || !colors || billing === undefined || activityEnabled === undefined) {
-        return null;
-    }
-
-    const uuid = user.uuid;
-    const [showOnlyAdmin, setShowOnlyAdmin] = usePersistedState(`${uuid}:show_all_servers`, false);
-
+    // MUST call hooks before conditional returns
+    const [showOnlyAdmin, setShowOnlyAdmin] = usePersistedState(`${user?.uuid || 'default'}:show_all_servers`, false);
     const [groups, setGroups] = useState<ServerGroup[]>([]);
     const [page, setPage] = useState(!isNaN(defaultPage) && defaultPage > 0 ? defaultPage : 1);
     const { clearFlashes, clearAndAddHttpError } = useFlash();
 
     const { data: servers, error } = useSWR<PaginatedResult<Server>>(
-        ['/api/client/servers', showOnlyAdmin && user.rootAdmin, page],
-        () => getServers({ page, type: showOnlyAdmin && user.rootAdmin ? 'admin' : undefined, per_page: 5 }),
+        ['/api/client/servers', showOnlyAdmin && user?.rootAdmin, page],
+        () => getServers({ page, type: showOnlyAdmin && user?.rootAdmin ? 'admin' : undefined, per_page: 5 }),
     );
+
+    // Early return AFTER all hooks
+    if (!user || !user.email || !name || !colors || billing === undefined || activityEnabled === undefined) {
+        return null;
+    }
 
     useEffect(() => {
         getServerGroups()

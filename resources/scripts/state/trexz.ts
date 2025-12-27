@@ -86,8 +86,13 @@ const everest: EverestStore = {
     }),
 
     updateEverest: action((state, payload) => {
-        // @ts-expect-error limitation of Typescript, can't do much about that currently unfortunately.
-        state.data = { ...state.data, ...payload };
+        if (state.data) {
+            // @ts-expect-error limitation of Typescript, can't do much about that currently unfortunately.
+            state.data = { ...state.data, ...payload };
+        } else {
+            // @ts-expect-error limitation of Typescript
+            state.data = payload as EverestSettings;
+        }
     }),
 };
 

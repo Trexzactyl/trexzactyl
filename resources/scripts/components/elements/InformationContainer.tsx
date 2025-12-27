@@ -21,18 +21,21 @@ export default () => {
     const { addFlash } = useFlash();
     const [bal, setBal] = useState(0);
     const [activity, setActivity] = useState<Activity>();
-    const properties = wrapProperties(activity?.properties);
     const user = useStoreState(state => state.user.data);
-    const store = useStoreState(state => state.storefront.data!);
+    const store = useStoreState(state => state.storefront.data);
 
-    if (!user) {
-        return null;
-    }
-
+    // Call hooks BEFORE conditional return
     useEffect(() => {
+        if (!user) return;
         getResources().then(d => setBal(d.balance));
         getLatestActivity().then(d => setActivity(d));
-    }, []);
+    }, [user]);
+
+    const properties = wrapProperties(activity?.properties);
+
+    if (!user || !store) {
+        return null;
+    }
 
     const verify = () => {
         apiVerify().then(data => {

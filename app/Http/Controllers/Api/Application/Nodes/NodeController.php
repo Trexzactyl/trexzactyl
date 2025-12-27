@@ -7,6 +7,7 @@ use Trexz\Facades\Activity;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Spatie\QueryBuilder\QueryBuilder;
+use Trexz\Exceptions\Service\Node\ConfigurationNotPersistedException;
 use Trexz\Services\Nodes\NodeUpdateService;
 use Trexz\Services\Nodes\NodeCreationService;
 use Trexz\Services\Nodes\NodeDeletionService;
@@ -112,6 +113,38 @@ class NodeController extends ApplicationApiController
      *
      * @throws \Trexz\Exceptions\Service\HasActiveServersException
      */
+    /**
+     * Reset the daemon token for a node.
+     *
+     * @throws \Throwable
+     */
+    public function resetToken(GetNodeRequest $request, Node $node): array
+    {
+        $daemonOffline = false;
+        
+        try {
+            $node = $this->updateService->handle($node, [], true);
+        } catch (ConfigurationNotPersistedException $exception) {
+            // Token was reset successfully in database, but Wings couldn't be updated
+            // Reload the node from database to get the updated token
+            $node = Node::find($node->id);
+            $daemonOffline = true;
+        }
+
+        Activity::event('admin:nodes:token-reset')
+            ->property('node', $node)
+            ->description('Node daemon token was reset')
+            ->log();
+
+        return $this->fractal->item($node)
+            ->transformWith(NodeTransformer::class)
+            ->addMeta([
+                'daemon_offline' => $daemonOffline,
+                'warning' => $daemonOffline ? trans('exceptions.node.daemon_off_config_updated') : null,
+            ])
+            ->toArray();
+    }
+
     public function delete(DeleteNodeRequest $request, Node $node): Response
     {
         $this->deletionService->handle($node);

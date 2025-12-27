@@ -14,18 +14,18 @@ import { PuzzleIcon, ReplyIcon } from '@heroicons/react/outline';
 import { Fragment } from 'react';
 
 function AdminRouter() {
-    const theme = useStoreState(state => state.theme.data!);
+    const theme = useStoreState(state => state.theme.data);
     const user = useStoreState(state => state.user.data);
-    const settings = useStoreState(state => state.settings.data!);
+    const settings = useStoreState(state => state.settings.data);
+    const [collapsed, setCollapsed] = usePersistedState<boolean>(`sidebar_admin_${user?.uuid || "default"}`, false);
 
-    if (!user || !user.email) {
+    if (!user || !user.email || !theme || !settings) {
         return null;
     }
 
     const activityEnabled: boolean = settings.activity.enabled.admin;
 
     const categories = ['general', 'modules', 'appearance', 'management', 'services'] as const;
-    const [collapsed, setCollapsed] = usePersistedState<boolean>(`sidebar_admin_${user.uuid}`, false);
 
     return (
         <div className={'h-screen flex'}>

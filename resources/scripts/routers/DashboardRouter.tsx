@@ -16,17 +16,18 @@ import NavigationBar from '@/elements/NavigationBar';
 import DashboardContainer from '@account/DashboardContainer';
 
 function DashboardRouter() {
-    const user = useStoreState(s => s.user.data!);
-    const { name, logo } = useStoreState(s => s.settings.data!);
-    const theme = useStoreState(state => state.theme.data!);
+    const user = useStoreState(s => s.user.data);
+    const settings = useStoreState(s => s.settings.data);
+    const theme = useStoreState(state => state.theme.data);
     const [links, setLinks] = useState<CustomLink[] | null>();
-    const flags = useStoreState(state => state.everest.data!);
+    const flags = useStoreState(state => state.everest.data);
+    const [collapsed, setCollapsed] = usePersistedState<boolean>(`sidebar_user_${user?.uuid || "default"}`, false);
 
-    if (!user || !user.email) {
+    if (!user || !user.email || !settings || !theme || !flags) {
         return null;
     }
 
-    const [collapsed, setCollapsed] = usePersistedState<boolean>(`sidebar_user_${user.uuid}`, false);
+    const { name, logo } = settings;
 
     useEffect(() => {
         getLinks().then(setLinks).catch();
