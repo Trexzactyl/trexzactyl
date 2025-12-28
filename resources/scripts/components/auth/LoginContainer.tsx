@@ -21,8 +21,8 @@ const LoginContainer = () => {
     const ref = useRef<Reaptcha>(null);
     const [token, setToken] = useState('');
     const name = useStoreState(state => state.settings.data?.name);
-    const email = useStoreState(state => state.settings.data?.registration.email);
-    const discord = useStoreState(state => state.settings.data?.registration.discord);
+    const email = useStoreState(state => state.settings.data?.registration?.email);
+    const discord = useStoreState(state => state.settings.data?.registration?.discord);
 
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const recaptchaEnabled = useStoreState(state => state.settings.data?.recaptcha?.enabled || false);

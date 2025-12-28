@@ -23,7 +23,7 @@ export interface SiteSettings {
             admin: boolean;
         };
     };
-    registration: {
+    registration?: {
         enabled: boolean;
         email?: boolean;
         discord?: boolean;
