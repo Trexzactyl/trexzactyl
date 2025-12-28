@@ -32,6 +32,7 @@ const AdminUsersContainer = lazy(() => import('@/components/admin/management/use
 const NewUserContainer = lazy(() => import('@/components/admin/management/users/NewUserContainer'));
 const UserRouter = lazy(() => import('@/components/admin/management/users/UserRouter'));
 const RolesContainer = lazy(() => import('@/components/admin/management/roles/RolesContainer'));
+const LocationsContainer = lazy(() => import('@/components/admin/management/locations/LocationsContainer'));
 const RoleEditContainer = lazy(() => import('@/components/admin/management/roles/RoleEditContainer'));
 
 const NestsContainer = lazy(() => import('@/components/admin/service/nests/NestsContainer'));
@@ -105,6 +106,15 @@ const admin: AdminRouteDefinition[] = [
     route('nests/:nestId', NestEditContainer),
     route('nests/:nestId/new', NewEggContainer),
     route('nests/:nestId/eggs/:id/*', EggRouter),
+
+    /**
+     * Admin - Location Routes
+     */
+    route('locations', LocationsContainer, {
+        name: 'Locations',
+        icon: Icon.LocationMarkerIcon,
+        category: 'management'
+    }),
 ];
 
 export default admin;

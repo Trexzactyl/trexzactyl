@@ -7,8 +7,8 @@ import { withSubComponents } from '@/lib/helpers';
 
 const MobileSidebar = ({ children }: { children: ReactNode[] }) => {
     return (
-        <div className={'block md:hidden w-full fixed bottom-0 h-16 z-50 rounded-t-xl bg-black/80'}>
-            <div className={'flex h-full px-8 space-x-8 overflow-x-auto'}>{children}</div>
+        <div className={'block md:hidden fixed top-0 left-0 h-full w-64 z-50 bg-black/95 shadow-xl transition-transform duration-300'}>
+            <div className={'flex flex-col h-full py-6 space-y-4 overflow-y-auto'}>{children}</div>
         </div>
     );
 };
@@ -32,13 +32,12 @@ const Link = ({
             to={linkTo}
             end={end}
             className={({ isActive }) =>
-                `h-full flex items-center justify-center font-semibold transition duration-300 ${
-                    isActive ? setActive(true) : setActive(false)
+                `w-full px-6 py-3 flex items-center font-semibold transition duration-300 hover:bg-white/5 ${isActive ? setActive(true) : setActive(false)
                 }`
             }
-            style={{ color: active ? colors.primary : '' }}
+            style={{ color: active ? colors.primary : '#9ca3af' }}
         >
-            {Icon && <Icon className={'w-4 h-4 mr-2'} />}
+            {Icon && <Icon className={'w-5 h-5 mr-4'} />}
             {text}
         </NavLink>
     );
