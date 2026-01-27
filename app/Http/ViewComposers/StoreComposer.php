@@ -21,11 +21,15 @@ class StoreComposer extends Composer
     {
         $view->with('storeConfiguration', [
             'enabled' => $this->setting('store:enabled', Composer::TYPE_BOOL),
-            'currency' => $this->setting('store:currency', Composer::TYPE_STR),
+            'currency' => config('gateways.currency', 'USD'),
+            'credit_price' => config('gateways.cost', 1.00),
 
             'gateways' => [
                 'paypal' => $this->setting('store:paypal:enabled', Composer::TYPE_BOOL),
                 'stripe' => $this->setting('store:stripe:enabled', Composer::TYPE_BOOL),
+                'bkash' => $this->settings->get('trexzactyl::store:bkash:number', config('gateways.bkash.number')),
+                'nagad' => $this->settings->get('trexzactyl::store:nagad:number', config('gateways.nagad.number')),
+                'conversion_rate' => $this->settings->get('trexzactyl::store:conversion_rate', 115),
             ],
 
             'renewals' => [

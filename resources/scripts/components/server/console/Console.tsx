@@ -52,7 +52,6 @@ const terminalProps: ITerminalOptions = {
 };
 
 export default () => {
-    const TERMINAL_PRELUDE = '\u001b[1m\u001b[33mTrexzactyl: \u001b[0m';
     const ref = useRef<HTMLDivElement>(null);
     const terminal = useMemo(() => new Terminal({ ...terminalProps }), []);
     const fitAddon = new FitAddon();
@@ -63,6 +62,10 @@ export default () => {
     const isConsoleDetached = location.pathname.endsWith('/console');
     const [canSendCommands] = usePermissions(['control.console']);
     const serverId = ServerContext.useStoreState((state) => state.server.data!.id);
+    const nodeConsoleName = ServerContext.useStoreState((state) => state.server.data!.nodeConsoleName);
+    const TERMINAL_PRELUDE = nodeConsoleName
+        ? `\u001b[1m\u001b[33m[ ${nodeConsoleName} ] \u001b[0m`
+        : '\u001b[1m\u001b[33mTrexzactyl: \u001b[0m';
     const { connected, instance } = ServerContext.useStoreState((state) => state.socket);
     const isTransferring = ServerContext.useStoreState((state) => state.server.data!.isTransferring);
     const [history, setHistory] = usePersistedState<string[]>(`${serverId}:command_history`, []);

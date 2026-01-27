@@ -11,8 +11,15 @@ class StoreFormRequest extends AdminFormRequest
         return [
             'store:enabled' => 'required|in:true,false',
             'store:paypal:enabled' => 'required|in:true,false',
+            'store:paypal:client_id' => 'nullable|string',
+            'store:paypal:client_secret' => 'nullable|string',
             'store:stripe:enabled' => 'required|in:true,false',
+            'store:stripe:secret' => 'nullable|string',
+            'store:stripe:webhook_secret' => 'nullable|string',
+            'store:bkash:number' => 'nullable|numeric',
+            'store:nagad:number' => 'nullable|numeric',
             'store:currency' => 'required|min:1|max:10',
+            'store:conversion_rate' => 'required|numeric|min:0',
 
             'earn:enabled' => 'required|in:true,false',
             'earn:amount' => 'required|numeric|min:0',

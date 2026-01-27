@@ -10,25 +10,13 @@ import { Button } from '@/components/elements/button';
 import { Dialog } from '@/components/elements/dialog';
 import { getCosts, Costs } from '@/api/store/getCosts';
 import purchaseResource from '@/api/store/purchaseResource';
-import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import PurchaseBox from '@/components/elements/store/PurchaseBox';
 import PageContentBlock from '@/components/elements/PageContentBlock';
+import { motion } from 'framer-motion';
 
 const Container = styled.div`
-    ${tw`flex flex-wrap`};
-
-    & > div {
-        ${tw`w-full`};
-
-        ${breakpoint('sm')`
-      width: calc(50% - 1rem);
-    `}
-
-        ${breakpoint('md')`
-      ${tw`w-auto flex-1`};
-    `}
-    }
+    ${tw`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8`};
 `;
 
 export default () => {
@@ -68,14 +56,15 @@ export default () => {
             <Dialog.Confirm
                 open={open}
                 onClose={() => setOpen(false)}
-                title={'Confirm resource seletion'}
+                title={'Confirm resource selection'}
                 confirm={'Continue'}
                 onConfirmed={() => purchase(resource)}
             >
                 Are you sure you want to purchase this resource ({resource})? This will take the credits from your
                 account and add the resource. This is not a reversible transaction.
             </Dialog.Confirm>
-            <Container css={tw`lg:grid lg:grid-cols-4 my-10 gap-8`}>
+
+            <Container css={tw`mb-12`}>
                 <PurchaseBox
                     type={'CPU'}
                     amount={50}
@@ -116,7 +105,8 @@ export default () => {
                     description={'Increase your server slot limit to deploy new instances.'}
                 />
             </Container>
-            <Container css={tw`lg:grid lg:grid-cols-4 my-10 gap-8`}>
+
+            <Container css={tw`mb-12`}>
                 <PurchaseBox
                     type={'Ports'}
                     amount={1}
@@ -144,40 +134,48 @@ export default () => {
                     setResource={setResource}
                     description={'Add more MySQL databases for your applications.'}
                 />
-                <div css={tw`bg-neutral-900/40 backdrop-blur-md border border-white/5 rounded-2xl p-6`}>
-                    <h3 css={tw`text-sm font-black uppercase tracking-widest text-neutral-100 mb-4 flex items-center`}>
-                        <Icon.Info size={16} css={tw`mr-2 text-blue-400`} /> Usage Guide
+                <div css={tw`bg-neutral-900/40 backdrop-blur-xl border border-neutral-700 rounded-3xl p-10 relative overflow-hidden flex flex-col justify-center`}>
+                    <div css={tw`absolute top-0 right-0 w-24 h-24 bg-blue-500/10 blur-2xl -mr-12 -mt-12`} />
+                    <h3 css={tw`text-lg font-black uppercase tracking-widest text-white mb-6 flex items-center`}>
+                        <Icon.Info size={20} css={tw`mr-3 text-blue-400`} strokeWidth={2.5} /> Usage Guide
                     </h3>
-                    <div css={tw`space-y-4`}>
+                    <div css={tw`space-y-6 relative z-10`}>
                         <div>
-                            <p css={tw`text-xs font-black uppercase tracking-widest text-blue-400 mb-1`}>Existing Servers</p>
-                            <p css={tw`text-xs text-neutral-400 leading-relaxed font-medium`}>
-                                Navigate to a server&apos;s &apos;Edit&apos; tab to allocate newly purchased resources.
+                            <p css={tw`text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-1.5`}>Server Allocation</p>
+                            <p css={tw`text-xs text-neutral-400 leading-relaxed font-bold uppercase tracking-wide`}>
+                                Navigate to a server&apos;s &apos;Edit&apos; tab to distribute your credits.
                             </p>
                         </div>
                         <div>
-                            <p css={tw`text-xs font-black uppercase tracking-widest text-blue-400 mb-1`}>New Deployments</p>
-                            <p css={tw`text-xs text-neutral-400 leading-relaxed font-medium`}>
-                                Allocated resources can be assigned during the creation process in the storefront.
+                            <p css={tw`text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-1.5`}>Deployment</p>
+                            <p css={tw`text-xs text-neutral-400 leading-relaxed font-bold uppercase tracking-wide`}>
+                                Credits are automatically deducted during the server creation process.
                             </p>
                         </div>
                     </div>
                 </div>
             </Container>
-            <div css={tw`flex justify-center items-center mt-16`}>
-                <div
+
+            <div css={tw`flex justify-center items-center mt-24 mb-12`}>
+                <motion.div
                     className={'group'}
-                    css={tw`w-full max-w-4xl bg-blue-600/5 backdrop-blur-sm border border-blue-500/20 p-8 rounded-3xl text-center relative overflow-hidden`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    css={tw`w-full max-w-5xl bg-neutral-900/40 backdrop-blur-xl border border-neutral-700 p-12 rounded-[2.5rem] text-center relative overflow-hidden shadow-2xl hover:border-blue-500 transition-all duration-500`}
                 >
-                    <div css={tw`absolute inset-0 bg-gradient-to-r from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                    <h1 css={tw`text-4xl font-black uppercase tracking-tighter text-neutral-100 mb-2`}>Ready to get started?</h1>
-                    <p css={tw`text-neutral-400 font-medium mb-8`}>Deploy your next high-performance server in seconds.</p>
-                    <Link to={'/store/create'}>
-                        <Button css={tw`px-12 bg-blue-600/10 text-blue-400 border border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/60 font-black uppercase tracking-widest text-sm py-4 rounded-xl transition-all shadow-lg`}>
-                            Create a server
-                        </Button>
-                    </Link>
-                </div>
+                    <div css={tw`absolute inset-0 bg-gradient-to-br from-blue-600/5 via-transparent to-purple-600/5 opacity-50`} />
+                    <div css={tw`absolute -bottom-24 -left-24 w-64 h-64 bg-blue-500/10 blur-[100px] rounded-full`} />
+                    <div css={tw`relative z-10`}>
+                        <h1 css={tw`text-5xl md:text-6xl font-black uppercase tracking-tighter text-white mb-4`}>Deploy Now</h1>
+                        <p css={tw`text-neutral-500 font-bold uppercase tracking-[0.2em] text-xs mb-10`}>Your high-performance instance is just a click away</p>
+                        <Link to={'/store/create'}>
+                            <Button css={tw`px-16 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest text-sm py-5 rounded-2xl transition-all shadow-xl hover:shadow-2xl active:scale-95`}>
+                                Initialize Instance
+                            </Button>
+                        </Link>
+                    </div>
+                </motion.div>
             </div>
         </PageContentBlock>
     );

@@ -34,7 +34,7 @@ class ServerEditService
         $this->verify($request, $server, $user);
 
         $server->update([$resource => $this->toServer($resource, $server) + $amount]);
-        $user->update(['store_' . $resource => $this->toUser($resource, $user) - $amount]);
+        $user->update([$this->toUserColumn($resource) => $this->toUser($resource, $user) - $amount]);
 
         return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
@@ -49,7 +49,7 @@ class ServerEditService
     {
         $amount = $request->input('amount');
         $resource = $request->input('resource');
-        $limit = $this->settings->get('Trexzactyl::store:limit:' . $resource);
+        $limit = $this->settings->get('Trexzactyl::store:limit:' . $resource, 0);
 
         // Check if the amount requested goes over defined limits.
         if (($amount + $this->toServer($resource, $server)) > $limit) {
@@ -67,40 +67,58 @@ class ServerEditService
         }
     }
 
-     /**
-      * Gets the minimum value for a specific resource.
-      *
-      * @throws DisplayException
-      */
-     protected function toMin(string $resource): int
-     {
-         return match ($resource) {
-             'cpu' => 50,
-             'allocation_limit' => 1,
-             'disk', 'memory' => 1024,
-             'backup_limit', 'database_limit' => 0,
-             default => throw new DisplayException('Unable to parse resource type')
-         };
-     }
+    /**
+     * Get the resource column name for the user.
+     *
+     * @throws DisplayException
+     */
+    protected function toUserColumn(string $resource): string
+    {
+        return match ($resource) {
+            'cpu' => 'store_cpu',
+            'disk' => 'store_disk',
+            'memory' => 'store_memory',
+            'backup_limit' => 'store_backups',
+            'allocation_limit' => 'store_ports',
+            'database_limit' => 'store_databases',
+            default => throw new DisplayException('Unable to parse resource type')
+        };
+    }
 
-     /**
-      * Get the requested resource type and transform it
-      * so it can be used in a database statement.
-      *
-      * @throws DisplayException
-      */
-     protected function toUser(string $resource, User $user): int
-     {
-         return match ($resource) {
-             'cpu' => $user->store_cpu,
-             'disk' => $user->store_disk,
-             'memory' => $user->store_memory,
-             'backup_limit' => $user->store_backups,
-             'allocation_limit' => $user->store_ports,
-             'database_limit' => $user->store_databases,
-             default => throw new DisplayException('Unable to parse resource type')
-         };
-     }
+    /**
+     * Gets the minimum value for a specific resource.
+     *
+     * @throws DisplayException
+     */
+    protected function toMin(string $resource): int
+    {
+        return match ($resource) {
+            'cpu' => 50,
+            'allocation_limit' => 1,
+            'disk', 'memory' => 1024,
+            'backup_limit', 'database_limit' => 0,
+            default => throw new DisplayException('Unable to parse resource type')
+        };
+    }
+
+    /**
+     * Get the requested resource type and transform it
+     * so it can be used in a database statement.
+     *
+     * @throws DisplayException
+     */
+    protected function toUser(string $resource, User $user): int
+    {
+        return match ($resource) {
+            'cpu' => $user->store_cpu,
+            'disk' => $user->store_disk,
+            'memory' => $user->store_memory,
+            'backup_limit' => $user->store_backups,
+            'allocation_limit' => $user->store_ports,
+            'database_limit' => $user->store_databases,
+            default => throw new DisplayException('Unable to parse resource type')
+        };
+    }
 
     /**
      * Get the requested resource type and transform it

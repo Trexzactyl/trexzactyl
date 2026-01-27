@@ -19,6 +19,44 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import { getResources, Resources } from '@/api/store/getResources';
 import PageContentBlock from '@/components/elements/PageContentBlock';
+import { motion, AnimatePresence } from 'framer-motion';
+import styled from 'styled-components';
+
+const PremiumBox = styled(motion.div)`
+    ${tw`bg-neutral-900/40 backdrop-blur-xl border border-neutral-700 p-8 rounded-3xl relative overflow-hidden transition-all duration-300`};
+    ${tw`hover:border-blue-500 hover:bg-neutral-900/60`};
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+        opacity: 0.6;
+    }
+`;
+
+const IconWrapper = styled.div`
+    ${tw`bg-blue-600/10 p-3 rounded-2xl border border-blue-500/20 mr-4 transition-transform duration-500`};
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+`;
+
+const InputLabel = styled.h3`
+    ${tw`text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-2 ml-1`};
+`;
+
+const PoolInfo = styled.div`
+    ${tw`mt-6 pt-4 border-t border-white/5 flex flex-wrap gap-4 text-[9px] font-black uppercase tracking-widest text-neutral-500`};
+    & span {
+        ${tw`bg-neutral-800/50 px-2 py-1 rounded border border-white/5`};
+    }
+    & b {
+        ${tw`text-blue-400 font-black`};
+    }
+`;
 
 interface CreateValues {
     name: string;
@@ -141,109 +179,135 @@ export default () => {
                     egg: number().required().default(egg),
                 })}
             >
-                <Form css={tw`space-y-6`}>
-                    {/* Basic Details & Resource Limits Row */}
-                    <div css={tw`grid grid-cols-1 lg:grid-cols-2 gap-6`}>
-                        <div css={tw`bg-neutral-900/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl relative overflow-hidden transition-all hover:bg-neutral-900/60`}>
-                            <div css={tw`flex items-center mb-4`}>
-                                <div css={tw`bg-blue-600/10 p-2 rounded-lg border border-blue-500/20 mr-3`}>
-                                    <Icon.Tag size={18} css={tw`text-blue-400`} />
-                                </div>
-                                <h2 css={tw`text-sm font-black uppercase tracking-widest text-neutral-100`}>Basic Details</h2>
-                            </div>
-                            <div css={tw`space-y-4`}>
+                <Form css={tw`space-y-8`}>
+                    <div css={tw`grid grid-cols-1 lg:grid-cols-2 gap-8`}>
+                        <PremiumBox
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4 }}
+                        >
+                            <div css={tw`flex items-center mb-8`}>
+                                <IconWrapper>
+                                    <Icon.Tag size={24} css={tw`text-blue-400`} strokeWidth={2.5} />
+                                </IconWrapper>
                                 <div>
-                                    <h3 css={tw`text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-1 ml-1`}>Server Name</h3>
-                                    <Field name={'name'} css={tw`bg-neutral-900/50 border-neutral-800 focus:border-blue-500/50 rounded-xl h-10 text-sm`} />
-                                </div>
-                                <div>
-                                    <h3 css={tw`text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-1 ml-1`}>Description (Optional)</h3>
-                                    <Field name={'description'} css={tw`bg-neutral-900/50 border-neutral-800 focus:border-blue-500/50 rounded-xl h-10 text-sm`} />
+                                    <h2 css={tw`text-lg font-black uppercase tracking-tight text-white`}>Identity</h2>
+                                    <p css={tw`text-[10px] text-neutral-500 font-bold uppercase tracking-widest`}>Basic identification details</p>
                                 </div>
                             </div>
-                        </div>
+                            <div css={tw`space-y-6`}>
+                                <div>
+                                    <InputLabel>Server Name</InputLabel>
+                                    <Field name={'name'} css={tw`bg-neutral-900/50 border-neutral-700 focus:border-blue-500 rounded-2xl h-12 text-sm px-4 font-bold tracking-wide`} />
+                                </div>
+                                <div>
+                                    <InputLabel>Description</InputLabel>
+                                    <Field name={'description'} css={tw`bg-neutral-900/50 border-neutral-700 focus:border-blue-500 rounded-2xl h-12 text-sm px-4 font-bold tracking-wide`} />
+                                </div>
+                            </div>
+                        </PremiumBox>
 
-                        <div css={tw`bg-neutral-900/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl relative overflow-hidden transition-all hover:bg-neutral-900/60`}>
-                            <div css={tw`flex items-center mb-4`}>
-                                <div css={tw`bg-blue-600/10 p-2 rounded-lg border border-blue-500/20 mr-3`}>
-                                    <Icon.Cpu size={18} css={tw`text-blue-400`} />
-                                </div>
-                                <h2 css={tw`text-sm font-black uppercase tracking-widest text-neutral-100`}>Resource Limits</h2>
-                            </div>
-                            <div css={tw`grid grid-cols-3 gap-3`}>
+                        <PremiumBox
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.1 }}
+                        >
+                            <div css={tw`flex items-center mb-8`}>
+                                <IconWrapper>
+                                    <Icon.Cpu size={24} css={tw`text-blue-400`} strokeWidth={2.5} />
+                                </IconWrapper>
                                 <div>
-                                    <h3 css={tw`text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-1 ml-1`}>CPU (%)</h3>
-                                    <Field name={'cpu'} type={'number'} css={tw`bg-neutral-900/50 border-neutral-800 focus:border-blue-500/50 rounded-xl h-10 text-sm`} />
-                                </div>
-                                <div>
-                                    <h3 css={tw`text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-1 ml-1`}>RAM (MB)</h3>
-                                    <Field name={'memory'} type={'number'} css={tw`bg-neutral-900/50 border-neutral-800 focus:border-blue-500/50 rounded-xl h-10 text-sm`} />
-                                </div>
-                                <div>
-                                    <h3 css={tw`text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-1 ml-1`}>Disk (MB)</h3>
-                                    <Field name={'disk'} type={'number'} css={tw`bg-neutral-900/50 border-neutral-800 focus:border-blue-500/50 rounded-xl h-10 text-sm`} />
+                                    <h2 css={tw`text-lg font-black uppercase tracking-tight text-white`}>Core Power</h2>
+                                    <p css={tw`text-[10px] text-neutral-500 font-bold uppercase tracking-widest`}>Resource allocation pool</p>
                                 </div>
                             </div>
-                            <div css={tw`mt-4 flex justify-between text-[9px] font-black uppercase tracking-widest text-neutral-500`}>
-                                <span>Pool: <span css={tw`text-blue-400`}>{resources.cpu}% CPU</span></span>
-                                <span>Pool: <span css={tw`text-blue-400`}>{resources.memory}MB RAM</span></span>
-                                <span>Pool: <span css={tw`text-blue-400`}>{resources.disk}MB Disk</span></span>
+                            <div css={tw`grid grid-cols-3 gap-4`}>
+                                <div>
+                                    <InputLabel>CPU (%)</InputLabel>
+                                    <Field name={'cpu'} type={'number'} css={tw`bg-neutral-900/50 border-neutral-700 focus:border-blue-500 rounded-2xl h-12 text-sm px-4 font-black tabular-nums tracking-tighter`} />
+                                </div>
+                                <div>
+                                    <InputLabel>RAM (MB)</InputLabel>
+                                    <Field name={'memory'} type={'number'} css={tw`bg-neutral-900/50 border-neutral-700 focus:border-blue-500 rounded-2xl h-12 text-sm px-4 font-black tabular-nums tracking-tighter`} />
+                                </div>
+                                <div>
+                                    <InputLabel>Disk (MB)</InputLabel>
+                                    <Field name={'disk'} type={'number'} css={tw`bg-neutral-900/50 border-neutral-700 focus:border-blue-500 rounded-2xl h-12 text-sm px-4 font-black tabular-nums tracking-tighter`} />
+                                </div>
                             </div>
-                        </div>
+                            <PoolInfo>
+                                <span>Available: <b>{resources.cpu}%</b> CPU</span>
+                                <span>Available: <b>{resources.memory}MB</b> RAM</span>
+                                <span>Available: <b>{resources.disk}MB</b> Disk</span>
+                            </PoolInfo>
+                        </PremiumBox>
                     </div>
 
-                    {/* Scaling & Deployment Row */}
-                    <div css={tw`grid grid-cols-1 lg:grid-cols-2 gap-6`}>
-                        <div css={tw`bg-neutral-900/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl relative overflow-hidden transition-all hover:bg-neutral-900/60`}>
-                            <div css={tw`flex items-center mb-4`}>
-                                <div css={tw`bg-blue-600/10 p-2 rounded-lg border border-blue-500/20 mr-3`}>
-                                    <Icon.Layers size={18} css={tw`text-blue-400`} />
-                                </div>
-                                <h2 css={tw`text-sm font-black uppercase tracking-widest text-neutral-100`}>Scaling</h2>
-                            </div>
-                            <div css={tw`grid grid-cols-3 gap-3`}>
+                    <div css={tw`grid grid-cols-1 lg:grid-cols-2 gap-8`}>
+                        <PremiumBox
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.2 }}
+                        >
+                            <div css={tw`flex items-center mb-8`}>
+                                <IconWrapper>
+                                    <Icon.Layers size={24} css={tw`text-blue-400`} strokeWidth={2.5} />
+                                </IconWrapper>
                                 <div>
-                                    <h3 css={tw`text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-1 ml-1`}>Ports</h3>
-                                    <Field name={'ports'} type={'number'} css={tw`bg-neutral-900/50 border-neutral-800 focus:border-blue-500/50 rounded-xl h-10 text-sm`} />
-                                </div>
-                                <div>
-                                    <h3 css={tw`text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-1 ml-1`}>DBs</h3>
-                                    <Field name={'databases'} type={'number'} css={tw`bg-neutral-900/50 border-neutral-800 focus:border-blue-500/50 rounded-xl h-10 text-sm`} />
-                                </div>
-                                <div>
-                                    <h3 css={tw`text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-1 ml-1`}>Backups</h3>
-                                    <Field name={'backups'} type={'number'} css={tw`bg-neutral-900/50 border-neutral-800 focus:border-blue-500/50 rounded-xl h-10 text-sm`} />
+                                    <h2 css={tw`text-lg font-black uppercase tracking-tight text-white`}>Capabilities</h2>
+                                    <p css={tw`text-[10px] text-neutral-500 font-bold uppercase tracking-widest`}>Feature set allocation</p>
                                 </div>
                             </div>
-                            <div css={tw`mt-4 flex justify-between text-[9px] font-black uppercase tracking-widest text-neutral-500`}>
-                                <span>Pool: <span css={tw`text-blue-400`}>{resources.ports} Ports</span></span>
-                                <span>Pool: <span css={tw`text-blue-400`}>{resources.databases} DBs</span></span>
-                                <span>Pool: <span css={tw`text-blue-400`}>{resources.backups} Backups</span></span>
+                            <div css={tw`grid grid-cols-3 gap-4`}>
+                                <div>
+                                    <InputLabel>Ports</InputLabel>
+                                    <Field name={'ports'} type={'number'} css={tw`bg-neutral-900/50 border-neutral-700 focus:border-blue-500 rounded-2xl h-12 text-sm px-4 font-black tabular-nums`} />
+                                </div>
+                                <div>
+                                    <InputLabel>DBs</InputLabel>
+                                    <Field name={'databases'} type={'number'} css={tw`bg-neutral-900/50 border-neutral-700 focus:border-blue-500 rounded-2xl h-12 text-sm px-4 font-black tabular-nums`} />
+                                </div>
+                                <div>
+                                    <InputLabel>Backups</InputLabel>
+                                    <Field name={'backups'} type={'number'} css={tw`bg-neutral-900/50 border-neutral-700 focus:border-blue-500 rounded-2xl h-12 text-sm px-4 font-black tabular-nums`} />
+                                </div>
                             </div>
-                        </div>
+                            <PoolInfo>
+                                <span>Available: <b>{resources.ports}</b> Ports</span>
+                                <span>Available: <b>{resources.databases}</b> DBs</span>
+                                <span>Available: <b>{resources.backups}</b> Backups</span>
+                            </PoolInfo>
+                        </PremiumBox>
 
-                        <div css={tw`bg-neutral-900/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl relative overflow-hidden transition-all hover:bg-neutral-900/60`}>
-                            <div css={tw`flex items-center mb-4`}>
-                                <div css={tw`bg-blue-600/10 p-2 rounded-lg border border-blue-500/20 mr-3`}>
-                                    <Icon.Grid size={18} css={tw`text-blue-400`} />
-                                </div>
-                                <h2 css={tw`text-sm font-black uppercase tracking-widest text-neutral-100`}>Deployment</h2>
-                            </div>
-                            <div css={tw`grid grid-cols-2 gap-3 mb-3`}>
+                        <PremiumBox
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.3 }}
+                        >
+                            <div css={tw`flex items-center mb-8`}>
+                                <IconWrapper>
+                                    <Icon.Grid size={24} css={tw`text-blue-400`} strokeWidth={2.5} />
+                                </IconWrapper>
                                 <div>
-                                    <h3 css={tw`text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-1 ml-1`}>Select Node</h3>
-                                    <Select name={'node'} onChange={(e) => setNode(parseInt(e.target.value))} css={tw`bg-neutral-900/50 border-neutral-800 focus:border-blue-500/50 rounded-xl h-10 text-xs`}>
+                                    <h2 css={tw`text-lg font-black uppercase tracking-tight text-white`}>Infrastructure</h2>
+                                    <p css={tw`text-[10px] text-neutral-500 font-bold uppercase tracking-widest`}>Deployment location & type</p>
+                                </div>
+                            </div>
+                            <div css={tw`grid grid-cols-2 gap-4 mb-4`}>
+                                <div>
+                                    <InputLabel>Target Node</InputLabel>
+                                    <Select name={'node'} onChange={(e) => setNode(parseInt(e.target.value))} css={tw`bg-neutral-900/50 border-neutral-700 focus:border-blue-500 rounded-2xl h-12 text-xs px-4 font-bold uppercase tracking-widest`}>
                                         {!node && <option>Select a node...</option>}
                                         {nodes.map((n) => (
                                             <option key={n.id} value={n.id}>
-                                                {n.name} ({n.location}) | {100 - parseInt(((n?.used / n?.total) * 100).toFixed(0))}% Free
+                                                {n.name} | {100 - parseInt(((n?.used / n?.total) * 100).toFixed(0))}% FREE
                                             </option>
                                         ))}
                                     </Select>
                                 </div>
                                 <div>
-                                    <h3 css={tw`text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-1 ml-1`}>Server Nest</h3>
-                                    <Select name={'nest'} onChange={(e) => changeNest(e)} css={tw`bg-neutral-900/50 border-neutral-800 focus:border-blue-500/50 rounded-xl h-10 text-xs`}>
+                                    <InputLabel>Environment</InputLabel>
+                                    <Select name={'nest'} onChange={(e) => changeNest(e)} css={tw`bg-neutral-900/50 border-neutral-700 focus:border-blue-500 rounded-2xl h-12 text-xs px-4 font-bold uppercase tracking-widest`}>
                                         {!nest && <option>Select a nest...</option>}
                                         {nests.map((n) => (
                                             <option key={n.id} value={n.id}>{n.name}</option>
@@ -252,36 +316,41 @@ export default () => {
                                 </div>
                             </div>
                             <div css={tw`w-full`}>
-                                <h3 css={tw`text-[10px] uppercase font-black tracking-widest text-neutral-500 mb-1 ml-1`}>Server Egg</h3>
-                                <Select name={'egg'} onChange={(e) => setEgg(parseInt(e.target.value))} css={tw`bg-neutral-900/50 border-neutral-800 focus:border-blue-500/50 rounded-xl h-10 text-xs`}>
+                                <InputLabel>Application</InputLabel>
+                                <Select name={'egg'} onChange={(e) => setEgg(parseInt(e.target.value))} css={tw`bg-neutral-900/50 border-neutral-700 focus:border-blue-500 rounded-2xl h-12 text-xs px-4 font-bold uppercase tracking-widest`}>
                                     {!egg && <option>Select an egg...</option>}
                                     {eggs.map((e) => (
                                         <option key={e.id} value={e.id}>{e.name}</option>
                                     ))}
                                 </Select>
                             </div>
-                        </div>
+                        </PremiumBox>
                     </div>
 
-                    {/* Bottom Action Bar */}
-                    <div css={tw`bg-blue-600/5 backdrop-blur-sm border border-blue-500/20 p-6 rounded-2xl flex flex-col lg:flex-row items-center justify-between mt-6`}>
-                        <div css={tw`mb-4 lg:mb-0 text-center lg:text-left`}>
-                            <h2 css={tw`text-xl font-black uppercase tracking-tighter text-neutral-100`}>Finalize Deployment</h2>
-                            <p css={tw`text-neutral-500 text-xs font-medium`}>Ready to launch your high-performance instance?</p>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: 0.4 }}
+                        css={tw`bg-blue-600/5 backdrop-blur-xl border border-blue-500 p-10 rounded-3xl flex flex-col lg:flex-row items-center justify-between mt-12 relative overflow-hidden`}
+                    >
+                        <div css={tw`absolute -bottom-20 -right-20 w-64 h-64 bg-blue-500/10 blur-3xl rounded-full`} />
+                        <div css={tw`mb-8 lg:mb-0 text-center lg:text-left relative z-10`}>
+                            <h2 css={tw`text-3xl font-black uppercase tracking-tighter text-white mb-2`}>Ready for Launch</h2>
+                            <p css={tw`text-neutral-500 text-xs font-bold uppercase tracking-widest`}>Initialize your high-performance environment now</p>
                         </div>
-                        <div css={tw`w-full lg:w-auto`}>
+                        <div css={tw`w-full lg:w-auto relative z-10`}>
                             <InputSpinner visible={loading}>
                                 <Button
                                     type={'submit'}
-                                    css={tw`w-full lg:px-12 bg-blue-600/10 text-blue-400 border border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/60 font-black uppercase tracking-widest text-xs py-3 rounded-xl transition-all shadow-lg`}
+                                    css={tw`w-full lg:px-20 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest text-sm py-5 rounded-2xl transition-all shadow-xl active:scale-95`}
                                     size={Button.Sizes.Large}
                                     disabled={loading}
                                 >
-                                    <Icon.Zap size={16} css={tw`mr-2`} /> Deploy Instance
+                                    <Icon.Zap size={18} css={tw`mr-3`} strokeWidth={3} /> Initialize Instance
                                 </Button>
                             </InputSpinner>
                         </div>
-                    </div>
+                    </motion.div>
                 </Form>
             </Formik>
         </PageContentBlock>

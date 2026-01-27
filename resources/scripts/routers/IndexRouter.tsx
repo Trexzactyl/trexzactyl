@@ -15,9 +15,9 @@ import AuthenticatedRoute from '@/components/elements/AuthenticatedRoute';
 export default () => {
     const authenticated = useStoreState((state) => state.user?.data);
     const approved = useStoreState((state) => state.user.data?.approved);
-    const store = useStoreState((state) => state.storefront.data!.enabled);
-    const tickets = useStoreState((state) => state.settings.data!.tickets);
-    const approvals = useStoreState((state) => state.settings.data!.approvals);
+    const store = useStoreState((state) => state.storefront.data?.enabled);
+    const tickets = useStoreState((state) => state.settings.data?.tickets);
+    const approvals = useStoreState((state) => state.settings.data?.approvals);
 
     if (approvals && !approved && authenticated) {
         return (

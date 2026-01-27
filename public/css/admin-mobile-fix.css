@@ -198,3 +198,23 @@
         display: none;
     }
 }
+
+/* Admin Store Page Text Visibility Fix */
+.box .box-body label,
+.box .box-body .control-label,
+.box .box-body input,
+.box .box-body select,
+.box .box-body .text-muted,
+.box .box-body p,
+.box .box-body small {
+    color: #333 !important;
+}
+
+.box .box-header h3,
+.box .box-header .box-title {
+    color: #333 !important;
+}
+
+.box {
+    background: #fff !important;
+}

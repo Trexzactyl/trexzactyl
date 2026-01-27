@@ -20,6 +20,7 @@ const IconWrapper = styled.div`
 `;
 
 const EditContainer = () => {
+    const [visible, setVisible] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [resource, setResource] = useState('');
     const [amount, setAmount] = useState(0);
@@ -30,6 +31,7 @@ const EditContainer = () => {
     const edit = (resource: string, amount: number) => {
         clearFlashes('server:edit');
         setSubmitting(true);
+        setVisible(false);
 
         editServer(uuid, resource, amount)
             .then(() => {
@@ -60,9 +62,9 @@ const EditContainer = () => {
                 <Button.Danger
                     css={tw`flex-1 py-3`}
                     onClick={() => {
-                        setSubmitting(true);
                         setResource(res);
                         setAmount(sub);
+                        setVisible(true);
                     }}
                 >
                     <Icon.Minus size={16} />
@@ -70,9 +72,9 @@ const EditContainer = () => {
                 <Button.Success
                     css={tw`flex-1 py-3`}
                     onClick={() => {
-                        setSubmitting(true);
                         setResource(res);
                         setAmount(add);
+                        setVisible(true);
                     }}
                 >
                     <Icon.Plus size={16} />
@@ -85,8 +87,8 @@ const EditContainer = () => {
         <ServerContentBlock title={'Edit Resources'}>
             <SpinnerOverlay size={'large'} visible={submitting} />
             <Dialog.Confirm
-                open={submitting}
-                onClose={() => setSubmitting(false)}
+                open={visible}
+                onClose={() => setVisible(false)}
                 title={'Confirm resource edit'}
                 onConfirmed={() => edit(resource, amount)}
             >

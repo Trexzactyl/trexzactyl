@@ -9,9 +9,8 @@ import TransitionRouter from '@/TransitionRouter';
 import React, { useEffect, useState } from 'react';
 import Spinner from '@/components/elements/Spinner';
 import { CSSTransition } from 'react-transition-group';
-import SidePanel from '@/components/elements/SidePanel';
+import NavigationBar from '@/components/elements/NavigationBar';
 import Suspended from '@/components/elements/Suspended';
-import useWindowDimensions from '@/plugins/useWindowDimensions';
 import SubNavigation from '@/components/elements/SubNavigation';
 import ErrorBoundary from '@/components/elements/ErrorBoundary';
 import ExternalConsole from '@/components/server/ExternalConsole';
@@ -23,7 +22,6 @@ import TransferListener from '@/components/server/TransferListener';
 import WebsocketHandler from '@/components/server/WebsocketHandler';
 import RequireServerPermission from '@/hoc/RequireServerPermission';
 import ServerInstallSvg from '@/assets/images/server_installing.svg';
-import MobileNavigation from '@/components/elements/MobileNavigation';
 import UsersContainer from '@/components/server/users/UsersContainer';
 import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
 import BackupContainer from '@/components/server/backups/BackupContainer';
@@ -68,7 +66,6 @@ const ConflictStateRenderer = () => {
 export default () => {
     const match = useRouteMatch<{ id: string }>();
     const location = useLocation();
-    const { width } = useWindowDimensions();
 
     const [error, setError] = useState('');
     const rootAdmin = useStoreState((state) => state.user.data!.rootAdmin);
@@ -101,8 +98,8 @@ export default () => {
     }, [match.params.id]);
 
     return (
-        <React.Fragment key={'server-router'}>
-            {width >= 1280 ? <SidePanel /> : <MobileNavigation />}
+        <div css={tw`pt-20`} key={'server-router'}>
+            <NavigationBar />
             {!uuid || !id ? (
                 error ? (
                     <ServerError message={error} />
@@ -293,6 +290,6 @@ export default () => {
                     )}
                 </>
             )}
-        </React.Fragment>
+        </div>
     );
 };

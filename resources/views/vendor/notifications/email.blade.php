@@ -23,38 +23,38 @@
 </head>
 
 <?php
+/* Layout ------------------------------ */
 $style = [
-    /* Layout ------------------------------ */
-    'body' => 'margin: 0; padding: 0; width: 100%; background-color: #0d0d0d;',
-    'email-wrapper' => 'width: 100%; margin: 0; padding: 40px 0; background-color: #0d0d0d;',
+    'body' => 'margin: 0; padding: 0; width: 100%; background-color: #09090b; font-family: "Inter", Helvetica, Arial, sans-serif;',
+    'email-wrapper' => 'width: 100%; margin: 0; padding: 50px 0; background-color: #09090b;',
 
     /* Masthead ----------------------- */
-    'email-masthead' => 'padding: 0 0 40px 0; text-align: center;',
-    'email-masthead_name' => 'font-size: 18px; font-weight: 900; color: #ffffff; text-decoration: none; text-transform: uppercase; letter-spacing: 0.2em;',
+    'email-masthead' => 'padding: 0 0 30px 0; text-align: center;',
+    'email-masthead_name' => 'font-size: 24px; font-weight: 800; color: #ffffff; text-decoration: none; letter-spacing: 0.05em;',
 
-    'email-body' => 'width: 100%; margin: 0; padding: 0; background-color: #171717; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.05);',
+    'email-body' => 'width: 100%; margin: 0; padding: 0; background-color: #18181b; border-radius: 16px; border: 1px solid #27272a;',
     'email-body_inner' => 'width: auto; max-width: 570px; margin: 0 auto; padding: 0;',
-    'email-body_cell' => 'padding: 45px;',
+    'email-body_cell' => 'padding: 40px;',
 
     'email-footer' => 'width: auto; max-width: 570px; margin: 0 auto; padding: 0; text-align: center;',
-    'email-footer_cell' => 'color: #737373; padding: 40px; text-align: center; font-size: 12px;',
+    'email-footer_cell' => 'color: #71717a; padding: 30px; text-align: center; font-size: 12px; line-height: 1.5;',
 
     /* Body ------------------------------ */
-    'body_action' => 'width: 100%; margin: 40px auto; padding: 0; text-align: center;',
-    'body_sub' => 'margin-top: 35px; padding-top: 25px; border-top: 1px solid rgba(255, 255, 255, 0.05);',
+    'body_action' => 'width: 100%; margin: 30px auto; padding: 0; text-align: center;',
+    'body_sub' => 'margin-top: 25px; padding-top: 25px; border-top: 1px solid #27272a;',
 
     /* Type ------------------------------ */
-    'anchor' => 'color: #60a5fa; text-decoration: none;',
-    'header-1' => 'margin-top: 0; color: #ffffff; font-size: 24px; font-weight: 900; text-align: left; letter-spacing: -0.02em; line-height: 1.2; text-transform: uppercase;',
-    'paragraph' => 'margin-top: 15px; color: #a3a3a3; font-size: 16px; line-height: 1.6em; font-weight: 400;',
-    'paragraph-sub' => 'margin-top: 0; color: #737373; font-size: 12px; line-height: 1.6em;',
+    'anchor' => 'color: #3b82f6; text-decoration: none; font-weight: 600;',
+    'header-1' => 'margin-top: 0; color: #ffffff; font-size: 22px; font-weight: 700; text-align: left; line-height: 1.3; margin-bottom: 20px;',
+    'paragraph' => 'margin-top: 0; color: #d4d4d8; font-size: 15px; line-height: 1.6em; margin-bottom: 20px;',
+    'paragraph-sub' => 'margin-top: 0; color: #a1a1aa; font-size: 12px; line-height: 1.5em;',
     'paragraph-center' => 'text-align: center;',
 
     /* Buttons ------------------------------ */
-    'button' => 'display: inline-block; padding: 14px 28px; background-color: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.3); border-radius: 12px; color: #60a5fa; font-size: 14px; font-weight: 800; text-align: center; text-decoration: none; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s ease;',
-    'button--green' => 'background-color: rgba(22, 163, 74, 0.1); border: 1px solid rgba(22, 163, 74, 0.3); color: #4ade80;',
-    'button--red' => 'background-color: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); color: #f87171;',
-    'button--blue' => 'background-color: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.3); color: #60a5fa;',
+    'button' => 'display: inline-block; padding: 12px 24px; background-color: #3b82f6; border-radius: 8px; color: #ffffff; font-size: 14px; font-weight: 600; text-align: center; text-decoration: none; transition: all 0.2s;',
+    'button--green' => 'background-color: #22c55e;',
+    'button--red' => 'background-color: #ef4444;',
+    'button--blue' => 'background-color: #3b82f6;',
 ];
 ?>
 
@@ -99,7 +99,7 @@ $style = [
                                         <!-- Intro -->
                                         @foreach ($introLines as $line)
                                             <p style="{{ $style['paragraph'] }}">
-                                                {{ $line }}
+                                                {!! $line !!}
                                             </p>
                                         @endforeach
 
@@ -121,7 +121,7 @@ $style = [
                                                     $actionColor = 'button--blue';
                                                     break;
                                             }
-                                                                                                ?>
+                                                                                                                                        ?>
 
                                                                                             <a href="{{ $actionUrl }}"
                                                                                                 style="{{ $style['button'] }} {{ $style[$actionColor] }}"
@@ -186,8 +186,8 @@ $style = [
                                     <td style="{{ $style['email-footer_cell'] }}">
                                         <p style="{{ $style['paragraph-sub'] }}">
                                             &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.<br>
-                                            <a style="{{ $style['anchor'] }}; font-size: 11px; opacity: 0.6;"
-                                                href="{{ url('/') }}" target="_blank">Visit Portal</a>
+                                            <br>
+                                            You can manage your notification preferences in your account settings.
                                         </p>
                                     </td>
                                 </tr>

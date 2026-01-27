@@ -4,7 +4,7 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
 
-                    <li @if($activeTab === 'index') class="active "@endif>
+                    <li @if($activeTab === 'index') class="active " @endif>
                         <a href="{{ route('admin.index') }}">Home</a>
                     </li>
                     <li @if($activeTab === 'appearance') class="active" @endif>
@@ -27,6 +27,9 @@
                     </li>
                     <li @if($activeTab === 'approvals') class="active" @endif>
                         <a href="{{ route('admin.trexzactyl.approvals') }}">Approvals</a>
+                    </li>
+                    <li @if($activeTab === 'payments') class="active" @endif>
+                        <a href="{{ route('admin.trexzactyl.payments') }}">Payments</a>
                     </li>
                     <li @if($activeTab === 'server') class="active" @endif>
                         <a href="{{ route('admin.trexzactyl.server') }}">Server Settings</a>

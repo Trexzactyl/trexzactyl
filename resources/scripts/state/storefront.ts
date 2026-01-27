@@ -3,6 +3,7 @@ import { action, Action } from 'easy-peasy';
 export interface StorefrontSettings {
     enabled: boolean;
     currency: string;
+    credit_price: number;
     renewals: {
         cost: number;
         days: number;
@@ -30,6 +31,9 @@ export interface StorefrontSettings {
     gateways: {
         paypal: boolean;
         stripe: boolean;
+        bkash?: string;
+        nagad?: string;
+        conversion_rate: number;
     };
     earn: {
         enabled: boolean;

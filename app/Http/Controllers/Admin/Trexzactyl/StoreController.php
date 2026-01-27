@@ -58,6 +58,14 @@ class StoreController extends Controller
             'limit_port' => $this->settings->get($prefix . 'limit:port', 1),
             'limit_backup' => $this->settings->get($prefix . 'limit:backup', 1),
             'limit_database' => $this->settings->get($prefix . 'limit:database', 1),
+
+            'paypal_client_id' => $this->settings->get($prefix . 'paypal:client_id', config('gateways.paypal.client_id')),
+            'paypal_client_secret' => $this->settings->get($prefix . 'paypal:client_secret', config('gateways.paypal.client_secret')),
+            'stripe_secret' => $this->settings->get($prefix . 'stripe:secret', config('gateways.stripe.secret')),
+            'stripe_webhook_secret' => $this->settings->get($prefix . 'stripe:webhook_secret', config('gateways.stripe.webhook_secret')),
+            'bkash_number' => $this->settings->get($prefix . 'bkash:number', config('gateways.bkash.number')),
+            'nagad_number' => $this->settings->get($prefix . 'nagad:number', config('gateways.nagad.number')),
+            'conversion_rate' => $this->settings->get($prefix . 'conversion_rate', 115),
         ]);
     }
 

@@ -8,7 +8,7 @@ use Trexzactyl\Contracts\Repository\SettingsRepositoryInterface;
 
 class Composer
 {
-    private SettingsRepositoryInterface $settings;
+    protected SettingsRepositoryInterface $settings;
 
     /**
      * Types of value that can be retrieved from the database

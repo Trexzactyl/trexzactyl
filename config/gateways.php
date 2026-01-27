@@ -50,4 +50,19 @@ return [
         'secret' => env('STRIPE_CLIENT_SECRET', ''),
         'webhook_secret' => env('STRIPE_WEBHOOK_SECRET', ''),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Manual Payment Configuration (Bangladesh)
+    |--------------------------------------------------------------------------
+    | These values determine the configuration for manual payments via bKash/Nagad.
+    |
+    */
+    'bkash' => [
+        'number' => env('BKASH_NUMBER', ''),
+    ],
+
+    'nagad' => [
+        'number' => env('NAGAD_NUMBER', ''),
+    ],
 ];

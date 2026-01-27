@@ -12,35 +12,38 @@ export default () => {
 
     return (
         <PageContentBlock title={'Storefront Overview'}>
-            <div css={tw`flex flex-row items-center justify-between mt-10`}>
-                {width >= 1280 && (
-                    <div>
-                        <h1 css={tw`text-6xl font-black uppercase tracking-tighter`}>Hey, {username}!</h1>
-                        <h3 css={tw`text-2xl mt-2 text-neutral-500 font-medium tracking-tight whitespace-nowrap`}>👋 Welcome to the store.</h3>
-                    </div>
-                )}
-                <ResourceBar css={tw`w-full lg:w-3/4`} />
+            <div css={tw`flex flex-col lg:flex-row lg:items-end justify-between mt-10 mb-12 gap-8`}>
+                <div css={tw`flex-1`}>
+                    <h1 css={tw`text-4xl md:text-6xl font-black uppercase tracking-tighter text-white mr-4`}>
+                        Hey, <span css={tw`text-blue-500`}>{username}</span>!
+                    </h1>
+                    <h3 css={tw`text-lg md:text-2xl mt-2 text-neutral-500 font-bold uppercase tracking-widest`}>
+                        👋 Welcome to the store
+                    </h3>
+                </div>
             </div>
-            <div className={'lg:grid lg:grid-cols-3 gap-8 my-10'}>
-                <StoreBanner
-                    title={'Want to create a server?'}
-                    className={'bg-storeone'}
-                    action={'Create'}
-                    link={'create'}
-                />
-                <StoreBanner
-                    title={'Need more resources?'}
-                    className={'bg-storetwo'}
-                    action={'Buy Resources'}
-                    link={'resources'}
-                />
-                <StoreBanner
-                    title={'Run out of credits?'}
-                    className={'bg-storethree'}
-                    action={'Buy Credits'}
-                    link={'credits'}
-                />
+
+            <div css={tw`mb-12`}>
+                <ResourceBar />
             </div>
+            <StoreBanner
+                title={'Want to create a server?'}
+                className={'bg-gradient-to-br from-blue-600/20 via-transparent to-purple-600/20'}
+                action={'Create'}
+                link={'create'}
+            />
+            <StoreBanner
+                title={'Need more resources?'}
+                className={'bg-gradient-to-br from-green-600/20 via-transparent to-emerald-600/20'}
+                action={'Buy Resources'}
+                link={'resources'}
+            />
+            <StoreBanner
+                title={'Run out of credits?'}
+                className={'bg-gradient-to-br from-yellow-600/20 via-transparent to-orange-600/20'}
+                action={'Buy Credits'}
+                link={'credits'}
+            />
         </PageContentBlock>
     );
 };

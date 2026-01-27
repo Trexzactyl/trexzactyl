@@ -1,119 +1,169 @@
 import tw from 'twin.macro';
-import classNames from 'classnames';
 import * as Icon from 'react-feather';
 import styled from 'styled-components/macro';
 import { megabytesToHuman } from '@/helpers';
 import React, { useState, useEffect } from 'react';
 import Spinner from '@/components/elements/Spinner';
-import ContentBox from '@/components/elements/ContentBox';
-import Tooltip from '@/components/elements/tooltip/Tooltip';
 import StoreContainer from '@/components/elements/StoreContainer';
 import { getResources, Resources } from '@/api/store/getResources';
+import { motion } from 'framer-motion';
 
-const Wrapper = styled.div`
-    ${tw`text-2xl flex flex-row justify-center items-center`};
+const PremiumBoxContainer = styled.div<{ $color: string }>`
+    ${tw`relative flex flex-col p-5 rounded-2xl border border-neutral-700 bg-neutral-900/40 backdrop-blur-xl transition-all duration-300 overflow-hidden`};
+    ${tw`hover:border-blue-500/50 hover:shadow-2xl`};
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: ${({ $color }) => $color};
+        opacity: 0.6;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -20px;
+        right: -20px;
+        width: 60px;
+        height: 60px;
+        background: ${({ $color }) => $color};
+        opacity: 0.05;
+        filter: blur(25px);
+        border-radius: 100%;
+    }
 `;
 
-interface RowProps {
-    className?: string;
-    titles?: boolean;
-}
+const PremiumBox = motion(PremiumBoxContainer);
+
+const IconWrapper = styled.div<{ $color: string }>`
+    ${tw`w-9 h-9 rounded-xl flex items-center justify-center mb-4 transition-all duration-300`};
+    background: ${({ $color }) => `${$color}10`};
+    color: ${({ $color }) => $color};
+    border: 1px solid ${({ $color }) => `${$color}20`};
+`;
+
+const ResourceTitle = styled.h4`
+    ${tw`text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-1 leading-none`};
+`;
+
+const ResourceValue = styled.div`
+    ${tw`flex items-baseline mt-1`};
+    & .amount {
+        ${tw`text-2xl font-black text-white tabular-nums tracking-tighter`};
+    }
+    & .suffix {
+        ${tw`text-[11px] text-neutral-500 font-black ml-1 uppercase`};
+    }
+`;
 
 interface BoxProps {
     title: string;
-    description: string;
     icon: React.ReactElement;
     amount: number;
     toHuman?: boolean;
     suffix?: string;
+    color: string;
+    delay: number;
 }
 
-export default ({ className, titles }: RowProps) => {
+const ResourceCard = ({ title, icon, amount, toHuman, suffix, color, delay }: BoxProps) => (
+    <PremiumBox
+        $color={color}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay, duration: 0.3 }}
+        whileHover={{ translateY: -4 }}
+    >
+        <IconWrapper $color={color}>
+            {React.cloneElement(icon, { size: 18, strokeWidth: 2.5 })}
+        </IconWrapper>
+        <ResourceTitle>{title}</ResourceTitle>
+        <ResourceValue>
+            <span className="amount">
+                {toHuman ? megabytesToHuman(amount) : amount.toLocaleString()}
+            </span>
+            {suffix && <span className="suffix">{suffix}</span>}
+        </ResourceValue>
+    </PremiumBox>
+);
+
+export default () => {
     const [resources, setResources] = useState<Resources>();
 
     useEffect(() => {
         getResources().then((resources) => setResources(resources));
     }, []);
 
-    if (!resources) return <Spinner size={'large'} centered />;
-
-    const ResourceBox = (props: BoxProps) => (
-        <ContentBox css={tw`bg-neutral-900/40 backdrop-blur-md border border-white/5 rounded-xl p-2 transition-all hover:bg-neutral-900/60`}>
-            <Tooltip content={props.description}>
-                <Wrapper css={tw`flex flex-col items-center py-1`}>
-                    <div css={tw`bg-blue-600/10 p-2 rounded-lg border border-blue-500/20 mb-1 text-blue-400`}>
-                        {React.cloneElement(props.icon as React.ReactElement, { size: 14 })}
-                    </div>
-                    <p css={tw`text-[10px] font-black uppercase tracking-wider text-neutral-500 mb-0.5 leading-none`}>
-                        {props.title}
-                    </p>
-                    <div css={tw`flex items-baseline`}>
-                        <span css={tw`text-sm font-black text-neutral-100 tabular-nums`}>
-                            {props.toHuman ? megabytesToHuman(props.amount) : props.amount}
-                        </span>
-                        {props.suffix && (
-                            <span css={tw`text-[10px] text-neutral-500 font-bold ml-0.5 tracking-tight`}>
-                                {props.suffix}
-                            </span>
-                        )}
-                    </div>
-                </Wrapper>
-            </Tooltip>
-        </ContentBox>
+    if (!resources) return (
+        <div css={tw`w-full flex justify-center py-10`}>
+            <Spinner size={'large'} />
+        </div>
     );
 
     return (
-        <StoreContainer css={tw`grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 gap-4`}>
-            <ResourceBox
+        <StoreContainer css={tw`grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-4 w-full`}>
+            <ResourceCard
                 title={'Credits'}
-                description={'Available credits'}
                 icon={<Icon.DollarSign />}
                 amount={resources.balance}
+                color={'#fbbf24'}
+                delay={0.05}
             />
-            <ResourceBox
+            <ResourceCard
                 title={'CPU'}
-                description={'Available CPU capacity'}
                 icon={<Icon.Cpu />}
                 amount={resources.cpu}
                 suffix={'%'}
+                color={'#3b82f6'}
+                delay={0.1}
             />
-            <ResourceBox
+            <ResourceCard
                 title={'Memory'}
-                description={'Available memory'}
                 icon={<Icon.PieChart />}
                 amount={resources.memory}
                 toHuman
+                color={'#a78bfa'}
+                delay={0.15}
             />
-            <ResourceBox
+            <ResourceCard
                 title={'Disk'}
-                description={'Available storage'}
                 icon={<Icon.HardDrive />}
                 amount={resources.disk}
                 toHuman
+                color={'#22d3ee'}
+                delay={0.2}
             />
-            <ResourceBox
+            <ResourceCard
                 title={'Slots'}
-                description={'Available server slots'}
                 icon={<Icon.Server />}
                 amount={resources.slots}
+                color={'#f472b6'}
+                delay={0.25}
             />
-            <ResourceBox
+            <ResourceCard
                 title={'Ports'}
-                description={'Available network ports'}
                 icon={<Icon.Share2 />}
                 amount={resources.ports}
+                color={'#4ade80'}
+                delay={0.3}
             />
-            <ResourceBox
+            <ResourceCard
                 title={'Backups'}
-                description={'Available backup slots'}
                 icon={<Icon.Archive />}
                 amount={resources.backups}
+                color={'#fb923c'}
+                delay={0.35}
             />
-            <ResourceBox
+            <ResourceCard
                 title={'Databases'}
-                description={'Available MySQL databases'}
                 icon={<Icon.Database />}
                 amount={resources.databases}
+                color={'#94a3b8'}
+                delay={0.4}
             />
         </StoreContainer>
     );

@@ -10,7 +10,7 @@ import { NavLink, Route, Switch } from 'react-router-dom';
 import { NotFound } from '@/components/elements/ScreenBlock';
 import SubNavigation from '@/components/elements/SubNavigation';
 import useWindowDimensions from '@/plugins/useWindowDimensions';
-import MobileNavigation from '@/components/elements/MobileNavigation';
+import NavigationBar from '@/components/elements/NavigationBar';
 import ReferralContainer from '@/components/dashboard/ReferralContainer';
 import DashboardContainer from '@/components/dashboard/DashboardContainer';
 import AccountApiContainer from '@/components/dashboard/AccountApiContainer';
@@ -22,13 +22,12 @@ import CouponContainer from '@/components/dashboard/CouponContainer';
 
 export default () => {
     const location = useLocation();
-    const { width } = useWindowDimensions();
-    const coupons = useStoreState((state) => state.settings.data!.coupons);
-    const referrals = useStoreState((state) => state.storefront.data!.referrals.enabled);
+    const coupons = useStoreState((state) => state.settings.data?.coupons);
+    const referrals = useStoreState((state) => state.storefront.data?.referrals?.enabled);
 
     return (
-        <>
-            {width >= 1280 ? <SidePanel /> : <MobileNavigation />}
+        <div css={tw`pt-20`}>
+            <NavigationBar />
             {location.pathname.startsWith('/account') ? (
                 <SubNavigation className={'j-down'}>
                     <div>
@@ -109,6 +108,6 @@ export default () => {
                     </Switch>
                 </React.Suspense>
             </TransitionRouter>
-        </>
+        </div>
     );
 };
