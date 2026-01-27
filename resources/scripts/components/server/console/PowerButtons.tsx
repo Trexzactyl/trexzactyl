@@ -10,6 +10,7 @@ import useFlash from '@/plugins/useFlash';
 import { httpErrorToHuman } from '@/api/http';
 import { useStoreState } from '@/state/hooks';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
+import { usePermissions } from '@/plugins/usePermissions';
 
 interface PowerButtonProps {
     className?: string;
@@ -19,9 +20,11 @@ const ButtonGroup = styled.div`
     ${tw`flex items-center gap-2`};
 `;
 
-const PowerButton = styled.button<{ $variant: 'start' | 'restart' | 'stop' | 'kill' | 'renew' }>`
+const PowerButton = styled.button<{ $variant: 'start' | 'restart' | 'stop' | 'kill' | 'renew'; $isSmall?: boolean }>`
     ${tw`flex-1 px-6 py-2.5 rounded-lg font-black uppercase tracking-widest text-sm transition-all duration-200 border`};
     ${tw`disabled:opacity-50 disabled:cursor-not-allowed`};
+
+    ${({ $isSmall }) => $isSmall && tw`sm:px-6 sm:py-2.5 px-2 py-2 text-[10px]`};
 
     ${({ $variant }) =>
         $variant === 'start'
@@ -88,6 +91,14 @@ export default ({ className }: PowerButtonProps) => {
         if (status === 'offline') setOpen(false);
     }, [status]);
 
+    const canStart = usePermissions(['control.start'])[0];
+    const canRestart = usePermissions(['control.restart'])[0];
+    const canStop = usePermissions(['control.stop'])[0];
+    const hasRenew = renewable && !!store;
+
+    const buttonCount = [hasRenew, canStart, canRestart, canStop].filter(Boolean).length;
+    const isSmall = buttonCount >= 4;
+
     return (
         <ButtonGroup className={className}>
             <Dialog.Confirm
@@ -116,41 +127,44 @@ export default ({ className }: PowerButtonProps) => {
                 )}
             </Dialog.Confirm>
 
-            {renewable && store && (
-                <PowerButton $variant={'renew'} onClick={() => setRenewOpen(true)}>
+            {hasRenew && (
+                <PowerButton $variant={'renew'} $isSmall={isSmall} onClick={() => setRenewOpen(true)}>
                     Renew
                 </PowerButton>
             )}
 
-            <Can action={'control.start'}>
+            {canStart && (
                 <PowerButton
                     $variant={'start'}
+                    $isSmall={isSmall}
                     disabled={status !== 'offline'}
                     onClick={onButtonClick.bind(this, 'start')}
                 >
                     Start
                 </PowerButton>
-            </Can>
+            )}
 
-            <Can action={'control.restart'}>
+            {canRestart && (
                 <PowerButton
                     $variant={'restart'}
+                    $isSmall={isSmall}
                     disabled={!status}
                     onClick={onButtonClick.bind(this, 'restart')}
                 >
                     Restart
                 </PowerButton>
-            </Can>
+            )}
 
-            <Can action={'control.stop'}>
+            {canStop && (
                 <PowerButton
                     $variant={killable ? 'kill' : 'stop'}
+                    $isSmall={isSmall}
                     disabled={status === 'offline'}
                     onClick={onButtonClick.bind(this, killable ? 'kill' : 'stop')}
                 >
                     {killable ? 'Kill' : 'Stop'}
                 </PowerButton>
-            </Can>
+            )}
         </ButtonGroup>
     );
 };

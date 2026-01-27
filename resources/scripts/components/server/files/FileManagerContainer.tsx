@@ -123,8 +123,8 @@ export default () => {
                         <NavLink to={`/server/${id}/files/new${window.location.hash}`}>
                             <Button css={tw`bg-blue-600/10 text-blue-400 border border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/60 font-black uppercase tracking-widest text-[10px] px-4 py-2 rounded-lg transition-all`}>
                                 <div css={tw`flex items-center gap-2`}>
-                                    <Icon.FilePlus size={14} />
-                                    New File
+                                    <Icon.FilePlus css={tw`w-[18px] h-[18px] sm:w-[14px] sm:h-[14px]`} />
+                                    <span css={tw`hidden sm:block`}>New File</span>
                                 </div>
                             </Button>
                         </NavLink>

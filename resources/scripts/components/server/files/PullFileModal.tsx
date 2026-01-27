@@ -135,8 +135,8 @@ export default ({ className }: WithClassname) => {
                 css={tw`bg-neutral-800/50 text-neutral-300 border border-neutral-700 hover:bg-neutral-800/80 hover:border-neutral-600 font-black uppercase tracking-widest text-[10px] px-4 py-2 rounded-lg transition-all`}
             >
                 <div css={tw`flex items-center gap-2`}>
-                    <Icon.DownloadCloud size={14} />
-                    Pull File
+                    <Icon.DownloadCloud css={tw`w-[18px] h-[18px] sm:w-[14px] sm:h-[14px]`} />
+                    <span css={tw`hidden sm:block`}>Pull File</span>
                 </div>
             </Button>
         </>

@@ -55,6 +55,7 @@ class DropdownMenu extends React.PureComponent<Props, State> {
 
     onClickHandler = (e: React.MouseEvent<any, MouseEvent>) => {
         e.preventDefault();
+        e.stopPropagation();
         this.triggerMenu(e.clientX);
     };
 
