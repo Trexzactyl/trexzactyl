@@ -71,7 +71,7 @@ class DatabaseManagementService
      */
     public function create(Server $server, array $data): Database
     {
-        if (!config('Trexzactyl.client_features.databases.enabled')) {
+        if (!config('trexzactyl.client_features.databases.enabled')) {
             throw new DatabaseClientFeatureNotEnabledException();
         }
 

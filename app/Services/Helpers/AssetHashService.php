@@ -65,7 +65,7 @@ class AssetHashService
             'referrerpolicy' => 'no-referrer',
         ];
 
-        if (config('Trexzactyl.assets.use_hash')) {
+        if (config('trexzactyl.assets.use_hash')) {
             $attributes['integrity'] = $this->integrity($resource);
         }
 
@@ -87,7 +87,7 @@ class AssetHashService
             'crossorigin' => 'anonymous',
         ];
 
-        if (config('Trexzactyl.assets.use_hash')) {
+        if (config('trexzactyl.assets.use_hash')) {
             $attributes['integrity'] = $this->integrity($resource);
         }
 

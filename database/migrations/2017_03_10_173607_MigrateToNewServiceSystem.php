@@ -10,7 +10,7 @@ class MigrateToNewServiceSystem extends Migration
     public function up()
     {
         DB::transaction(function () {
-            $service = DB::table('services')->where('author', config('Trexzactyl.service.core'))->where('folder', 'srcds')->first();
+            $service = DB::table('services')->where('author', config('trexzactyl.service.core'))->where('folder', 'srcds')->first();
             if (!$service) {
                 return;
             }

@@ -33,7 +33,7 @@ class DeployServerDatabaseService
         } else {
             $nodeHosts = $hosts->where('node_id', $server->node_id)->toBase();
 
-            if ($nodeHosts->isEmpty() && !config('Trexzactyl.client_features.databases.allow_random')) {
+            if ($nodeHosts->isEmpty() && !config('trexzactyl.client_features.databases.allow_random')) {
                 throw new NoSuitableDatabaseHostException();
             }
         }

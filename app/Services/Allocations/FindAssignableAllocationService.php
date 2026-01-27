@@ -30,7 +30,7 @@ class FindAssignableAllocationService
      */
     public function handle(Server $server): Allocation
     {
-        if (!config('Trexzactyl.client_features.allocations.enabled')) {
+        if (!config('trexzactyl.client_features.allocations.enabled')) {
             throw new AutoAllocationNotEnabledException();
         }
 
@@ -64,8 +64,8 @@ class FindAssignableAllocationService
      */
     protected function createNewAllocation(Server $server): Allocation
     {
-        $start = config('Trexzactyl.client_features.allocations.range_start', null);
-        $end = config('Trexzactyl.client_features.allocations.range_end', null);
+        $start = config('trexzactyl.client_features.allocations.range_start', null);
+        $end = config('trexzactyl.client_features.allocations.range_end', null);
 
         if (!$start || !$end) {
             throw new NoAutoAllocationSpaceAvailableException();

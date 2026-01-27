@@ -28,6 +28,8 @@
             {!! Theme::css('vendor/animate/animate.min.css?t={cache-version}') !!}
             <!-- Ability to customize Trexzactyl theme -->
             <link rel="stylesheet" href="/themes/{{ config('theme.admin', 'Trexzactyl') }}/css/{{ config('theme.admin', 'Trexzactyl') }}.css">
+            <!-- Mobile responsive fixes -->
+            <link rel="stylesheet" href="/css/admin-mobile-fix.css">
 
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
@@ -39,10 +41,18 @@
                 <a href="{{ route('index') }}" class="logo">
                     <img src="{{ config('app.logo') }}" width="48" height="48" />
                 </a>
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" style="margin-left: auto;">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                </nav>
             </header>
             <aside class="main-sidebar">
                 <section class="sidebar">
-                    <ul class="sidebar-menu">
+                    <ul class="sidebar-menu" style="padding-bottom: 60px;">
                         <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.index') ?: 'active' }}">
                             <a href="{{ route('admin.index')}}">
                                 <i data-feather="tool" style="margin-left: 12px;"></i> 
@@ -94,9 +104,13 @@
                             </a>
                         </li>
                     </ul>
+                    <div class="sidebar-version">
+                        <small>v{{ \Trexzactyl\Services\Helpers\VersionService::getCurrentVersion() }}</small>
+                    </div>
                 </section>
             </aside>
             <div class="content-wrapper">
+                @include('admin.partials.update-notification')
                 <section class="content-header">
                     @yield('content-header')
                 </section>
@@ -142,6 +156,52 @@
 
             <script>
                 feather.replace()
+            </script>
+
+            <script>
+                // Mobile sidebar toggle functionality
+                document.addEventListener('DOMContentLoaded', function() {
+                    const toggleBtn = document.querySelector('.sidebar-toggle');
+                    const body = document.body;
+                    const sidebar = document.querySelector('.main-sidebar');
+                    const menuLinks = document.querySelectorAll('.sidebar-menu li a');
+                    
+                    // Toggle sidebar on button click
+                    if (toggleBtn) {
+                        toggleBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            body.classList.toggle('sidebar-open');
+                        });
+                    }
+                    
+                    // Close sidebar when clicking outside on mobile
+                    document.addEventListener('click', function(e) {
+                        if (window.innerWidth <= 767) {
+                            if (!e.target.closest('.main-sidebar') && !e.target.closest('.sidebar-toggle')) {
+                                body.classList.remove('sidebar-open');
+                            }
+                        }
+                    });
+                    
+                    // Close sidebar when clicking a menu item on mobile
+                    menuLinks.forEach(function(link) {
+                        link.addEventListener('click', function() {
+                            if (window.innerWidth <= 767) {
+                                setTimeout(function() {
+                                    body.classList.remove('sidebar-open');
+                                }, 200);
+                            }
+                        });
+                    });
+                    
+                    // Prevent sidebar clicks from closing it
+                    if (sidebar) {
+                        sidebar.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                        });
+                    }
+                });
             </script>
 
             @if(Auth::user()->root_admin)

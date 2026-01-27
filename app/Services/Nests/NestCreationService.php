@@ -25,7 +25,7 @@ class NestCreationService
     {
         return $this->repository->create([
             'uuid' => Uuid::uuid4()->toString(),
-            'author' => $author ?? $this->config->get('Trexzactyl.service.author'),
+            'author' => $author ?? $this->config->get('trexzactyl.service.author'),
             'name' => array_get($data, 'name'),
             'description' => array_get($data, 'description'),
             'private' => array_get($data, 'private'),

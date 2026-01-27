@@ -11,7 +11,7 @@ return [
     | change this value if you are not maintaining your own internal versions.
     */
 
-    'version' => '3.7.4',
+    'version' => env('APP_VERSION', '3.7.4'),
 
     /*
     |--------------------------------------------------------------------------
@@ -112,7 +112,7 @@ return [
     |
     */
 
-    'logo' => '',
+    'logo' => 'https://cdn.discordapp.com/attachments/1439156387564490772/1449621821103280170/20251116_172150.png?ex=69799306&is=69784186&hm=2d7d8a67dd4237b4860d9e07e02e10c04e99865d35750412fd1d031460aa44b7&',
 
     /*
     |--------------------------------------------------------------------------

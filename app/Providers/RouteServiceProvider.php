@@ -90,7 +90,7 @@ class RouteServiceProvider extends ServiceProvider
 
         // Credit earning ratelimiting.
         RateLimiter::for('earn', function (Request $request) {
-            return Limit::perMinute(1)->by($request->user()->id);
+            return Limit::perMinute(60)->by($request->user()->id);
         });
 
         // Stops users from renewing or editing servers many times in quick succession.

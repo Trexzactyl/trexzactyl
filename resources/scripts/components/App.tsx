@@ -3,7 +3,6 @@ import tw from 'twin.macro';
 import '@/assets/tailwind.css';
 import { store } from '@/state';
 import { StoreProvider } from 'easy-peasy';
-import { hot } from 'react-hot-loader/root';
 import { history } from '@/components/history';
 import { SiteSettings } from '@/state/settings';
 import IndexRouter from '@/routers/IndexRouter';
@@ -84,4 +83,4 @@ const App = () => {
     );
 };
 
-export default hot(App);
+export default App;

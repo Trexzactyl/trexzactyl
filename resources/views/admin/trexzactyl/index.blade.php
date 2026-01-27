@@ -29,9 +29,9 @@
                 </div>
                 <div class="box-body">
                     @if ($version->isLatestPanel())
-                        You are running Trexzactyl <code>{{ config('app.version') }}</code>. 
+                        You are running Trexzactyl <code>{{ \Trexzactyl\Services\Helpers\VersionService::getCurrentVersion() }}</code>. 
                     @else
-                        Trexzactyl is not up-to-date. <code>{{ config('app.version') }} (current) -> <a href="https://github.com/Trexzactyl/Trexzactyl/releases/v{{ $version->getPanel() }}" target="_blank">{{ $version->getPanel() }}</a> (latest)</code>
+                        Trexzactyl is not up-to-date. <code>{{ \Trexzactyl\Services\Helpers\VersionService::getCurrentVersion() }} (current) -> <a href="https://github.com/Trexzactyl/Trexzactyl/releases/v{{ $version->getPanel() }}" target="_blank">{{ $version->getPanel() }}</a> (latest)</code>
                     @endif
                 </div>
             </div>

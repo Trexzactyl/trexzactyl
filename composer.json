@@ -1,5 +1,6 @@
 {
     "name": "trexzactyl/trexzactyl",
+    "version": "1.0.1",
     "description": "A fast, advanced and customisable game management panel and billing system in one. ",
     "license": "MIT",
     "require": {
@@ -51,7 +52,7 @@
         "nunomaduro/collision": "~6.3",
         "php-mock/php-mock-phpunit": "~2.6",
         "phpunit/phpunit": "~9.5",
-        "spatie/laravel-ignition": "~1.5"
+        "spatie/laravel-ignition": "^1.7"
     },
     "autoload": {
         "files": [
