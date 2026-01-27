@@ -29,15 +29,20 @@ const DiscordContainer = () => {
     return (
         <DiscordFormContainer css={tw`w-full flex`}>
             <div css={tw`flex flex-col md:h-full`}>
-                <div css={tw`mt-6`}>
-                    <Button type={'button'} css={tw`w-full`} onClick={() => login()} disabled={loading}>
+                <div css={tw`mt-2`}>
+                    <Button
+                        type={'button'}
+                        css={tw`w-full bg-blue-600/10 text-blue-400 border border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/60 font-black uppercase tracking-widest text-sm py-4 rounded-xl transition-all shadow-lg`}
+                        onClick={() => login()}
+                        disabled={loading}
+                    >
                         Connect with Discord
                     </Button>
                 </div>
-                <div css={tw`mt-6 text-center`}>
+                <div css={tw`mt-10 text-center`}>
                     <Link
                         to={'/auth/login'}
-                        css={tw`text-xs text-neutral-500 tracking-wide no-underline uppercase hover:text-neutral-600`}
+                        css={tw`text-[10px] text-neutral-500 font-black tracking-widest no-underline uppercase hover:text-neutral-300 transition-colors`}
                     >
                         Return to login
                     </Link>

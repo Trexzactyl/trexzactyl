@@ -11,17 +11,22 @@ import { ServerEggVariable } from '@/api/server/types';
 import { usePermissions } from '@/plugins/usePermissions';
 import getServerStartup from '@/api/swr/getServerStartup';
 import InputSpinner from '@/components/elements/InputSpinner';
-import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import updateStartupVariable from '@/api/server/updateStartupVariable';
+import styled from 'styled-components/macro';
+import * as Icon from 'react-feather';
 
-interface Props {
-    variable: ServerEggVariable;
-}
+const VariableCard = styled.div`
+    ${tw`p-6 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md transition-all duration-300`};
+    ${tw`hover:border-blue-500/50 hover:shadow-lg`};
+`;
 
-const VariableBox = ({ variable }: Props) => {
+const Badge = styled.span`
+    ${tw`bg-neutral-800 text-neutral-500 text-[10px] py-0.5 px-2 rounded-full font-black uppercase tracking-widest mr-2`};
+`;
+
+const VariableBox = ({ variable }: { variable: ServerEggVariable }) => {
     const FLASH_KEY = `server:startup:${variable.envVariable}`;
-
     const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
     const [loading, setLoading] = useState(false);
     const [canEdit] = usePermissions(['startup.update']);
@@ -31,19 +36,15 @@ const VariableBox = ({ variable }: Props) => {
     const setVariableValue = debounce((value: string) => {
         setLoading(true);
         clearFlashes(FLASH_KEY);
-
         updateStartupVariable(uuid, variable.envVariable, value)
             .then(([response, invocation]) =>
-                mutate(
-                    (data) => ({
-                        ...data,
-                        invocation,
-                        variables: (data.variables || []).map((v) =>
-                            v.envVariable === response.envVariable ? response : v
-                        ),
-                    }),
-                    false
-                )
+                mutate((data) => ({
+                    ...data,
+                    invocation,
+                    variables: (data.variables || []).map((v) =>
+                        v.envVariable === response.envVariable ? response : v
+                    ),
+                }), false)
             )
             .catch((error) => {
                 console.error(error);
@@ -52,33 +53,33 @@ const VariableBox = ({ variable }: Props) => {
             .then(() => setLoading(false));
     }, 500);
 
-    const useSwitch = variable.rules.some(
-        (v) => v === 'boolean' || v === 'in:0,1' || v === 'in:1,0' || v === 'in:true,false' || v === 'in:false,true'
-    );
+    const useSwitch = variable.rules.some((v) => v === 'boolean' || v === 'in:0,1' || v === 'in:1,0' || v === 'in:true,false' || v === 'in:false,true');
     const isStringSwitch = variable.rules.some((v) => v === 'string');
     const selectValues = variable.rules.find((v) => v.startsWith('in:'))?.split(',') || [];
 
     return (
-        <TitledGreyBox
-            title={
-                <p css={tw`text-sm uppercase`}>
-                    {!variable.isEditable && (
-                        <span css={tw`bg-neutral-700 text-xs py-1 px-2 rounded-full mr-2 mb-1`}>Read Only</span>
-                    )}
-                    {variable.name}
-                </p>
-            }
-        >
-            <FlashMessageRender byKey={FLASH_KEY} css={tw`mb-2 md:mb-4`} />
+        <VariableCard className={'group'}>
+            <div css={tw`flex items-center justify-between mb-4`}>
+                <div css={tw`flex items-center`}>
+                    {!variable.isEditable && <Badge>Read Only</Badge>}
+                    <h4 css={tw`text-xs font-black text-neutral-400 uppercase tracking-widest group-hover:text-blue-400 transition-colors`}>
+                        {variable.name}
+                    </h4>
+                </div>
+                <div css={tw`font-mono text-[10px] text-neutral-600 font-bold bg-neutral-800/50 px-2 py-0.5 rounded`}>
+                    {variable.envVariable}
+                </div>
+            </div>
+
+            <FlashMessageRender byKey={FLASH_KEY} css={tw`mb-4`} />
+
             <InputSpinner visible={loading}>
                 {useSwitch ? (
-                    <>
+                    <div css={tw`flex items-center gap-3`}>
                         <Switch
                             readOnly={!canEdit || !variable.isEditable}
                             name={variable.envVariable}
-                            defaultChecked={
-                                isStringSwitch ? variable.serverValue === 'true' : variable.serverValue === '1'
-                            }
+                            defaultChecked={isStringSwitch ? variable.serverValue === 'true' : variable.serverValue === '1'}
                             onChange={() => {
                                 if (canEdit && variable.isEditable) {
                                     if (isStringSwitch) {
@@ -89,47 +90,46 @@ const VariableBox = ({ variable }: Props) => {
                                 }
                             }}
                         />
-                    </>
+                        <span css={tw`text-xs text-neutral-500 font-medium`}>{variable.serverValue === '1' || variable.serverValue === 'true' ? 'Enabled' : 'Disabled'}</span>
+                    </div>
                 ) : (
                     <>
                         {selectValues.length > 0 ? (
-                            <>
-                                <Select
-                                    onChange={(e) => setVariableValue(e.target.value)}
-                                    name={variable.envVariable}
-                                    defaultValue={variable.serverValue}
-                                    disabled={!canEdit || !variable.isEditable}
-                                >
-                                    {selectValues.map((selectValue) => (
-                                        <option
-                                            key={selectValue.replace('in:', '')}
-                                            value={selectValue.replace('in:', '')}
-                                        >
-                                            {selectValue.replace('in:', '')}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </>
+                            <Select
+                                onChange={(e) => setVariableValue(e.target.value)}
+                                name={variable.envVariable}
+                                defaultValue={variable.serverValue}
+                                disabled={!canEdit || !variable.isEditable}
+                                css={tw`bg-neutral-800/50 border-neutral-700 focus:border-blue-500`}
+                            >
+                                {selectValues.map((selectValue) => (
+                                    <option key={selectValue.replace('in:', '')} value={selectValue.replace('in:', '')}>
+                                        {selectValue.replace('in:', '')}
+                                    </option>
+                                ))}
+                            </Select>
                         ) : (
-                            <>
-                                <Input
-                                    onKeyUp={(e) => {
-                                        if (canEdit && variable.isEditable) {
-                                            setVariableValue(e.currentTarget.value);
-                                        }
-                                    }}
-                                    readOnly={!canEdit || !variable.isEditable}
-                                    name={variable.envVariable}
-                                    defaultValue={variable.serverValue}
-                                    placeholder={variable.defaultValue}
-                                />
-                            </>
+                            <Input
+                                onKeyUp={(e) => {
+                                    if (canEdit && variable.isEditable) {
+                                        setVariableValue(e.currentTarget.value);
+                                    }
+                                }}
+                                readOnly={!canEdit || !variable.isEditable}
+                                name={variable.envVariable}
+                                defaultValue={variable.serverValue}
+                                placeholder={variable.defaultValue}
+                                css={tw`bg-neutral-800/50 border-neutral-700 focus:border-blue-500`}
+                            />
                         )}
                     </>
                 )}
             </InputSpinner>
-            <p css={tw`mt-1 text-xs text-neutral-300`}>{variable.description}</p>
-        </TitledGreyBox>
+            <div css={tw`mt-4 flex gap-2`}>
+                <Icon.Info size={12} css={tw`text-neutral-500 mt-0.5 flex-none`} />
+                <p css={tw`text-xs text-neutral-500 leading-relaxed`}>{variable.description}</p>
+            </div>
+        </VariableCard>
     );
 };
 

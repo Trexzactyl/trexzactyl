@@ -22,6 +22,7 @@ interface ExtendedWindow extends Window {
         verified: boolean;
         /* eslint-disable camelcase */
         discord_id: string;
+        name_first: string | null;
         root_admin: boolean;
         use_totp: boolean;
         referral_code: string;
@@ -41,6 +42,7 @@ const App = () => {
         store.getActions().user.setUserData({
             uuid: TrexzactylUser.uuid,
             username: TrexzactylUser.username,
+            name_first: TrexzactylUser.name_first,
             email: TrexzactylUser.email,
             approved: TrexzactylUser.approved,
             verified: TrexzactylUser.verified,

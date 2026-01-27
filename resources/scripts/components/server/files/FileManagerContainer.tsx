@@ -1,7 +1,6 @@
 import tw from 'twin.macro';
 import { ip } from '@/lib/formatters';
 import { hashToPath } from '@/helpers';
-import style from './style.module.css';
 import Can from '@/components/elements/Can';
 import { httpErrorToHuman } from '@/api/http';
 import { ServerContext } from '@/state/server';
@@ -28,6 +27,8 @@ import FileManagerStatus from '@/components/server/files/FileManagerStatus';
 import NewDirectoryButton from '@/components/server/files/NewDirectoryButton';
 import { FileActionCheckbox } from '@/components/server/files/SelectFileCheckbox';
 import FileManagerBreadcrumbs from '@/components/server/files/FileManagerBreadcrumbs';
+import styled from 'styled-components/macro';
+import * as Icon from 'react-feather';
 
 const sortFiles = (files: FileObject[], searchString: string): FileObject[] => {
     const sortedFiles: FileObject[] = files
@@ -38,6 +39,22 @@ const sortFiles = (files: FileObject[], searchString: string): FileObject[] => {
         .filter((file) => file.name.toLowerCase().includes(searchString.toLowerCase()));
 };
 
+const ActionsContainer = styled.div`
+    ${tw`flex flex-wrap items-center justify-between gap-4 mb-6 p-4 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md`};
+`;
+
+const FileListContainer = styled.div`
+    ${tw`bg-neutral-900/50 backdrop-blur-md border border-neutral-700 rounded-xl overflow-hidden`};
+`;
+
+const SearchInput = styled(Input)`
+    ${tw`bg-neutral-800/50 border-neutral-700 focus:border-blue-500 transition-all duration-200`};
+`;
+
+const SFTPCard = styled.div`
+    ${tw`p-6 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md mt-8`};
+`;
+
 export default () => {
     const id = ServerContext.useStoreState((state) => state.server.data!.id);
     const username = useStoreState((state) => state.user.data!.username);
@@ -47,7 +64,6 @@ export default () => {
     const directory = ServerContext.useStoreState((state) => state.files.directory);
     const clearFlashes = useStoreActions((actions) => actions.flashes.clearFlashes);
     const setDirectory = ServerContext.useStoreActions((actions) => actions.files.setDirectory);
-
     const setSelectedFiles = ServerContext.useStoreActions((actions) => actions.files.setSelectedFiles);
     const selectedFilesLength = ServerContext.useStoreState((state) => state.files.selectedFiles.length);
 
@@ -72,58 +88,66 @@ export default () => {
     }
 
     const searchFiles = (event: ChangeEvent<HTMLInputElement>) => {
-        if (files) {
-            setSearchString(event.target.value);
-            sortFiles(files, searchString);
-            mutate();
-        }
+        setSearchString(event.target.value);
     };
 
     return (
-        <ServerContentBlock title={'File Manager'} description={'Create, edit and view files.'} showFlashKey={'files'}>
-            <Input onChange={searchFiles} className={'mb-4 j-up'} placeholder={'Search for files and folders...'} />
-            <div css={tw`flex flex-wrap-reverse md:flex-nowrap justify-center mb-4`}>
-                <ErrorBoundary>
-                    <div className={'j-right'}>
-                        <FileManagerBreadcrumbs
-                            css={tw`w-full`}
-                            renderLeft={
-                                <FileActionCheckbox
-                                    type={'checkbox'}
-                                    css={tw`mx-4`}
-                                    checked={selectedFilesLength === (files?.length === 0 ? -1 : files?.length)}
-                                    onChange={onSelectAllClick}
-                                />
-                            }
-                        />
-                    </div>
-                    <Can action={'file.create'}>
-                        <div className={style.manager_actions}>
-                            <FileManagerStatus />
-                            <NewDirectoryButton />
-                            <UploadButton />
-                            <PullFileModal />
-                            <NavLink to={`/server/${id}/files/new${window.location.hash}`}>
-                                <Button>New File</Button>
-                            </NavLink>
-                        </div>
-                    </Can>
-                </ErrorBoundary>
+        <ServerContentBlock title={'File Manager'}>
+            <div css={tw`mb-6`}>
+                <div css={tw`flex items-center gap-2 text-neutral-400 mb-2 px-1`}>
+                    <Icon.Search size={14} />
+                    <span css={tw`text-xs uppercase font-bold tracking-wider`}>Search Files</span>
+                </div>
+                <SearchInput onChange={searchFiles} placeholder={'Search for files and folders...'} />
             </div>
+
+            <ActionsContainer>
+                <div css={tw`flex-1`}>
+                    <FileManagerBreadcrumbs
+                        renderLeft={
+                            <FileActionCheckbox
+                                type={'checkbox'}
+                                css={tw`mr-4`}
+                                checked={selectedFilesLength === (files?.length === 0 ? -1 : files?.length)}
+                                onChange={onSelectAllClick}
+                            />
+                        }
+                    />
+                </div>
+                <Can action={'file.create'}>
+                    <div css={tw`flex items-center gap-2`}>
+                        <FileManagerStatus />
+                        <NewDirectoryButton />
+                        <UploadButton />
+                        <PullFileModal />
+                        <NavLink to={`/server/${id}/files/new${window.location.hash}`}>
+                            <Button css={tw`bg-blue-600/10 text-blue-400 border border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/60 font-black uppercase tracking-widest text-[10px] px-4 py-2 rounded-lg transition-all`}>
+                                <div css={tw`flex items-center gap-2`}>
+                                    <Icon.FilePlus size={14} />
+                                    New File
+                                </div>
+                            </Button>
+                        </NavLink>
+                    </div>
+                </Can>
+            </ActionsContainer>
+
             {!files ? (
                 <Spinner size={'large'} centered />
             ) : (
-                <>
+                <FileListContainer>
                     {!files.length ? (
-                        <p css={tw`text-sm text-neutral-400 text-center`}>This directory seems to be empty.</p>
+                        <div css={tw`p-12 flex flex-col items-center justify-center text-neutral-500`}>
+                            <Icon.FolderMinus size={48} css={tw`mb-4 opacity-20`} />
+                            <p css={tw`text-sm`}>This directory seems to be empty.</p>
+                        </div>
                     ) : (
                         <CSSTransition classNames={'fade'} timeout={150} appear in>
-                            <>
+                            <div css={tw`p-2`}>
                                 {files.length > 250 && (
-                                    <div css={tw`rounded bg-yellow-400 mb-px p-3`}>
-                                        <p css={tw`text-yellow-900 text-sm text-center`}>
-                                            This directory is too large to display in the browser, limiting the output
-                                            to the first 250 files.
+                                    <div css={tw`rounded-lg bg-yellow-500/10 border border-yellow-500/20 mb-2 p-3 text-center`}>
+                                        <p css={tw`text-yellow-400 text-xs`}>
+                                            Limit: First 250 files shown.
                                         </p>
                                     </div>
                                 )}
@@ -131,40 +155,49 @@ export default () => {
                                     <FileObjectRow key={file.key} file={file} />
                                 ))}
                                 <MassActionsBar />
-                            </>
+                            </div>
                         </CSSTransition>
                     )}
-                </>
+                </FileListContainer>
             )}
+
             <Can action={'file.sftp'}>
-                <TitledGreyBox title={'SFTP Details'} className={'mt-8 md:mt-6'}>
-                    <div>
-                        <Label>Server Address</Label>
-                        <CopyOnClick text={`sftp://${ip(sftp.ip)}:${sftp.port}`}>
-                            <Input type={'text'} value={`sftp://${ip(sftp.ip)}:${sftp.port}`} readOnly />
-                        </CopyOnClick>
-                    </div>
-                    <div css={tw`mt-6`}>
-                        <Label>Username</Label>
-                        <CopyOnClick text={`${username}.${id}`}>
-                            <Input type={'text'} value={`${username}.${id}`} readOnly />
-                        </CopyOnClick>
-                    </div>
-                    <div css={tw`mt-6 flex items-center`}>
-                        <div css={tw`flex-1`}>
-                            <div css={tw`border-l-4 border-cyan-500 p-3`}>
-                                <p css={tw`text-xs text-neutral-200`}>
-                                    Your SFTP password is the same as the password you use to access this panel.
-                                </p>
-                            </div>
+                <SFTPCard>
+                    <div css={tw`flex items-center gap-3 mb-6`}>
+                        <div css={tw`p-2 rounded-lg bg-blue-500/10 text-blue-400`}>
+                            <Icon.Cpu size={20} />
                         </div>
-                        <div css={tw`ml-4`}>
-                            <a href={`sftp://${username}.${id}@${ip(sftp.ip)}:${sftp.port}`}>
-                                <Button.Text variant={Button.Variants.Secondary}>Launch SFTP</Button.Text>
-                            </a>
+                        <div>
+                            <h3 css={tw`text-lg font-bold text-neutral-100`}>SFTP Connection</h3>
+                            <p css={tw`text-xs text-neutral-500`}>Connect via your favorite SFTP client.</p>
                         </div>
                     </div>
-                </TitledGreyBox>
+
+                    <div css={tw`grid grid-cols-1 md:grid-cols-2 gap-6`}>
+                        <div>
+                            <Label>Server Address</Label>
+                            <CopyOnClick text={`${ip(sftp.ip)}:${sftp.port}`}>
+                                <SearchInput type={'text'} value={`${ip(sftp.ip)}:${sftp.port}`} readOnly />
+                            </CopyOnClick>
+                        </div>
+                        <div>
+                            <Label>Username</Label>
+                            <CopyOnClick text={`${username}.${id}`}>
+                                <SearchInput type={'text'} value={`${username}.${id}`} readOnly />
+                            </CopyOnClick>
+                        </div>
+                    </div>
+
+                    <div css={tw`mt-8 p-4 rounded-lg bg-blue-500/5 border border-blue-500/10 flex items-center justify-between`}>
+                        <div css={tw`flex items-center gap-3`}>
+                            <Icon.Info size={16} css={tw`text-blue-400`} />
+                            <p css={tw`text-xs text-neutral-400`}>Password is the same as your panel password.</p>
+                        </div>
+                        <a href={`sftp://${username}.${id}@${ip(sftp.ip)}:${sftp.port}`}>
+                            <Button.Text css={tw`text-xs`}>Launch Protocol</Button.Text>
+                        </a>
+                    </div>
+                </SFTPCard>
             </Can>
         </ServerContentBlock>
     );

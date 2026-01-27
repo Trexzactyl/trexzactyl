@@ -15,6 +15,7 @@ import { Button } from '@/components/elements/button/index';
 import useFileManagerSwr from '@/plugins/useFileManagerSwr';
 import { FileObject } from '@/api/server/files/loadDirectory';
 import FlashMessageRender from '@/components/FlashMessageRender';
+import * as Icon from 'react-feather';
 
 interface Values {
     url: string;
@@ -78,7 +79,7 @@ export default ({ className }: WithClassname) => {
                             .url()
                             .test('unique', 'File or directory with that name already exists.', (v) => {
                                 return (
-                                    v !== undefined &&
+                                    v !== undefined && v !== null &&
                                     data !== undefined &&
                                     data.filter((f) => f.name.toLowerCase() === v.toLowerCase()).length < 1
                                 );
@@ -128,9 +129,16 @@ export default ({ className }: WithClassname) => {
                     )}
                 </Formik>
             </Portal>
-            <Button.Text onClick={() => setVisible(true)} className={className}>
-                Pull Remote File
-            </Button.Text>
+            <Button
+                onClick={() => setVisible(true)}
+                className={className}
+                css={tw`bg-neutral-800/50 text-neutral-300 border border-neutral-700 hover:bg-neutral-800/80 hover:border-neutral-600 font-black uppercase tracking-widest text-[10px] px-4 py-2 rounded-lg transition-all`}
+            >
+                <div css={tw`flex items-center gap-2`}>
+                    <Icon.DownloadCloud size={14} />
+                    Pull File
+                </div>
+            </Button>
         </>
     );
 };

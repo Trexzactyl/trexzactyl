@@ -27,7 +27,7 @@ class EggExporterService
         $egg = $this->repository->getWithExportAttributes($egg);
 
         $struct = [
-            '_comment' => 'DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY Trexzactyl PANEL - Trexzactyl.com',
+            '_comment' => 'DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY Trexzactyl PANEL - host.trexz.xyz',
             'meta' => [
                 'version' => Egg::EXPORT_VERSION,
                 'update_url' => $egg->update_url,

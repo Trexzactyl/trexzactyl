@@ -43,19 +43,24 @@ const LoginCheckpointContainer = () => {
                     autoFocus
                 />
             </div>
-            <div css={tw`mt-6`}>
-                <Button size={Button.Sizes.Large} css={tw`w-full`} type={'submit'} disabled={isSubmitting}>
+            <div css={tw`mt-8`}>
+                <Button
+                    size={Button.Sizes.Large}
+                    css={tw`w-full bg-blue-600/10 text-blue-400 border border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/60 font-black uppercase tracking-widest text-sm py-4 rounded-xl transition-all shadow-lg`}
+                    type={'submit'}
+                    disabled={isSubmitting}
+                >
                     Continue
                 </Button>
             </div>
-            <div css={tw`mt-6 text-center`}>
+            <div css={tw`mt-10 text-center`}>
                 <span
                     onClick={() => {
                         setFieldValue('code', '');
                         setFieldValue('recoveryCode', '');
                         setIsMissingDevice((s) => !s);
                     }}
-                    css={tw`cursor-pointer text-xs text-neutral-500 tracking-wide uppercase no-underline hover:text-neutral-700`}
+                    css={tw`cursor-pointer text-[10px] text-neutral-500 font-black tracking-widest uppercase no-underline hover:text-neutral-300 transition-colors`}
                 >
                     {!isMissingDevice ? "I've Lost My Device" : 'I Have My Device'}
                 </span>
@@ -63,7 +68,7 @@ const LoginCheckpointContainer = () => {
             <div css={tw`mt-6 text-center`}>
                 <Link
                     to={'/auth/login'}
-                    css={tw`text-xs text-neutral-500 tracking-wide uppercase no-underline hover:text-neutral-700`}
+                    css={tw`text-[10px] text-neutral-500 font-black tracking-widest uppercase no-underline hover:text-neutral-300 transition-colors`}
                 >
                     Return to Login
                 </Link>

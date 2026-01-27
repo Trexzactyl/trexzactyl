@@ -1,3 +1,4 @@
+import tw from 'twin.macro';
 import PageContentBlock from '@/components/elements/PageContentBlock';
 import React, { Fragment } from 'react';
 import FlashMessageRender from '@/components/FlashMessageRender';
@@ -35,11 +36,9 @@ export default () => {
     };
 
     return (
-        <PageContentBlock title={'Coupons'}>
-            <h1 className={'text-5xl'}>Coupons</h1>
-            <h3 className={'text-2xl mt-2 text-neutral-500'}>Redeem coupons given to you.</h3>
+        <PageContentBlock title={'Coupons'} description={'Redeem coupons given to you.'}>
             <FlashMessageRender byKey={'coupons'} className={'mt-2'} />
-            <ContentBox title={'Redeem'} className={'w-1/4 mt-6'}>
+            <ContentBox title={'Redeem Coupon'} css={tw`md:w-1/3 mt-10`}>
                 <Formik initialValues={{ code: '' }} onSubmit={submit} validationSchema={schema}>
                     {({ isSubmitting, isValid }) => (
                         <Fragment>

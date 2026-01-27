@@ -10,14 +10,13 @@ import { Actions, useStoreActions, useStoreState } from 'easy-peasy';
 import getServerSubusers from '@/api/server/users/getServerSubusers';
 import AddSubuserButton from '@/components/server/users/AddSubuserButton';
 import ServerContentBlock from '@/components/elements/ServerContentBlock';
+import * as Icon from 'react-feather';
 
 export default () => {
     const [loading, setLoading] = useState(true);
-
     const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
     const subusers = ServerContext.useStoreState((state) => state.subusers.data);
     const setSubusers = ServerContext.useStoreActions((actions) => actions.subusers.setSubusers);
-
     const permissions = useStoreState((state: ApplicationStore) => state.permissions.data);
     const getPermissions = useStoreActions((actions: Actions<ApplicationStore>) => actions.permissions.getPermissions);
     const { addError, clearFlashes } = useStoreActions((actions: Actions<ApplicationStore>) => actions.flashes);
@@ -47,18 +46,17 @@ export default () => {
     }
 
     return (
-        <ServerContentBlock
-            title={'Users'}
-            description={'Add and remove users from your server.'}
-            showFlashKey={'users'}
-        >
+        <ServerContentBlock title={'Users'}>
             {!subusers.length ? (
-                <p css={tw`text-center text-sm text-neutral-300`}>It looks like you don&apos;t have any subusers.</p>
+                <div css={tw`p-12 flex flex-col items-center justify-center text-neutral-500 bg-neutral-900/50 backdrop-blur-md rounded-xl border border-neutral-700`}>
+                    <Icon.Users size={48} css={tw`mb-4 opacity-20`} />
+                    <p css={tw`text-sm`}>It looks like you don&apos;t have any subusers.</p>
+                </div>
             ) : (
                 subusers.map((subuser) => <UserRow key={subuser.uuid} subuser={subuser} />)
             )}
             <Can action={'user.create'}>
-                <div css={tw`flex justify-end mt-6`}>
+                <div css={tw`flex justify-end mt-8`}>
                     <AddSubuserButton />
                 </div>
             </Can>

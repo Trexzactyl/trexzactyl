@@ -73,7 +73,7 @@ class StoreController extends Controller
             $this->settings->set('trexzactyl::' . $key, $value);
         }
 
-        $this->alert->success('If you have enabled a payment gateway, please remember to configure them. <a href="https://docs.trexzactyl.com">Documentation</a>')->flash();
+        $this->alert->success('If you have enabled a payment gateway, please remember to configure them. <a href="https://docs.trexz.xyz">Documentation</a>')->flash();
 
         return redirect()->route('admin.trexzactyl.store');
     }

@@ -1,3 +1,4 @@
+import tw from 'twin.macro';
 import { Link } from 'react-router-dom';
 import { MoreHorizontal } from 'react-feather';
 import React, { useEffect, useState } from 'react';
@@ -22,32 +23,34 @@ export default () => {
     return (
         <PageContentBlock
             title={'Support Tickets'}
-            description={'Create or reply to a support ticket.'}
+            description={'Need assistance? Create or manage your support tickets here.'}
             showFlashKey={'tickets'}
         >
             <NewTicketDialog open={visible} onClose={() => setVisible(false)} />
-            <div className={'my-10'}>
+            <div className={'my-10 space-y-4'}>
                 {tickets.map((ticket) => (
-                    <Link to={`/tickets/${ticket.id}`} key={ticket.id}>
-                        <GreyRowBox className={'flex-wrap md:flex-nowrap items-center my-1'}>
-                            <div className={'flex items-center truncate w-full md:flex-1'}>
-                                <p className={'mr-4 text-xl font-bold'}>#{ticket.id}</p>
-                                <div className={'flex flex-col truncate'}>
+                    <Link to={`/tickets/${ticket.id}`} key={ticket.id} className={'block'}>
+                        <div css={tw`flex items-center p-6 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md transition-all duration-200 hover:border-blue-500/50 hover:bg-neutral-900/80`}>
+                            <div className={'flex items-center min-w-0 flex-1'}>
+                                <div css={tw`flex-none w-12 h-12 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center mr-6`}>
+                                    <p css={tw`text-blue-400 font-black text-lg`}>#{ticket.id}</p>
+                                </div>
+                                <div className={'flex flex-col min-w-0 truncate'}>
                                     <div className={'flex items-center mb-1'}>
-                                        <p className={'break-words truncate text-lg'}>{ticket.title}</p>
-                                        <span className={'ml-3 text-gray-500 text-xs font-extralight hidden sm:inline'}>
+                                        <p css={tw`text-neutral-100 font-black uppercase tracking-widest truncate mr-4`}>{ticket.title}</p>
+                                        <span css={tw`text-[10px] font-black uppercase tracking-widest py-1 px-2.5 bg-neutral-800 text-neutral-400 rounded-md border border-neutral-700`}>
                                             {ticket.status}
                                         </span>
                                     </div>
-                                    <p className={'mt-1 md:mt-0 text-xs text-neutral-300 font-mono truncate'}>
+                                    <p css={tw`text-xs text-neutral-500 font-medium truncate opacity-60`}>
                                         {ticket.content}
                                     </p>
                                 </div>
                             </div>
                             {ticket.createdAt && (
-                                <div className={'flex-1 md:flex-none md:w-48 mt-4 md:mt-0 md:ml-8 md:text-center'}>
-                                    <p className={'text-sm'}>{format(ticket.createdAt, 'MMMM do, yyyy')}</p>
-                                    <p className={'text-2xs text-neutral-500 uppercase mt-1'}>
+                                <div css={tw`hidden md:block flex-none w-48 ml-8 text-right`}>
+                                    <p css={tw`text-xs font-black text-neutral-300 uppercase tracking-widest`}>{format(ticket.createdAt, 'MMM do, yyyy')}</p>
+                                    <p css={tw`text-[10px] text-neutral-500 font-bold uppercase mt-1 opacity-50`}>
                                         {formatDistanceToNow(ticket.createdAt, {
                                             includeSeconds: true,
                                             addSuffix: true,
@@ -55,15 +58,20 @@ export default () => {
                                     </p>
                                 </div>
                             )}
-                            <div className={'mt-4 md:mt-0 ml-6'} style={{ marginRight: '-0.5rem' }}>
-                                <MoreHorizontal />
+                            <div css={tw`ml-8 text-neutral-500`}>
+                                <MoreHorizontal size={20} />
                             </div>
-                        </GreyRowBox>
+                        </div>
                     </Link>
                 ))}
             </div>
-            <div className={'w-full flex lg:justify-end lg:items-end mt-2'}>
-                <Button onClick={() => setVisible(true)}>Create New Ticket</Button>
+            <div className={'w-full flex justify-end mt-2'}>
+                <Button
+                    onClick={() => setVisible(true)}
+                    css={tw`bg-blue-600/10 text-blue-400 border border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/60 font-black uppercase tracking-widest text-sm px-6 py-2.5 rounded-lg transition-all`}
+                >
+                    Create New Ticket
+                </Button>
             </div>
         </PageContentBlock>
     );

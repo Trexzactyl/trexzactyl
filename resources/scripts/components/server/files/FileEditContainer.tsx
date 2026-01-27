@@ -20,6 +20,21 @@ import FileNameModal from '@/components/server/files/FileNameModal';
 import PageContentBlock from '@/components/elements/PageContentBlock';
 import CodemirrorEditor from '@/components/elements/CodemirrorEditor';
 import FileManagerBreadcrumbs from '@/components/server/files/FileManagerBreadcrumbs';
+import styled from 'styled-components/macro';
+import * as Icon from 'react-feather';
+
+const EditorWrapper = styled.div`
+    ${tw`relative rounded-xl border border-neutral-700 bg-[#1e1e1e]`};
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+`;
+
+const ControlsContainer = styled.div`
+    ${tw`flex flex-wrap items-center justify-between gap-4 p-4 mt-4 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md`};
+`;
+
+const StyledSelect = styled(Select)`
+    ${tw`bg-neutral-800/50 border-neutral-700 text-xs font-bold uppercase tracking-wider`};
+`;
 
 export default () => {
     const [error, setError] = useState('');
@@ -41,7 +56,6 @@ export default () => {
 
     useEffect(() => {
         if (action === 'new') return;
-
         setError('');
         setLoading(true);
         const path = hashToPath(hash);
@@ -56,10 +70,7 @@ export default () => {
     }, [action, uuid, hash]);
 
     const save = (name?: string) => {
-        if (!fetchFileContent) {
-            return;
-        }
-
+        if (!fetchFileContent) return;
         setLoading(true);
         clearFlashes('files:view');
         fetchFileContent()
@@ -69,8 +80,6 @@ export default () => {
                     history.push(`/server/${id}/files/edit#/${encodePathSegments(name)}`);
                     return;
                 }
-
-                return Promise.resolve();
             })
             .catch((error) => {
                 console.error(error);
@@ -79,29 +88,31 @@ export default () => {
             .then(() => setLoading(false));
     };
 
-    if (error) {
-        return <ServerError message={error} onBack={() => history.goBack()} />;
-    }
+    if (error) return <ServerError message={error} onBack={() => history.goBack()} />;
 
     return (
         <PageContentBlock>
             <FlashMessageRender byKey={'files:view'} css={tw`mb-4`} />
-            <ErrorBoundary>
-                <div className={'mb-4 j-right'}>
+            <div css={tw`flex items-center justify-between mb-6`}>
+                <ErrorBoundary>
                     <FileManagerBreadcrumbs withinFileEditor isNewFile={action !== 'edit'} />
+                </ErrorBoundary>
+                <div css={tw`flex items-center gap-2 text-neutral-500`}>
+                    <Icon.Edit3 size={14} />
+                    <span css={tw`text-xs uppercase font-bold tracking-wider`}>Editor</span>
                 </div>
-            </ErrorBoundary>
+            </div>
+
             {hash.replace(/^#/, '').endsWith('.pteroignore') && (
-                <div css={tw`mb-4 p-4 border-l-4 bg-neutral-900 rounded border-cyan-400`}>
-                    <p css={tw`text-neutral-300 text-sm`}>
-                        You&apos;re editing a <code css={tw`font-mono bg-black rounded py-px px-1`}>.pteroignore</code>{' '}
-                        file. Any files or directories listed in here will be excluded from backups. Wildcards are
-                        supported by using an asterisk (<code css={tw`font-mono bg-black rounded py-px px-1`}>*</code>).
-                        You can negate a prior rule by prepending an exclamation point (
-                        <code css={tw`font-mono bg-black rounded py-px px-1`}>!</code>).
+                <div css={tw`mb-6 p-4 rounded-xl border border-blue-500/20 bg-blue-500/5 flex items-start gap-4`}>
+                    <Icon.Info size={20} css={tw`text-blue-400 mt-0.5`} />
+                    <p css={tw`text-neutral-400 text-sm leading-relaxed`}>
+                        You&apos;re editing a <code css={tw`font-mono bg-neutral-900 rounded py-0.5 px-1.5 text-blue-300`}>.pteroignore</code> file.
+                        Entries here are excluded from backups. Use <code css={tw`text-blue-300`}>*</code> for wildcards and <code css={tw`text-blue-300`}>!</code> to negate rules.
                     </p>
                 </div>
             )}
+
             <FileNameModal
                 visible={modalVisible}
                 onDismissed={() => setModalVisible(false)}
@@ -110,49 +121,44 @@ export default () => {
                     save(name);
                 }}
             />
-            <div css={tw`relative`}>
+
+            <EditorWrapper>
                 <SpinnerOverlay visible={loading} />
                 <CodemirrorEditor
                     mode={mode}
                     filename={hash.replace(/^#/, '')}
                     onModeChanged={setMode}
                     initialContent={content}
-                    fetchContent={(value) => {
-                        fetchFileContent = value;
-                    }}
-                    onContentSaved={() => {
-                        if (action !== 'edit') {
-                            setModalVisible(true);
-                        } else {
-                            save();
-                        }
-                    }}
+                    fetchContent={(value) => { fetchFileContent = value; }}
+                    onContentSaved={() => action !== 'edit' ? setModalVisible(true) : save()}
                 />
-            </div>
-            <div className={'flex justify-end mt-4'}>
-                <div className={'flex-1 sm:flex-none rounded bg-neutral-900 mr-4'}>
-                    <Select value={mode} onChange={(e) => setMode(e.currentTarget.value)}>
-                        {modes.map((mode) => (
-                            <option key={`${mode.name}_${mode.mime}`} value={mode.mime}>
-                                {mode.name}
-                            </option>
-                        ))}
-                    </Select>
+            </EditorWrapper>
+
+            <ControlsContainer>
+                <div css={tw`flex items-center gap-4`}>
+                    <div css={tw`flex flex-col`}>
+                        <span css={tw`text-[10px] text-neutral-500 font-bold uppercase tracking-widest mb-1 ml-1`}>Syntax Mode</span>
+                        <StyledSelect value={mode} onChange={(e) => setMode(e.currentTarget.value)}>
+                            {modes.map((mode) => (
+                                <option key={`${mode.name}_${mode.mime}`} value={mode.mime}>
+                                    {mode.name}
+                                </option>
+                            ))}
+                        </StyledSelect>
+                    </div>
                 </div>
-                {action === 'edit' ? (
-                    <Can action={'file.update'}>
-                        <Button css={tw`flex-1 sm:flex-none`} onClick={() => save()}>
-                            Save Content
-                        </Button>
-                    </Can>
-                ) : (
-                    <Can action={'file.create'}>
-                        <Button css={tw`flex-1 sm:flex-none`} onClick={() => setModalVisible(true)}>
-                            Create File
-                        </Button>
-                    </Can>
-                )}
-            </div>
+                <div>
+                    {action === 'edit' ? (
+                        <Can action={'file.update'}>
+                            <Button css={tw`px-8`} onClick={() => save()}>Save Changes</Button>
+                        </Can>
+                    ) : (
+                        <Can action={'file.create'}>
+                            <Button css={tw`px-8`} onClick={() => setModalVisible(true)}>Create File</Button>
+                        </Can>
+                    )}
+                </div>
+            </ControlsContainer>
         </PageContentBlock>
     );
 };

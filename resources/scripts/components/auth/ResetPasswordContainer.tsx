@@ -6,6 +6,7 @@ import { ApplicationStore } from '@/state';
 import { httpErrorToHuman } from '@/api/http';
 import { Formik, FormikHelpers } from 'formik';
 import Field from '@/components/elements/Field';
+import Label from '@/components/elements/Label';
 import Input from '@/components/elements/Input';
 import { RouteComponentProps } from 'react-router';
 import { Actions, useStoreActions } from 'easy-peasy';
@@ -62,9 +63,9 @@ export default ({ match, location }: RouteComponentProps<{ token: string }>) => 
         >
             {({ isSubmitting }) => (
                 <LoginFormContainer title={'Reset Password'} css={tw`w-full flex`}>
-                    <div>
-                        <label>Email</label>
-                        <Input value={email} isLight disabled />
+                    <div css={tw`mb-4`}>
+                        <Label isLight>Email Address</Label>
+                        <Input value={email} isLight disabled css={tw`opacity-50 cursor-not-allowed`} />
                     </div>
                     <div css={tw`mt-6`}>
                         <Field
@@ -78,15 +79,20 @@ export default ({ match, location }: RouteComponentProps<{ token: string }>) => 
                     <div css={tw`mt-6`}>
                         <Field light label={'Confirm New Password'} name={'passwordConfirmation'} type={'password'} />
                     </div>
-                    <div css={tw`mt-6`}>
-                        <Button size={Button.Sizes.Large} css={tw`w-full`} type={'submit'} disabled={isSubmitting}>
+                    <div css={tw`mt-8`}>
+                        <Button
+                            size={Button.Sizes.Large}
+                            css={tw`w-full bg-blue-600/10 text-blue-400 border border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/60 font-black uppercase tracking-widest text-sm py-4 rounded-xl transition-all shadow-lg`}
+                            type={'submit'}
+                            disabled={isSubmitting}
+                        >
                             Reset Password
                         </Button>
                     </div>
-                    <div css={tw`mt-6 text-center`}>
+                    <div css={tw`mt-10 text-center`}>
                         <Link
                             to={'/auth/login'}
-                            css={tw`text-xs text-neutral-500 tracking-wide no-underline uppercase hover:text-neutral-600`}
+                            css={tw`text-[10px] text-neutral-500 font-black tracking-widest no-underline uppercase hover:text-neutral-300 transition-colors`}
                         >
                             Return to Login
                         </Link>

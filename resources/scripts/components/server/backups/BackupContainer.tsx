@@ -9,21 +9,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import ServerContentBlock from '@/components/elements/ServerContentBlock';
 import CreateBackupButton from '@/components/server/backups/CreateBackupButton';
 import getServerBackups, { Context as ServerBackupContext } from '@/api/swr/getServerBackups';
+import * as Icon from 'react-feather';
 
 const BackupContainer = () => {
     const { page, setPage } = useContext(ServerBackupContext);
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const { data: backups, error, isValidating } = getServerBackups();
-
     const backupLimit = ServerContext.useStoreState((state) => state.server.data!.featureLimits.backups);
 
     useEffect(() => {
         if (!error) {
             clearFlashes('backups');
-
             return;
         }
-
         clearAndAddHttpError({ error, key: 'backups' });
     }, [error]);
 
@@ -32,40 +30,43 @@ const BackupContainer = () => {
     }
 
     return (
-        <ServerContentBlock title={'Backups'} description={'Protect your data with backups.'} showFlashKey={'backups'}>
+        <ServerContentBlock title={'Backups'}>
             <Pagination data={backups} onPageSelect={setPage}>
                 {({ items }) =>
                     !items.length ? (
-                        // Don't show any error messages if the server has no backups and the user cannot
-                        // create additional ones for the server.
-                        !backupLimit ? null : (
-                            <p css={tw`text-center text-sm text-neutral-300`}>
-                                {page > 1
-                                    ? "Looks like we've run out of backups to show you, try going back a page."
-                                    : 'It looks like there are no backups currently stored for this server.'}
-                            </p>
-                        )
+                        backupLimit > 0 ? (
+                            <div css={tw`p-12 flex flex-col items-center justify-center text-neutral-500 bg-neutral-900/50 backdrop-blur-md rounded-xl border border-neutral-700`}>
+                                <Icon.Database size={48} css={tw`mb-4 opacity-20`} />
+                                <p css={tw`text-sm`}>It looks like there are no backups currently stored for this server.</p>
+                            </div>
+                        ) : null
                     ) : (
-                        items.map((backup, index) => (
-                            <BackupRow key={backup.uuid} backup={backup} css={index > 0 ? tw`mt-2` : undefined} />
+                        items.map((backup) => (
+                            <BackupRow key={backup.uuid} backup={backup} />
                         ))
                     )
                 }
             </Pagination>
             {backupLimit === 0 && (
-                <p css={tw`text-center text-sm text-neutral-300`}>
-                    Backups cannot be created for this server because the backup limit is set to 0.
-                </p>
+                <div css={tw`p-8 rounded-xl bg-red-500/5 border border-red-500/10 flex items-center gap-4`}>
+                    <Icon.AlertTriangle css={tw`text-red-400`} />
+                    <p css={tw`text-sm text-red-100`}>
+                        Backups cannot be created for this server because the backup limit is set to 0.
+                    </p>
+                </div>
             )}
             <Can action={'backup.create'}>
-                <div css={tw`mt-6 sm:flex items-center justify-end`}>
-                    {backupLimit > 0 && backups.backupCount > 0 && (
-                        <p css={tw`text-sm text-neutral-300 mb-4 sm:mr-6 sm:mb-0`}>
-                            {backups.backupCount} of {backupLimit} backups have been created for this server.
-                        </p>
+                <div css={tw`mt-8 flex flex-col sm:flex-row items-center justify-between gap-4`}>
+                    {backupLimit > 0 && (
+                        <div css={tw`flex items-center gap-3 p-3 rounded-lg bg-neutral-900/50 border border-neutral-700`}>
+                            <Icon.PieChart size={16} css={tw`text-blue-400`} />
+                            <p css={tw`text-xs text-neutral-400 font-bold uppercase tracking-wider`}>
+                                Status: <span css={tw`text-neutral-100`}>{backups.backupCount} / {backupLimit} slots used</span>
+                            </p>
+                        </div>
                     )}
                     {backupLimit > 0 && backupLimit > backups.backupCount && (
-                        <CreateBackupButton css={tw`w-full sm:w-auto`} />
+                        <CreateBackupButton css={tw`w-full sm:w-auto px-8`} />
                     )}
                 </div>
             </Can>

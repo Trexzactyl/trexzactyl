@@ -1,18 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/elements/button/index';
+import styled from 'styled-components/macro';
+import tw from 'twin.macro';
 import Can from '@/components/elements/Can';
 import { ServerContext } from '@/state/server';
-import { PowerAction } from '@/components/server/console/ServerConsoleContainer';
+export type PowerAction = 'start' | 'stop' | 'restart' | 'kill';
 import { Dialog } from '@/components/elements/dialog';
+import renewServer from '@/api/server/renewServer';
+import useFlash from '@/plugins/useFlash';
+import { httpErrorToHuman } from '@/api/http';
+import { useStoreState } from '@/state/hooks';
+import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 
 interface PowerButtonProps {
     className?: string;
 }
 
+const ButtonGroup = styled.div`
+    ${tw`flex items-center gap-2`};
+`;
+
+const PowerButton = styled.button<{ $variant: 'start' | 'restart' | 'stop' | 'kill' | 'renew' }>`
+    ${tw`flex-1 px-6 py-2.5 rounded-lg font-black uppercase tracking-widest text-sm transition-all duration-200 border`};
+    ${tw`disabled:opacity-50 disabled:cursor-not-allowed`};
+
+    ${({ $variant }) =>
+        $variant === 'start'
+            ? tw`bg-green-600/10 text-green-400 border-green-500/30 hover:bg-green-600/20 hover:border-green-500/60`
+            : $variant === 'restart'
+                ? tw`bg-blue-600/10 text-blue-400 border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/60`
+                : $variant === 'renew'
+                    ? tw`bg-cyan-600/10 text-cyan-400 border-cyan-500/30 hover:bg-cyan-600/20 hover:border-cyan-500/60`
+                    : tw`bg-red-600/10 text-red-400 border-red-500/30 hover:bg-red-600/20 hover:border-red-500/60`};
+`;
+
 export default ({ className }: PowerButtonProps) => {
     const [open, setOpen] = useState(false);
+    const [renewOpen, setRenewOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const { addFlash, clearFlashes } = useFlash();
+
     const status = ServerContext.useStoreState((state) => state.status.value);
     const instance = ServerContext.useStoreState((state) => state.socket.instance);
+    const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
+    const renewable = ServerContext.useStoreState((state) => state.server.data!.renewable);
+    const store = useStoreState((state) => state.storefront.data?.renewals);
 
     const killable = status === 'stopping';
     const onButtonClick = (
@@ -20,24 +51,45 @@ export default ({ className }: PowerButtonProps) => {
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ): void => {
         e.preventDefault();
-        if (action === 'kill') {
-            return setOpen(true);
-        }
-
+        if (action === 'kill') return setOpen(true);
         if (instance) {
             setOpen(false);
             instance.send('set state', action === 'kill-confirmed' ? 'kill' : action);
         }
     };
 
+    const doRenewal = () => {
+        setLoading(true);
+        clearFlashes('console:share');
+
+        renewServer(uuid)
+            .then(() => {
+                setRenewOpen(false);
+                setLoading(false);
+                addFlash({
+                    key: 'console:share',
+                    type: 'success',
+                    message: 'Server has been renewed.',
+                });
+            })
+            .catch((error) => {
+                setRenewOpen(false);
+                setLoading(false);
+                addFlash({
+                    key: 'console:share',
+                    type: 'danger',
+                    message: 'Unable to renew your server. Are you sure you have enough credits?',
+                });
+                console.error(httpErrorToHuman(error));
+            });
+    };
+
     useEffect(() => {
-        if (status === 'offline') {
-            setOpen(false);
-        }
+        if (status === 'offline') setOpen(false);
     }, [status]);
 
     return (
-        <div className={className}>
+        <ButtonGroup className={className}>
             <Dialog.Confirm
                 open={open}
                 hideCloseIcon
@@ -48,29 +100,57 @@ export default ({ className }: PowerButtonProps) => {
             >
                 Forcibly stopping a server can lead to data corruption.
             </Dialog.Confirm>
+
+            <Dialog.Confirm
+                open={renewOpen}
+                onClose={() => setRenewOpen(false)}
+                title={'Confirm server renewal'}
+                onConfirmed={() => doRenewal()}
+            >
+                <SpinnerOverlay visible={loading} />
+                {store && (
+                    <>
+                        You will be charged {store.cost} credits to add {store.days} days until your next
+                        renewal is due.
+                    </>
+                )}
+            </Dialog.Confirm>
+
+            {renewable && store && (
+                <PowerButton $variant={'renew'} onClick={() => setRenewOpen(true)}>
+                    Renew
+                </PowerButton>
+            )}
+
             <Can action={'control.start'}>
-                <Button.Success
-                    className={'flex-1'}
+                <PowerButton
+                    $variant={'start'}
                     disabled={status !== 'offline'}
                     onClick={onButtonClick.bind(this, 'start')}
                 >
                     Start
-                </Button.Success>
+                </PowerButton>
             </Can>
+
             <Can action={'control.restart'}>
-                <Button.Text className={'flex-1'} disabled={!status} onClick={onButtonClick.bind(this, 'restart')}>
+                <PowerButton
+                    $variant={'restart'}
+                    disabled={!status}
+                    onClick={onButtonClick.bind(this, 'restart')}
+                >
                     Restart
-                </Button.Text>
+                </PowerButton>
             </Can>
+
             <Can action={'control.stop'}>
-                <Button.Danger
-                    className={'flex-1'}
+                <PowerButton
+                    $variant={killable ? 'kill' : 'stop'}
                     disabled={status === 'offline'}
                     onClick={onButtonClick.bind(this, killable ? 'kill' : 'stop')}
                 >
                     {killable ? 'Kill' : 'Stop'}
-                </Button.Danger>
+                </PowerButton>
             </Can>
-        </div>
+        </ButtonGroup>
     );
 };

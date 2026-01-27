@@ -51,28 +51,35 @@ export default () => {
 
     return (
         <PageContentBlock title={'Dashboard'} css={tw`mt-4 sm:mt-10`} showFlashKey={'dashboard'}>
-            <div css={tw`mb-10 flex justify-between items-center`}>
+            <div css={tw`mb-10 p-8 rounded-2xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md flex justify-between items-center relative overflow-hidden`}>
+                <div css={tw`absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl -mr-16 -mt-16`} />
+                <div css={tw`absolute bottom-0 left-0 w-24 h-24 bg-purple-500/10 blur-3xl -ml-12 -mb-12`} />
+
                 {rootAdmin ? (
                     <>
-                        <div>
-                            <h1 className={'text-5xl'}>
-                                {showOnlyAdmin ? 'Showing other servers' : 'Showing your servers'}
+                        <div css={tw`relative z-10`}>
+                            <h1 className={'text-4xl font-black tracking-tight text-neutral-100 uppercase'}>
+                                {showOnlyAdmin ? 'ADMIN OVERVIEW' : 'MY SERVERS'}
                             </h1>
-                            <h3 className={'text-2xl mt-2 text-neutral-500'}>
-                                Select a server to view, update or modify.
+                            <h3 className={'text-lg mt-1 text-neutral-400 font-medium'}>
+                                {showOnlyAdmin ? 'Viewing all managed instances across the platform.' : 'Directly manage your active server instances.'}
                             </h3>
                         </div>
-                        <Switch
-                            name={'show_all_servers'}
-                            defaultChecked={showOnlyAdmin}
-                            onChange={() => setShowOnlyAdmin((s) => !s)}
-                        />
+                        <div css={tw`relative z-10`}>
+                            <Switch
+                                name={'show_all_servers'}
+                                defaultChecked={showOnlyAdmin}
+                                onChange={() => setShowOnlyAdmin((s) => !s)}
+                            />
+                        </div>
                     </>
                 ) : (
-                    <div>
-                        <h1 className={'text-5xl'}>Welcome, {username}!</h1>
-                        <h3 className={'text-2xl mt-2 text-neutral-500'}>
-                            Select a server from the list of your servers below.
+                    <div css={tw`relative z-10`}>
+                        <h1 className={'text-4xl font-black tracking-tight text-neutral-100 uppercase'}>
+                            Welcome back, <span css={tw`text-blue-400 border-b-2 border-blue-500/30 pb-0.5`}>{useStoreState(state => state.user.data?.name_first) || username}</span>!
+                        </h1>
+                        <h3 className={'text-lg mt-2 text-neutral-400 font-medium'}>
+                            Your dashboard is ready. Select an instance below to start managing.
                         </h3>
                     </div>
                 )}

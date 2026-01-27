@@ -15,6 +15,7 @@ import FlashMessageRender from '@/components/FlashMessageRender';
 import { Dialog, DialogWrapperContext } from '@/components/elements/dialog';
 import Code from '@/components/elements/Code';
 import asDialog from '@/hoc/asDialog';
+import * as Icon from 'react-feather';
 
 interface Values {
     directoryName: string;
@@ -57,7 +58,7 @@ const NewDirectoryDialog = asDialog({
 
     const submit = ({ directoryName }: Values, { setSubmitting }: FormikHelpers<Values>) => {
         createDirectory(uuid, directory, directoryName)
-            .then(() => mutate((data) => [...data, generateDirectoryData(directoryName)], false))
+            .then(() => mutate((data) => [...(data || []), generateDirectoryData(directoryName)], false))
             .then(() => close())
             .catch((error) => {
                 setSubmitting(false);
@@ -102,9 +103,16 @@ export default ({ className }: WithClassname) => {
     return (
         <>
             <NewDirectoryDialog open={open} onClose={setOpen.bind(this, false)} />
-            <Button.Text onClick={setOpen.bind(this, true)} className={className}>
-                Create Directory
-            </Button.Text>
+            <Button
+                onClick={setOpen.bind(this, true)}
+                className={className}
+                css={tw`bg-neutral-800/50 text-neutral-300 border border-neutral-700 hover:bg-neutral-800/80 hover:border-neutral-600 font-black uppercase tracking-widest text-[10px] px-4 py-2 rounded-lg transition-all`}
+            >
+                <div css={tw`flex items-center gap-2`}>
+                    <Icon.FolderPlus size={14} />
+                    New Folder
+                </div>
+            </Button>
         </>
     );
 };

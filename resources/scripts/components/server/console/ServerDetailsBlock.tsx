@@ -16,16 +16,17 @@ import { useStoreState } from '@/state/hooks';
 
 type Stats = Record<'memory' | 'cpu' | 'disk' | 'uptime', number>;
 
-const Limit = ({ limit, children }: { limit: string | null; children: React.ReactNode }) => (
-    <>
-        {children}
-        <span className={'ml-1 text-gray-300 text-[70%] select-none'}>/ {limit || <>&infin;</>}</span>
-    </>
-);
+const LimitText = styled.span`
+    ${tw`ml-1 text-neutral-500 text-xs font-bold tracking-wider`};
+`;
 
-const Bar = styled.div`
-    ${tw`h-0.5 bg-cyan-400`};
-    transition: 500ms ease-in-out;
+const ProgressBar = styled.div<{ $percent: number; $alarm?: boolean }>`
+    ${tw`h-1 w-full bg-neutral-800 rounded-full mt-2 overflow-hidden`};
+    & .fill {
+        width: ${({ $percent }) => $percent}%;
+        ${tw`h-full transition-all duration-500 ease-out`};
+        ${({ $alarm }) => ($alarm ? tw`bg-red-500` : tw`bg-blue-500`)};
+    }
 `;
 
 export default ({ className }: { className?: string }) => {
@@ -49,15 +50,11 @@ export default ({ className }: { className?: string }) => {
 
     const allocation = ServerContext.useStoreState((state) => {
         const match = state.server.data!.allocations.find((allocation) => allocation.isDefault);
-
         return !match ? 'n/a' : `${match.alias || ip(match.ip)}:${match.port}`;
     });
 
     useEffect(() => {
-        if (!connected || !instance) {
-            return;
-        }
-
+        if (!connected || !instance) return;
         instance.send(SocketRequest.SEND_STATS);
     }, [instance, connected]);
 
@@ -77,67 +74,55 @@ export default ({ className }: { className?: string }) => {
         });
     });
 
-    const cpuUsed = stats.cpu / (limits.cpu / 100);
-    const diskUsed = (stats.disk / 1024 / 1024 / limits.disk) * 100;
-    const memoryUsed = (stats.memory / 1024 / 1024 / limits.memory) * 100;
+    const cpuUsed = stats.cpu / (limits.cpu || 100);
+    const diskUsed = (stats.disk / 1024 / 1024 / (limits.disk || 1)) * 100;
+    const memoryUsed = (stats.memory / 1024 / 1024 / (limits.memory || 1)) * 100;
 
     return (
-        <div className={classNames('grid grid-cols-6 gap-2 md:gap-4', className)}>
+        <div className={classNames('flex flex-col gap-2', className)}>
             <StatBlock icon={faClock} title={'Uptime'}>
-                {status === null ? (
-                    'Offline'
-                ) : stats.uptime > 0 ? (
-                    <UptimeDuration uptime={stats.uptime / 1000} />
-                ) : (
-                    capitalize(status)
-                )}
+                {status === null ? 'Offline' : stats.uptime > 0 ? <UptimeDuration uptime={stats.uptime / 1000} /> : capitalize(status)}
             </StatBlock>
+
             <StatBlock icon={faWifi} title={'Address'} copyOnClick={allocation}>
                 {allocation}
             </StatBlock>
-            <StatBlock icon={faMicrochip} title={'CPU'}>
-                {status === 'offline' ? (
-                    <span className={'text-gray-400'}>Offline</span>
-                ) : (
-                    <Limit limit={textLimits.cpu}>{stats.cpu.toFixed(2)}%</Limit>
-                )}
-                {cpuUsed > 100 ? (
-                    <Bar style={{ width: '100%' }} css={tw`bg-red-500`} />
-                ) : limits.cpu === 0 ? (
-                    <Bar style={{ width: '100%' }} css={tw`bg-neutral-900`} />
-                ) : (
-                    <Bar style={{ width: cpuUsed === undefined ? '100%' : `${cpuUsed}%` }} />
-                )}
+
+            <StatBlock icon={faMicrochip} title={'CPU Usage'}>
+                <div className={'flex items-center'}>
+                    {status === 'offline' ? <span className={'text-neutral-500'}>Offline</span> : (
+                        <>
+                            {stats.cpu.toFixed(2)}%
+                            <LimitText>/ {textLimits.cpu || '∞'}</LimitText>
+                        </>
+                    )}
+                </div>
             </StatBlock>
-            <StatBlock icon={faMemory} title={'Memory'}>
-                {status === 'offline' ? (
-                    <span className={'text-gray-400'}>Offline</span>
-                ) : (
-                    <Limit limit={textLimits.memory}>{bytesToString(stats.memory)}</Limit>
-                )}
-                {memoryUsed > 90 ? (
-                    <Bar style={{ width: '100%' }} css={tw`bg-red-500`} />
-                ) : limits.memory === 0 ? (
-                    <Bar style={{ width: '100%' }} css={tw`bg-neutral-900`} />
-                ) : (
-                    <Bar style={{ width: memoryUsed === undefined ? '100%' : `${memoryUsed}%` }} />
-                )}
+
+            <StatBlock icon={faMemory} title={'Memory Usage'}>
+                <div className={'flex items-center'}>
+                    {status === 'offline' ? <span className={'text-neutral-500'}>Offline</span> : (
+                        <>
+                            {bytesToString(stats.memory)}
+                            <LimitText>/ {textLimits.memory || '∞'}</LimitText>
+                        </>
+                    )}
+                </div>
             </StatBlock>
-            <StatBlock icon={faHdd} title={'Disk'}>
-                <Limit limit={textLimits.disk}>{bytesToString(stats.disk)}</Limit>
-                {diskUsed > 90 ? (
-                    <Bar style={{ width: '100%' }} css={tw`bg-red-500`} />
-                ) : limits.disk === 0 ? (
-                    <Bar style={{ width: '100%' }} css={tw`bg-neutral-900`} />
-                ) : (
-                    <Bar style={{ width: diskUsed === undefined ? '100%' : `${diskUsed}%` }} />
-                )}
+
+            <StatBlock icon={faHdd} title={'Disk Usage'}>
+                <div className={'flex items-center'}>
+                    {bytesToString(stats.disk)}
+                    <LimitText>/ {textLimits.disk || '∞'}</LimitText>
+                </div>
             </StatBlock>
-            <StatBlock icon={faScroll} title={'Save Console Logs'}>
+
+            <StatBlock icon={faScroll} title={'Console Logs'}>
                 <ConsoleShareContainer />
             </StatBlock>
+
             {renewable && renewalEnabled && (
-                <StatBlock icon={faClock} title={'Renewal Date'}>
+                <StatBlock icon={faClock} title={'Renewal Info'}>
                     <RenewalInfo />
                 </StatBlock>
             )}

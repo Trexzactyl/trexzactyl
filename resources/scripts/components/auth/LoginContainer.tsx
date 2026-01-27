@@ -82,9 +82,14 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                     <div css={tw`mt-6`}>
                         <Field light type={'password'} label={'Password'} name={'password'} disabled={isSubmitting} />
                     </div>
-                    <div css={tw`mt-6`}>
-                        <Button type={'submit'} size={Button.Sizes.Large} css={tw`w-full`} disabled={isSubmitting}>
-                            Login
+                    <div css={tw`mt-8`}>
+                        <Button
+                            type={'submit'}
+                            size={Button.Sizes.Large}
+                            css={tw`w-full bg-blue-600/10 text-blue-400 border border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/60 font-black uppercase tracking-widest text-sm py-4 rounded-xl transition-all shadow-lg`}
+                            disabled={isSubmitting}
+                        >
+                            Log into Account
                         </Button>
                     </div>
                     {recaptchaEnabled && (
@@ -102,20 +107,20 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                             }}
                         />
                     )}
-                    <div css={tw`mt-6 text-center`}>
+                    <div css={tw`mt-10 text-center`}>
                         <Link
                             to={'/auth/password'}
-                            css={tw`text-xs text-neutral-500 tracking-wide no-underline uppercase hover:text-neutral-600`}
+                            css={tw`text-[10px] text-neutral-500 font-black tracking-widest no-underline uppercase hover:text-neutral-300 transition-colors`}
                         >
                             Forgot password?
                         </Link>
                     </div>
                     {(email || discord) && (
-                        <div css={tw`mt-6 text-center`}>
+                        <div css={tw`mt-6 pt-6 border-t border-neutral-700/50 flex justify-center items-center gap-6`}>
                             {email && (
                                 <Link
                                     to={'/auth/register'}
-                                    css={tw`text-xs text-neutral-500 tracking-wide no-underline uppercase hover:text-neutral-600`}
+                                    css={tw`text-[10px] text-neutral-500 font-black tracking-widest no-underline uppercase hover:text-blue-400 transition-colors`}
                                 >
                                     Signup with Email
                                 </Link>
@@ -123,9 +128,9 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                             {discord && (
                                 <Link
                                     to={'/auth/discord'}
-                                    css={tw`text-xs ml-6 text-neutral-500 tracking-wide no-underline uppercase hover:text-neutral-600`}
+                                    css={tw`text-[10px] text-neutral-500 font-black tracking-widest no-underline uppercase hover:text-blue-400 transition-colors`}
                                 >
-                                    Authenticate with Discord
+                                    Login with Discord
                                 </Link>
                             )}
                         </div>

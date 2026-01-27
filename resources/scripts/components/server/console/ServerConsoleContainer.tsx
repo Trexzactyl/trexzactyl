@@ -9,8 +9,12 @@ import Console from '@/components/server/console/Console';
 import PowerButtons from '@/components/server/console/PowerButtons';
 import ServerContentBlock from '@/components/elements/ServerContentBlock';
 import ServerDetailsBlock from '@/components/server/console/ServerDetailsBlock';
+import tw from 'twin.macro';
+import styled from 'styled-components/macro';
 
-export type PowerAction = 'start' | 'stop' | 'restart' | 'kill';
+const HeaderCard = styled.div`
+    ${tw`p-6 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md mb-6 flex flex-col sm:flex-row justify-between items-center gap-4`};
+`;
 
 const ServerConsoleContainer = () => {
     const name = ServerContext.useStoreState((state) => state.server.data!.name);
@@ -27,29 +31,34 @@ const ServerConsoleContainer = () => {
                     {isNodeUnderMaintenance
                         ? 'The node of this server is currently under maintenance and all actions are unavailable.'
                         : isInstalling
-                        ? 'This server is currently running its installation process and most actions are unavailable.'
-                        : 'This server is currently being transferred to another node and all actions are unavailable.'}
+                            ? 'This server is currently running its installation process and most actions are unavailable.'
+                            : 'This server is currently being transferred to another node and all actions are unavailable.'}
                 </Alert>
             )}
-            <div className={'grid grid-cols-4 gap-4 mb-4'}>
-                <div className={'hidden sm:block sm:col-span-2 lg:col-span-3 pr-4'}>
-                    <h1 className={'font-header text-2xl text-gray-50 leading-relaxed line-clamp-1'}>{name}</h1>
-                    <p className={'text-sm line-clamp-2'}>{description}</p>
+
+            <HeaderCard>
+                <div className={'w-full sm:min-w-0'}>
+                    <h1 className={'text-3xl font-bold text-neutral-100 truncate'}>{name}</h1>
+                    <p className={'text-sm text-neutral-400 mt-1 line-clamp-1'}>{description || 'No description provided.'}</p>
                 </div>
-                <div className={'flex-1'}>
-                    <Can action={['control.start', 'control.stop', 'control.restart']} matchAny>
-                        <PowerButtons className={'flex sm:justify-end space-x-2'} />
-                    </Can>
-                </div>
-            </div>
-            <div className={'grid grid-cols-4 gap-2 sm:gap-4 mb-8'}>
+                <Can action={['control.start', 'control.stop', 'control.restart']} matchAny>
+                    <PowerButtons className={'w-full sm:w-auto'} />
+                </Can>
+            </HeaderCard>
+
+            <div className={'grid grid-cols-4 gap-6'}>
                 <div className={'col-span-4 lg:col-span-3'}>
-                    <Spinner.Suspense>
-                        <Console />
-                    </Spinner.Suspense>
+                    <div className={'rounded-xl'}>
+                        <Spinner.Suspense>
+                            <Console />
+                        </Spinner.Suspense>
+                    </div>
                 </div>
-                <ServerDetailsBlock className={'col-span-4 lg:col-span-1 order-last lg:order-none'} />
+                <div className={'col-span-4 lg:col-span-1'}>
+                    <ServerDetailsBlock />
+                </div>
             </div>
+
             <Features enabled={eggFeatures} />
         </ServerContentBlock>
     );

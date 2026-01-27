@@ -1,4 +1,5 @@
 import tw from 'twin.macro';
+import classNames from 'classnames';
 import { object, string } from 'yup';
 import * as Icon from 'react-feather';
 import React, { useState } from 'react';
@@ -11,36 +12,47 @@ import Field from '@/components/elements/Field';
 import Label from '@/components/elements/Label';
 import Input from '@/components/elements/Input';
 import { Form, Formik, FormikHelpers } from 'formik';
-import GreyRowBox from '@/components/elements/GreyRowBox';
 import { Button } from '@/components/elements/button/index';
 import CopyOnClick from '@/components/elements/CopyOnClick';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import { ServerDatabase } from '@/api/server/databases/getServerDatabases';
 import deleteServerDatabase from '@/api/server/databases/deleteServerDatabase';
 import RotatePasswordButton from '@/components/server/databases/RotatePasswordButton';
+import styled from 'styled-components/macro';
 
-interface Props {
-    database: ServerDatabase;
-    className?: string;
-}
+const DatabaseCard = styled.div`
+    ${tw`flex flex-wrap md:flex-nowrap items-center p-4 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md mb-3 transition-all duration-300`};
+    ${tw`hover:border-blue-500/50 hover:shadow-lg hover:-translate-y-0.5`};
+`;
 
-export default ({ database, className }: Props) => {
+const IconWrapper = styled.div`
+    ${tw`flex-none p-2.5 rounded-xl bg-blue-500/10 text-blue-400 transition-colors group-hover:bg-blue-500 group-hover:text-white`};
+`;
+
+const StatBlock = styled.div`
+    ${tw`ml-8 text-center hidden md:block`};
+`;
+
+const DetailText = styled.p`
+    ${tw`text-xs font-bold text-neutral-100 font-mono tracking-tight`};
+`;
+
+const DetailLabel = styled.p`
+    ${tw`mt-1 text-[10px] text-neutral-500 uppercase font-black tracking-widest select-none`};
+`;
+
+const DatabaseRow = ({ database, className }: { database: ServerDatabase; className?: string }) => {
     const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
     const { addError, clearFlashes } = useFlash();
     const [visible, setVisible] = useState(false);
     const [connectionVisible, setConnectionVisible] = useState(false);
-
     const appendDatabase = ServerContext.useStoreActions((actions) => actions.databases.appendDatabase);
     const removeDatabase = ServerContext.useStoreActions((actions) => actions.databases.removeDatabase);
 
-    const jdbcConnectionString = `jdbc:mysql://${database.username}${
-        database.password ? `:${encodeURIComponent(database.password)}` : ''
-    }@${database.connectionString}/${database.name}`;
+    const jdbcConnectionString = `jdbc:mysql://${database.username}${database.password ? `:${encodeURIComponent(database.password)}` : ''}@${database.connectionString}/${database.name}`;
 
     const schema = object().shape({
-        confirm: string()
-            .required('The database name must be provided.')
-            .oneOf([database.name.split('_', 2)[1], database.name], 'The database name must be provided.'),
+        confirm: string().required().oneOf([database.name.split('_', 2)[1], database.name]),
     });
 
     const submit = (values: { confirm: string }, { setSubmitting }: FormikHelpers<{ confirm: string }>) => {
@@ -85,104 +97,84 @@ export default ({ database, className }: Props) => {
                                 description={'Enter the database name to confirm deletion.'}
                             />
                             <div css={tw`mt-6 text-right`}>
-                                <Button
-                                    type={'button'}
-                                    variant={Button.Variants.Secondary}
-                                    css={tw`mr-2`}
-                                    onClick={() => setVisible(false)}
-                                >
-                                    Cancel
-                                </Button>
-                                <Button type={'submit'} color={'red'} disabled={!isValid}>
-                                    Delete Database
-                                </Button>
+                                <Button type={'button'} variant={Button.Variants.Secondary} css={tw`mr-2`} onClick={() => setVisible(false)}>Cancel</Button>
+                                <Button type={'submit'} color={'red'} disabled={!isValid}>Delete Database</Button>
                             </div>
                         </Form>
                     </Modal>
                 )}
             </Formik>
+
             <Modal visible={connectionVisible} onDismissed={() => setConnectionVisible(false)}>
-                <FlashMessageRender byKey={'database-connection-modal'} css={tw`mb-6`} />
-                <h3 css={tw`mb-6 text-2xl`}>Database connection details</h3>
-                <div>
-                    <Label>Endpoint</Label>
-                    <CopyOnClick text={database.connectionString}>
-                        <Input type={'text'} readOnly value={database.connectionString} />
-                    </CopyOnClick>
+                <div css={tw`flex items-center gap-3 mb-6`}>
+                    <div css={tw`p-2 rounded-lg bg-blue-500/10 text-blue-400`}><Icon.Terminal size={18} /></div>
+                    <h3 css={tw`text-xl font-black text-neutral-100 uppercase tracking-widest`}>Connection Details</h3>
                 </div>
-                <div css={tw`mt-6`}>
-                    <Label>Connections from</Label>
-                    <Input type={'text'} readOnly value={database.allowConnectionsFrom} />
-                </div>
-                <div css={tw`mt-6`}>
-                    <Label>Username</Label>
-                    <CopyOnClick text={database.username}>
-                        <Input type={'text'} readOnly value={database.username} />
-                    </CopyOnClick>
-                </div>
-                <Can action={'database.view_password'}>
-                    <div css={tw`mt-6`}>
-                        <Label>Password</Label>
-                        <CopyOnClick text={database.password}>
-                            <Input type={'text'} readOnly value={database.password} />
+                <div className={'space-y-6'}>
+                    <div>
+                        <Label>Endpoint</Label>
+                        <CopyOnClick text={database.connectionString}>
+                            <Input type={'text'} readOnly value={database.connectionString} css={tw`bg-neutral-800/50 border-neutral-700`} />
                         </CopyOnClick>
                     </div>
-                </Can>
-                <div css={tw`mt-6`}>
-                    <Label>JDBC Connection String</Label>
-                    <CopyOnClick text={jdbcConnectionString}>
-                        <Input type={'text'} readOnly value={jdbcConnectionString} />
-                    </CopyOnClick>
+                    <div>
+                        <Label>Username</Label>
+                        <CopyOnClick text={database.username}>
+                            <Input type={'text'} readOnly value={database.username} css={tw`bg-neutral-800/50 border-neutral-700`} />
+                        </CopyOnClick>
+                    </div>
+                    <Can action={'database.view_password'}>
+                        <div>
+                            <Label>Password</Label>
+                            <CopyOnClick text={database.password}>
+                                <Input type={'text'} readOnly value={database.password} css={tw`bg-neutral-800/50 border-neutral-700`} />
+                            </CopyOnClick>
+                        </div>
+                    </Can>
+                    <div>
+                        <Label>JDBC Connection String</Label>
+                        <CopyOnClick text={jdbcConnectionString}>
+                            <Input type={'text'} readOnly value={jdbcConnectionString} css={tw`bg-neutral-800/50 border-neutral-700 font-mono text-xs`} />
+                        </CopyOnClick>
+                    </div>
                 </div>
-                <div css={tw`mt-6 text-right`}>
+                <div css={tw`mt-8 flex justify-end gap-3`}>
                     <Can action={'database.update'}>
                         <RotatePasswordButton databaseId={database.id} onUpdate={appendDatabase} />
                     </Can>
-                    <Button variant={Button.Variants.Secondary} onClick={() => setConnectionVisible(false)}>
-                        Close
-                    </Button>
+                    <Button variant={Button.Variants.Secondary} onClick={() => setConnectionVisible(false)}>Close</Button>
                 </div>
             </Modal>
-            <GreyRowBox $hoverable={false} className={className} css={tw`mb-2`}>
-                <div css={tw`hidden md:block`}>
-                    <Icon.Database />
-                </div>
+
+            <DatabaseCard className={classNames('group', className)}>
+                <IconWrapper>
+                    <Icon.Database size={18} />
+                </IconWrapper>
                 <div css={tw`flex-1 ml-4`}>
                     <CopyOnClick text={database.name}>
-                        <p css={tw`text-lg`}>{database.name}</p>
+                        <p css={tw`text-sm font-black text-neutral-100 uppercase tracking-wider group-hover:text-blue-400 transition-colors`}>{database.name}</p>
                     </CopyOnClick>
+                    <p css={tw`text-[10px] text-neutral-500 font-bold uppercase tracking-tight`}>{database.connectionString}</p>
                 </div>
-                <div css={tw`ml-8 text-center hidden md:block`}>
-                    <CopyOnClick text={database.connectionString}>
-                        <p css={tw`text-sm`}>{database.connectionString}</p>
-                    </CopyOnClick>
-                    <p css={tw`mt-1 text-2xs text-neutral-500 uppercase select-none`}>Endpoint</p>
-                </div>
-                <div css={tw`ml-8 text-center hidden md:block`}>
-                    <p css={tw`text-sm`}>{database.allowConnectionsFrom}</p>
-                    <p css={tw`mt-1 text-2xs text-neutral-500 uppercase select-none`}>Connections from</p>
-                </div>
-                <div css={tw`ml-8 text-center hidden md:block`}>
-                    <CopyOnClick text={database.username}>
-                        <p css={tw`text-sm`}>{database.username}</p>
-                    </CopyOnClick>
-                    <p css={tw`mt-1 text-2xs text-neutral-500 uppercase select-none`}>Username</p>
-                </div>
-                <div css={tw`ml-8`}>
-                    <Button
-                        variant={Button.Variants.Secondary}
-                        css={tw`mr-2`}
-                        onClick={() => setConnectionVisible(true)}
-                    >
-                        <Icon.Eye />
+
+                <StatBlock>
+                    <DetailText>{database.username}</DetailText>
+                    <DetailLabel>Username</DetailLabel>
+                </StatBlock>
+
+                <div css={tw`ml-8 flex items-center gap-2`}>
+                    <Button variant={Button.Variants.Secondary} css={tw`px-3 bg-neutral-800/50 border-neutral-700`} onClick={() => setConnectionVisible(true)}>
+                        <Icon.Eye size={16} />
                     </Button>
                     <Can action={'database.delete'}>
-                        <Button.Danger variant={Button.Variants.Secondary} onClick={() => setVisible(true)}>
-                            <Icon.Trash />
+                        <Button.Danger variant={Button.Variants.Secondary} css={tw`px-3 bg-red-500/10 border-red-500/20 text-red-400`} onClick={() => setVisible(true)}>
+                            <Icon.Trash size={16} />
                         </Button.Danger>
                     </Can>
                 </div>
-            </GreyRowBox>
+            </DatabaseCard>
         </>
     );
 };
+
+export default DatabaseRow;

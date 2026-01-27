@@ -10,37 +10,56 @@ import renameServer from '@/api/server/renameServer';
 import { Actions, useStoreActions } from 'easy-peasy';
 import { Textarea } from '@/components/elements/Input';
 import { Button } from '@/components/elements/button/index';
-import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import FormikFieldWrapper from '@/components/elements/FormikFieldWrapper';
 import { Field as FormikField, Form, Formik, FormikHelpers, useFormikContext } from 'formik';
+import styled from 'styled-components/macro';
+import * as Icon from 'react-feather';
 
-interface Values {
-    name: string;
-    description: string;
-}
+const Card = styled.div`
+    ${tw`p-6 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md relative overflow-hidden`};
+`;
+
+const StyledTextarea = styled(Textarea)`
+    ${tw`bg-neutral-800/50 border-neutral-700 focus:border-blue-500 transition-all duration-200 text-sm`};
+`;
 
 const RenameServerBox = () => {
     const { isSubmitting } = useFormikContext<Values>();
 
     return (
-        <TitledGreyBox title={'Change Server Details'} css={tw`relative`}>
+        <Card>
             <SpinnerOverlay visible={isSubmitting} />
+            <div css={tw`flex items-center gap-3 mb-6`}>
+                <div css={tw`p-2 rounded-lg bg-blue-500/10 text-blue-400`}>
+                    <Icon.Edit2 size={18} />
+                </div>
+                <div>
+                    <h3 css={tw`text-sm font-black text-neutral-100 uppercase tracking-widest`}>Update Details</h3>
+                    <p css={tw`text-[10px] text-neutral-500 font-bold uppercase`}>Name and description</p>
+                </div>
+            </div>
+
             <Form css={tw`mb-0`}>
-                <Field id={'name'} name={'name'} label={'Server Name'} type={'text'} />
+                <Field id={'name'} name={'name'} label={'Server Name'} type={'text'} css={tw`bg-neutral-800/50 border-neutral-700 focus:border-blue-500`} />
                 <div css={tw`mt-6`}>
-                    <Label>Server Description</Label>
+                    <Label css={tw`text-xs font-black text-neutral-500 uppercase tracking-widest mb-2 block`}>Server Description</Label>
                     <FormikFieldWrapper name={'description'}>
-                        <FormikField as={Textarea} name={'description'} rows={3} />
+                        <FormikField as={StyledTextarea} name={'description'} rows={3} placeholder={'Add a description for this server...'} />
                     </FormikFieldWrapper>
                 </div>
-                <div css={tw`mt-6 text-right`}>
-                    <Button type={'submit'}>Save</Button>
+                <div css={tw`mt-8 flex justify-end`}>
+                    <Button type={'submit'} css={tw`px-8`}>Save Changes</Button>
                 </div>
             </Form>
-        </TitledGreyBox>
+        </Card>
     );
 };
+
+interface Values {
+    name: string;
+    description: string;
+}
 
 export default () => {
     const server = ServerContext.useStoreState((state) => state.server.data!);

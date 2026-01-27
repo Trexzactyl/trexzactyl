@@ -30,12 +30,32 @@ class ResourceUtilizationController extends ClientApiController
     public function __invoke(GetServerRequest $request, Server $server): array
     {
         $key = "resources:$server->uuid";
-        $stats = $this->cache->remember($key, Carbon::now()->addSeconds(20), function () use ($server) {
-            return $this->repository->setServer($server)->getDetails();
-        });
 
-        return $this->fractal->item($stats)
-            ->transformWith($this->getTransformer(StatsTransformer::class))
-            ->toArray();
+        try {
+            $stats = $this->cache->remember($key, Carbon::now()->addSeconds(20), function () use ($server) {
+                return $this->repository->setServer($server)->getDetails();
+            });
+
+            return $this->fractal->item($stats)
+                ->transformWith($this->getTransformer(StatsTransformer::class))
+                ->toArray();
+        } catch (\Trexzactyl\Exceptions\Http\Connection\DaemonConnectionException $exception) {
+            // Return a graceful error response when Wings is unreachable
+            return [
+                'object' => 'stats',
+                'attributes' => [
+                    'current_state' => $server->status ?? 'offline',
+                    'is_suspended' => $server->isSuspended(),
+                    'resources' => [
+                        'memory_bytes' => 0,
+                        'cpu_absolute' => 0,
+                        'disk_bytes' => 0,
+                        'network_rx_bytes' => 0,
+                        'network_tx_bytes' => 0,
+                        'uptime' => 0,
+                    ],
+                ],
+            ];
+        }
     }
 }

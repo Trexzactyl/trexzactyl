@@ -1,47 +1,51 @@
 import React from 'react';
 import classNames from 'classnames';
 import useFitText from 'use-fit-text';
-import styles from './style.module.css';
 import Icon from '@/components/elements/Icon';
 import CopyOnClick from '@/components/elements/CopyOnClick';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components/macro';
+import tw from 'twin.macro';
 
 interface Props {
     title?: string | undefined;
     copyOnClick?: string;
-    color?: string | undefined;
     icon: IconDefinition;
     children: React.ReactNode;
     className?: string;
 }
 
-export default ({ title, copyOnClick, icon, color, className, children }: Props) => {
-    const { fontSize, ref } = useFitText({ minFontSize: 8, maxFontSize: 500 });
+const StatCard = styled.div`
+    ${tw`relative flex flex-col p-4 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md transition-all duration-300`};
+    ${tw`hover:border-blue-500/50 hover:shadow-lg hover:-translate-y-0.5`};
+`;
+
+const IconWrapper = styled.div`
+    ${tw`absolute top-4 right-4 text-neutral-500 opacity-50`};
+`;
+
+export default ({ title, copyOnClick, icon, className, children }: Props) => {
+    const { fontSize, ref } = useFitText({ minFontSize: 8, maxFontSize: 24 });
 
     return (
         <CopyOnClick text={copyOnClick}>
-            <div className={classNames(styles.stat_block, className)}>
-                <div className={classNames(styles.status_bar, color || 'bg-gray-700')} />
-                <div className={classNames(styles.icon, color || 'bg-gray-700')}>
-                    <Icon
-                        icon={icon}
-                        className={classNames({
-                            'text-gray-100': 'bg-gray-700',
-                            'text-gray-50': 'bg-gray-700',
-                        })}
-                    />
-                </div>
-                <div className={'flex flex-col justify-center overflow-hidden w-full'}>
-                    {title && <p className={'font-header leading-tight text-xs md:text-sm text-gray-200'}>{title}</p>}
+            <StatCard className={className}>
+                <div className={'flex items-center justify-between w-full overflow-hidden'}>
+                    <div className={'flex items-center gap-3'}>
+                        <div className={'text-neutral-500'}>
+                            <Icon icon={icon} />
+                        </div>
+                        {title && <p className={'text-xs text-neutral-400 font-bold uppercase tracking-wider'}>{title}</p>}
+                    </div>
                     <div
                         ref={ref}
-                        className={'h-[2rem] w-full font-semibold text-gray-50 truncate'}
-                        style={{ fontSize }}
+                        className={'font-black text-neutral-100 whitespace-nowrap'}
+                        style={{ fontSize: (fontSize as any) > 14 ? fontSize : 14 }}
                     >
                         {children}
                     </div>
                 </div>
-            </div>
+            </StatCard>
         </CopyOnClick>
     );
 };

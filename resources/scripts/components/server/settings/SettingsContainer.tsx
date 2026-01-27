@@ -3,46 +3,69 @@ import tw from 'twin.macro';
 import Can from '@/components/elements/Can';
 import { ServerContext } from '@/state/server';
 import CopyOnClick from '@/components/elements/CopyOnClick';
-import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import ServerContentBlock from '@/components/elements/ServerContentBlock';
 import RenameServerBox from '@/components/server/settings/RenameServerBox';
 import DeleteServerBox from '@/components/server/settings/DeleteServerBox';
 import ReinstallServerBox from '@/components/server/settings/ReinstallServerBox';
 import ChangeBackgroundBox from '@/components/server/settings/ChangeBackgroundBox';
 import { useStoreState } from 'easy-peasy';
+import styled from 'styled-components/macro';
+import * as Icon from 'react-feather';
 
-export default () => {
+const DebugCard = styled.div`
+    ${tw`p-6 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md mb-6`};
+`;
+
+const InfoRow = styled.div`
+    ${tw`flex items-center justify-between p-3 rounded-lg bg-neutral-800/50 border border-neutral-700/50 mb-3 last:mb-0 cursor-pointer hover:border-blue-500/30 transition-all`};
+`;
+
+const SettingsContainer = () => {
     const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
     const node = ServerContext.useStoreState((state) => state.server.data!.node);
     const deletion = useStoreState((state) => state.storefront.data!.deletion.enabled);
+
     return (
-        <ServerContentBlock
-            title={'Settings'}
-            description={'Control important settings for your server.'}
-            showFlashKey={'settings'}
-        >
-            <div className={'md:flex'}>
-                <div className={'w-full md:flex-1 md:mr-10'}>
-                    <TitledGreyBox title={'Debug Information'} css={tw`mb-6 md:mb-10`}>
-                        <div css={tw`flex items-center justify-between text-sm`}>
-                            <p>Node</p>
-                            <code css={tw`font-mono bg-neutral-900 rounded py-1 px-2`}>{node}</code>
-                        </div>
-                        <CopyOnClick text={uuid}>
-                            <div css={tw`flex items-center justify-between mt-2 text-sm`}>
-                                <p>Server ID</p>
-                                <code css={tw`font-mono bg-neutral-900 rounded py-1 px-2`}>{uuid}</code>
+        <ServerContentBlock title={'Settings'}>
+            <div className={'grid grid-cols-1 lg:grid-cols-2 gap-8'}>
+                <div>
+                    <DebugCard>
+                        <div css={tw`flex items-center gap-3 mb-6`}>
+                            <div css={tw`p-2 rounded-lg bg-blue-500/10 text-blue-400`}>
+                                <Icon.Code size={18} />
                             </div>
+                            <div>
+                                <h3 css={tw`text-sm font-black text-neutral-100 uppercase tracking-widest`}>Debug Info</h3>
+                                <p css={tw`text-[10px] text-neutral-500 font-bold uppercase`}>System identifiers</p>
+                            </div>
+                        </div>
+
+                        <InfoRow className={'group'}>
+                            <div css={tw`flex items-center gap-3`}>
+                                <Icon.Server size={14} css={tw`text-neutral-500`} />
+                                <span css={tw`text-xs font-bold text-neutral-400 uppercase tracking-wider`}>Node</span>
+                            </div>
+                            <code css={tw`font-mono text-xs text-blue-300 font-bold`}>{node}</code>
+                        </InfoRow>
+
+                        <CopyOnClick text={uuid}>
+                            <InfoRow className={'group'}>
+                                <div css={tw`flex items-center gap-3`}>
+                                    <Icon.Hash size={14} css={tw`text-neutral-500`} />
+                                    <span css={tw`text-xs font-bold text-neutral-400 uppercase tracking-wider`}>Server ID</span>
+                                </div>
+                                <code css={tw`font-mono text-xs text-blue-300 font-bold truncate max-w-[180px]`}>{uuid}</code>
+                            </InfoRow>
                         </CopyOnClick>
-                    </TitledGreyBox>
-                    {deletion && <DeleteServerBox />}
+                    </DebugCard>
+
+                    {deletion && <div css={tw`mb-6`}><DeleteServerBox /></div>}
                     <ChangeBackgroundBox />
                 </div>
-                <div className={'w-full mt-6 md:flex-1 md:mt-0'}>
+
+                <div className={'space-y-6'}>
                     <Can action={'settings.rename'}>
-                        <div css={tw`mb-6 md:mb-10`}>
-                            <RenameServerBox />
-                        </div>
+                        <RenameServerBox />
                     </Can>
                     <Can action={'settings.reinstall'}>
                         <ReinstallServerBox />
@@ -52,3 +75,5 @@ export default () => {
         </ServerContentBlock>
     );
 };
+
+export default SettingsContainer;

@@ -48,11 +48,12 @@ const PageContentBlock: React.FC<PageContentBlockProps> = ({
                 </ContentContainer>
                 <ContentContainer css={tw`text-sm text-center my-4 pb-8`}>
                     <p css={tw`text-neutral-500 sm:float-left`}>
-                        &copy; <a href={'https://Trexzactyl.com'}>Trexzactyl,</a> built on{' '}
-                        <a href={'https://pterodactyl.io'}>Pterodactyl.</a>
+                        &copy; <a href={'https://host.trexz.xyz'}>Trexzactyl</a>
+                        &nbsp;&bull;&nbsp;
+                        <a href={'https://github.com/ryanwtf88'}>Designed by RY4N</a>
                     </p>
                     <p css={tw`text-neutral-500 sm:float-right`}>
-                        <a href={'https://Trexzactyl.com'}> Site </a>
+                        <a href={'https://host.trexz.xyz'}> Site </a>
                         &bull;
                         <a href={'https://github.com/Trexzactyl/Trexzactyl'}> GitHub </a>
                     </p>

@@ -8,6 +8,7 @@ export interface UserData {
     approved: boolean;
     verified: boolean;
     discordId: string;
+    name_first: string | null;
     language: string;
     rootAdmin: boolean;
     useTotp: boolean;

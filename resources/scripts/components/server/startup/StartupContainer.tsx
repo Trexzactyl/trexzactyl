@@ -9,26 +9,35 @@ import Spinner from '@/components/elements/Spinner';
 import getServerStartup from '@/api/swr/getServerStartup';
 import InputSpinner from '@/components/elements/InputSpinner';
 import React, { useCallback, useEffect, useState } from 'react';
-import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import { ServerError } from '@/components/elements/ScreenBlock';
 import VariableBox from '@/components/server/startup/VariableBox';
 import { useDeepCompareEffect } from '@/plugins/useDeepCompareEffect';
 import setSelectedDockerImage from '@/api/server/setSelectedDockerImage';
 import ServerContentBlock from '@/components/elements/ServerContentBlock';
+import styled from 'styled-components/macro';
+import * as Icon from 'react-feather';
+
+const InvocationCard = styled.div`
+    ${tw`p-6 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md relative overflow-hidden`};
+`;
+
+const DockerCard = styled.div`
+    ${tw`p-6 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md`};
+`;
+
+const CodeBlock = styled.p`
+    ${tw`font-mono font-bold text-xs bg-black/40 text-blue-300 p-4 rounded-lg border border-white/5 break-all shadow-inner`};
+`;
 
 const StartupContainer = () => {
     const [loading, setLoading] = useState(false);
     const { clearFlashes, clearAndAddHttpError } = useFlash();
-
     const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
-    const variables = ServerContext.useStoreState(
-        ({ server }) => ({
-            variables: server.data!.variables,
-            invocation: server.data!.invocation,
-            dockerImage: server.data!.dockerImage,
-        }),
-        isEqual
-    );
+    const variables = ServerContext.useStoreState(({ server }) => ({
+        variables: server.data!.variables,
+        invocation: server.data!.invocation,
+        dockerImage: server.data!.dockerImage,
+    }), isEqual);
 
     const { data, error, isValidating, mutate } = getServerStartup(uuid, {
         ...variables,
@@ -36,22 +45,12 @@ const StartupContainer = () => {
     });
 
     const setServerFromState = ServerContext.useStoreActions((actions) => actions.server.setServerFromState);
-    const isCustomImage =
-        data &&
-        !Object.values(data.dockerImages)
-            .map((v) => v.toLowerCase())
-            .includes(variables.dockerImage.toLowerCase());
+    const isCustomImage = data && !Object.values(data.dockerImages).map((v) => v.toLowerCase()).includes(variables.dockerImage.toLowerCase());
 
-    useEffect(() => {
-        // Since we're passing in initial data this will not trigger on mount automatically. We
-        // want to always fetch fresh information from the API however when we're loading the startup
-        // information.
-        mutate();
-    }, []);
+    useEffect(() => { mutate(); }, []);
 
     useDeepCompareEffect(() => {
         if (!data) return;
-
         setServerFromState((s) => ({
             ...s,
             invocation: data.invocation,
@@ -59,22 +58,18 @@ const StartupContainer = () => {
         }));
     }, [data]);
 
-    const updateSelectedDockerImage = useCallback(
-        (v: React.ChangeEvent<HTMLSelectElement>) => {
-            setLoading(true);
-            clearFlashes('startup:image');
-
-            const image = v.currentTarget.value;
-            setSelectedDockerImage(uuid, image)
-                .then(() => setServerFromState((s) => ({ ...s, dockerImage: image })))
-                .catch((error) => {
-                    console.error(error);
-                    clearAndAddHttpError({ key: 'startup:image', error });
-                })
-                .then(() => setLoading(false));
-        },
-        [uuid]
-    );
+    const updateSelectedDockerImage = useCallback((v: React.ChangeEvent<HTMLSelectElement>) => {
+        setLoading(true);
+        clearFlashes('startup:image');
+        const image = v.currentTarget.value;
+        setSelectedDockerImage(uuid, image)
+            .then(() => setServerFromState((s) => ({ ...s, dockerImage: image })))
+            .catch((error) => {
+                console.error(error);
+                clearAndAddHttpError({ key: 'startup:image', error });
+            })
+            .then(() => setLoading(false));
+    }, [uuid]);
 
     return !data ? (
         !error || (error && isValidating) ? (
@@ -83,18 +78,34 @@ const StartupContainer = () => {
             <ServerError title={'Oops!'} message={httpErrorToHuman(error)} onRetry={() => mutate()} />
         )
     ) : (
-        <ServerContentBlock
-            title={'Startup Settings'}
-            description={'Fine-tune variables for your server during startup.'}
-            showFlashKey={'startup:image'}
-        >
-            <div className={'md:flex j-up'}>
-                <TitledGreyBox title={'Startup Command'} css={tw`flex-1`}>
-                    <div css={tw`px-1 py-2`}>
-                        <p css={tw`font-mono bg-neutral-900 rounded py-2 px-4`}>{data.invocation}</p>
+        <ServerContentBlock title={'Startup'}>
+            <div css={tw`grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12`}>
+                <InvocationCard css={tw`lg:col-span-2`}>
+                    <div css={tw`flex items-center gap-3 mb-4`}>
+                        <div css={tw`p-2 rounded-lg bg-blue-500/10 text-blue-400`}>
+                            <Icon.Terminal size={18} />
+                        </div>
+                        <div>
+                            <h3 css={tw`text-sm font-black text-neutral-100 uppercase tracking-widest`}>Startup Command</h3>
+                            <p css={tw`text-[10px] text-neutral-500 font-bold uppercase`}>Immutable dynamic execution string</p>
+                        </div>
                     </div>
-                </TitledGreyBox>
-                <TitledGreyBox title={'Docker Image'} css={tw`flex-1 lg:flex-none lg:w-1/3 mt-8 md:mt-0 md:ml-10`}>
+                    <CodeBlock>{data.invocation}</CodeBlock>
+                    <div css={tw`absolute top-0 right-0 p-4 opacity-5`}>
+                        <Icon.Terminal size={120} />
+                    </div>
+                </InvocationCard>
+
+                <DockerCard>
+                    <div css={tw`flex items-center gap-3 mb-4`}>
+                        <div css={tw`p-2 rounded-lg bg-blue-500/10 text-blue-400`}>
+                            <Icon.Box size={18} />
+                        </div>
+                        <div>
+                            <h3 css={tw`text-sm font-black text-neutral-100 uppercase tracking-widest`}>Docker Image</h3>
+                            <p css={tw`text-[10px] text-neutral-500 font-bold uppercase`}>Virtualization environment</p>
+                        </div>
+                    </div>
                     {Object.keys(data.dockerImages).length > 1 && !isCustomImage ? (
                         <>
                             <InputSpinner visible={loading}>
@@ -102,6 +113,7 @@ const StartupContainer = () => {
                                     disabled={Object.keys(data.dockerImages).length < 2}
                                     onChange={updateSelectedDockerImage}
                                     defaultValue={variables.dockerImage}
+                                    css={tw`bg-neutral-800/50 border-neutral-700 focus:border-blue-500`}
                                 >
                                     {Object.keys(data.dockerImages).map((key) => (
                                         <option key={data.dockerImages[key]} value={data.dockerImages[key]}>
@@ -110,26 +122,31 @@ const StartupContainer = () => {
                                     ))}
                                 </Select>
                             </InputSpinner>
-                            <p css={tw`text-xs text-neutral-300 mt-2`}>
-                                This is an advanced feature allowing you to select a Docker image to use when running
-                                this server instance.
+                            <p css={tw`text-[10px] text-neutral-500 mt-3 font-medium leading-relaxed`}>
+                                Switch between available docker tags for this egg.
                             </p>
                         </>
                     ) : (
                         <>
-                            <Input disabled readOnly value={variables.dockerImage} />
+                            <Input disabled readOnly value={variables.dockerImage} css={tw`bg-neutral-800/50 border-neutral-700 opacity-50`} />
                             {isCustomImage && (
-                                <p css={tw`text-xs text-neutral-300 mt-2`}>
-                                    This {"server's"} Docker image has been manually set by an administrator and cannot
-                                    be changed through this UI.
+                                <p css={tw`text-[10px] text-yellow-500/80 mt-3 font-bold uppercase tracking-tight`}>
+                                    Locked: Set by Administrator
                                 </p>
                             )}
                         </>
                     )}
-                </TitledGreyBox>
+                </DockerCard>
             </div>
-            <h3 css={tw`mt-8 mb-2 text-2xl`}>Variables</h3>
-            <div className={'grid gap-8 md:grid-cols-2'}>
+
+            <div css={tw`flex items-center gap-3 mb-6`}>
+                <div css={tw`px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest`}>
+                    Configuration Variables
+                </div>
+                <div css={tw`h-px bg-neutral-800 flex-1`} />
+            </div>
+
+            <div className={'grid gap-6 md:grid-cols-2 lg:grid-cols-3'}>
                 {data.variables.map((variable) => (
                     <VariableBox key={variable.envVariable} variable={variable} />
                 ))}

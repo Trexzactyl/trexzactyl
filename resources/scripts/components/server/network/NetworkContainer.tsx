@@ -12,6 +12,7 @@ import AllocationRow from '@/components/server/network/AllocationRow';
 import { useDeepCompareEffect } from '@/plugins/useDeepCompareEffect';
 import ServerContentBlock from '@/components/elements/ServerContentBlock';
 import createServerAllocation from '@/api/server/network/createServerAllocation';
+import * as Icon from 'react-feather';
 
 const NetworkContainer = () => {
     const [loading, setLoading] = useState(false);
@@ -33,13 +34,11 @@ const NetworkContainer = () => {
 
     useDeepCompareEffect(() => {
         if (!data) return;
-
         setServerFromState((state) => ({ ...state, allocations: data }));
     }, [data]);
 
     const onCreateAllocation = () => {
         clearFlashes();
-
         setLoading(true);
         createServerAllocation(uuid)
             .then((allocation) => {
@@ -51,28 +50,28 @@ const NetworkContainer = () => {
     };
 
     return (
-        <ServerContentBlock
-            title={'Network'}
-            description={'Configure external networking and ports.'}
-            showFlashKey={'server:network'}
-        >
+        <ServerContentBlock title={'Network'}>
             {!data ? (
                 <Spinner size={'large'} centered />
             ) : (
                 <>
-                    {data.map((allocation) => (
-                        <AllocationRow key={`${allocation.ip}:${allocation.port}`} allocation={allocation} />
-                    ))}
+                    <div css={tw`grid grid-cols-1 gap-3`}>
+                        {data.map((allocation) => (
+                            <AllocationRow key={`${allocation.ip}:${allocation.port}`} allocation={allocation} />
+                        ))}
+                    </div>
                     {allocationLimit > 0 && (
                         <Can action={'allocation.create'}>
                             <SpinnerOverlay visible={loading} />
-                            <div css={tw`mt-6 sm:flex items-center justify-end`}>
-                                <p css={tw`text-sm text-neutral-300 mb-4 sm:mr-6 sm:mb-0`}>
-                                    You are currently using {data.length} of {allocationLimit} allowed allocations for
-                                    this server.
-                                </p>
+                            <div css={tw`mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-6 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md`}>
+                                <div css={tw`flex items-center gap-3`}>
+                                    <Icon.Activity size={18} css={tw`text-blue-400`} />
+                                    <p css={tw`text-sm text-neutral-400 font-bold uppercase tracking-wider`}>
+                                        Allocations: <span css={tw`text-neutral-100 ml-1`}>{data.length} / {allocationLimit} used</span>
+                                    </p>
+                                </div>
                                 {allocationLimit > data.length && (
-                                    <Button css={tw`w-full sm:w-auto`} onClick={onCreateAllocation}>
+                                    <Button css={tw`w-full sm:w-auto px-8`} onClick={onCreateAllocation}>
                                         Create Allocation
                                     </Button>
                                 )}

@@ -82,9 +82,14 @@ export default () => {
                         name={'email'}
                         type={'email'}
                     />
-                    <div css={tw`mt-6`}>
-                        <Button size={Button.Sizes.Large} css={tw`w-full`} type={'submit'} disabled={isSubmitting}>
-                            Send Email
+                    <div css={tw`mt-8`}>
+                        <Button
+                            size={Button.Sizes.Large}
+                            css={tw`w-full bg-blue-600/10 text-blue-400 border border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/60 font-black uppercase tracking-widest text-sm py-4 rounded-xl transition-all shadow-lg`}
+                            type={'submit'}
+                            disabled={isSubmitting}
+                        >
+                            Send Reset Email
                         </Button>
                     </div>
                     {recaptchaEnabled && (
@@ -102,10 +107,10 @@ export default () => {
                             }}
                         />
                     )}
-                    <div css={tw`mt-6 text-center`}>
+                    <div css={tw`mt-10 text-center`}>
                         <Link
                             to={'/auth/login'}
-                            css={tw`text-xs text-neutral-500 tracking-wide uppercase no-underline hover:text-neutral-700`}
+                            css={tw`text-[10px] text-neutral-500 font-black tracking-widest no-underline uppercase hover:text-neutral-300 transition-colors`}
                         >
                             Return to Login
                         </Link>

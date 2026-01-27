@@ -13,6 +13,7 @@ import { WithClassname } from '@/components/types';
 import Portal from '@/components/elements/Portal';
 import { CloudUploadIcon } from '@heroicons/react/outline';
 import { useSignal } from '@preact/signals-react';
+import * as Icon from 'react-feather';
 
 function isFileOrDirectory(event: DragEvent): boolean {
     if (!event.dataTransfer?.types) {
@@ -146,8 +147,15 @@ export default ({ className }: WithClassname) => {
                 }}
                 multiple
             />
-            <Button className={className} onClick={() => fileUploadInput.current && fileUploadInput.current.click()}>
-                Upload
+            <Button
+                className={className}
+                onClick={() => fileUploadInput.current && fileUploadInput.current.click()}
+                css={tw`bg-neutral-800/50 text-neutral-300 border border-neutral-700 hover:bg-neutral-800/80 hover:border-neutral-600 font-black uppercase tracking-widest text-[10px] px-4 py-2 rounded-lg transition-all`}
+            >
+                <div css={tw`flex items-center gap-2`}>
+                    <Icon.Upload size={14} />
+                    Upload
+                </div>
             </Button>
         </>
     );

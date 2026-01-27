@@ -4,38 +4,34 @@ import { format } from 'date-fns';
 import * as Icon from 'react-feather';
 import { Schedule } from '@/api/server/schedules/getServerSchedules';
 import ScheduleCronRow from '@/components/server/schedules/ScheduleCronRow';
+import styled from 'styled-components/macro';
+
+const StatusBadge = styled.p<{ $active?: boolean; $processing?: boolean }>`
+    ${tw`py-1 px-3 rounded-full text-[10px] uppercase font-bold tracking-wider`};
+    ${({ $active, $processing }) =>
+        $processing
+            ? tw`bg-yellow-500/10 text-yellow-400 border border-yellow-500/20`
+            : $active
+                ? tw`bg-green-500/10 text-green-400 border border-green-500/20`
+                : tw`bg-neutral-500/10 text-neutral-400 border border-neutral-500/20`};
+`;
 
 export default ({ schedule }: { schedule: Schedule }) => (
     <>
-        <div css={tw`hidden md:block`}>
-            <Icon.Calendar />
+        <div css={tw`hidden md:flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/10 text-blue-400`}>
+            <Icon.Calendar size={20} />
         </div>
         <div css={tw`flex-1 md:ml-4`}>
-            <p>{schedule.name}</p>
-            <p css={tw`text-xs text-neutral-400`}>
-                Last run at: {schedule.lastRunAt ? format(schedule.lastRunAt, "MMM do 'at' h:mma") : 'never'}
+            <p css={tw`font-bold text-neutral-100 group-hover:text-blue-400 transition-colors duration-200`}>{schedule.name}</p>
+            <p css={tw`text-xs text-neutral-500 mt-1`}>
+                Last run: {schedule.lastRunAt ? format(schedule.lastRunAt, "MMM do 'at' h:mma") : 'Never'}
             </p>
         </div>
-        <div>
-            <p
-                css={[
-                    tw`py-1 px-3 rounded text-xs uppercase text-white sm:hidden`,
-                    schedule.isActive ? tw`bg-green-600` : tw`bg-neutral-400`,
-                ]}
-            >
-                {schedule.isActive ? 'Active' : 'Inactive'}
-            </p>
-        </div>
-        <ScheduleCronRow cron={schedule.cron} css={tw`mx-auto sm:mx-8 w-full sm:w-auto mt-4 sm:mt-0`} />
-        <div>
-            <p
-                css={[
-                    tw`py-1 px-3 rounded text-xs uppercase text-white hidden sm:block`,
-                    schedule.isActive && !schedule.isProcessing ? tw`bg-green-600` : tw`bg-neutral-400`,
-                ]}
-            >
+        <div css={tw`flex items-center gap-4`}>
+            <ScheduleCronRow cron={schedule.cron} css={tw`hidden sm:block text-xs font-mono text-neutral-400`} />
+            <StatusBadge $active={schedule.isActive} $processing={schedule.isProcessing}>
                 {schedule.isProcessing ? 'Processing' : schedule.isActive ? 'Active' : 'Inactive'}
-            </p>
+            </StatusBadge>
         </div>
     </>
 );

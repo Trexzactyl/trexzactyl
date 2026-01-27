@@ -98,8 +98,13 @@ const RegisterContainer = ({ history }: RouteComponentProps) => {
                         css={tw`my-3`}
                         disabled={isSubmitting}
                     />
-                    <Button type={'submit'} css={tw`my-6 w-full`} size={Button.Sizes.Large} disabled={isSubmitting}>
-                        Register
+                    <Button
+                        type={'submit'}
+                        css={tw`mt-8 w-full bg-blue-600/10 text-blue-400 border border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/60 font-black uppercase tracking-widest text-sm py-4 rounded-xl transition-all shadow-lg`}
+                        size={Button.Sizes.Large}
+                        disabled={isSubmitting}
+                    >
+                        Create My Account
                     </Button>
                     {recaptchaEnabled && (
                         <Reaptcha
@@ -116,10 +121,10 @@ const RegisterContainer = ({ history }: RouteComponentProps) => {
                             }}
                         />
                     )}
-                    <div css={tw`text-center`}>
+                    <div css={tw`mt-10 text-center`}>
                         <Link
                             to={'/auth/login'}
-                            css={tw`text-xs text-neutral-500 tracking-wide no-underline uppercase hover:text-neutral-600`}
+                            css={tw`text-[10px] text-neutral-500 font-black tracking-widest no-underline uppercase hover:text-neutral-300 transition-colors`}
                         >
                             Return to login
                         </Link>

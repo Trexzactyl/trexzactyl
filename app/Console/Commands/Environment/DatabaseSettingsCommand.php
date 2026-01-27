@@ -76,7 +76,7 @@ class DatabaseSettingsCommand extends Command
             $this->output->error('Your connection credentials have NOT been saved. You will need to provide valid connection information before proceeding.');
 
             if ($this->confirm('Go back and try again?')) {
-                $this->database->disconnect('_Trexzactyl_command_test');
+                $this->database->disconnect('_host.trexz.xyzmand_test');
 
                 return $this->handle();
             }
@@ -96,7 +96,7 @@ class DatabaseSettingsCommand extends Command
      */
     private function testMySQLConnection()
     {
-        config()->set('database.connections._Trexzactyl_command_test', [
+        config()->set('database.connections._host.trexz.xyzmand_test', [
             'driver' => 'mysql',
             'host' => $this->variables['DB_HOST'],
             'port' => $this->variables['DB_PORT'],
@@ -108,6 +108,6 @@ class DatabaseSettingsCommand extends Command
             'strict' => true,
         ]);
 
-        $this->database->connection('_Trexzactyl_command_test')->getPdo();
+        $this->database->connection('_host.trexz.xyzmand_test')->getPdo();
     }
 }

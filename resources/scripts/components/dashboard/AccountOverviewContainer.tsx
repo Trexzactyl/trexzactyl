@@ -34,15 +34,15 @@ export default () => {
     const referrals = useStoreState((state) => state.storefront.data!.referrals.enabled);
 
     return (
-        <PageContentBlock title={'Account Overview'} description={'View and update account details.'}>
+        <PageContentBlock title={'Account Overview'} description={'View and update your core account details.'}>
             {state?.twoFactorRedirect && (
-                <Alert type={'danger'}>
+                <Alert type={'danger'} className={'mt-4'}>
                     Your account must have two-factor authentication enabled in order to continue.
                 </Alert>
             )}
-            <Container
+            <div
                 className={'j-up'}
-                css={[tw`lg:grid lg:grid-cols-2 gap-8 mb-10`, state?.twoFactorRedirect ? tw`mt-4` : tw`mt-10`]}
+                css={[tw`lg:grid lg:grid-cols-2 gap-8 mb-10 mt-10`]}
             >
                 <ContentBox title={'Update Username'} showFlashes={'account:username'}>
                     <UpdateUsernameForm />
@@ -60,7 +60,7 @@ export default () => {
                         <DiscordAccountForm />
                     </ContentBox>
                 )}
-            </Container>
+            </div>
         </PageContentBlock>
     );
 };

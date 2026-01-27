@@ -25,27 +25,39 @@ const DiscordFormContainer = ({ children }: { children: React.ReactNode }) => {
     const name = useStoreState((state) => state.settings.data!.name);
 
     return (
-        <div>
-            <Wrapper>
-                <h2 css={tw`text-3xl text-center text-neutral-100 font-medium py-4`}>Login to {name}</h2>
-                <FlashMessageRender css={tw`mb-2 px-1`} />
-                <div css={tw`md:flex w-full bg-neutral-900 shadow-lg rounded-lg p-6 md:pl-0 mx-1`}>
-                    <div css={tw`flex-none select-none mb-6 md:mb-0 self-center`}>
-                        <img src={'/assets/svgs/discord.svg'} css={tw`block w-48 p-8 md:w-64 mx-auto`} />
+        <Wrapper className={'relative'}>
+            <div css={tw`fixed inset-0 z-[-1] pointer-events-none overflow-hidden`}>
+                <div css={tw`absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full`} />
+                <div css={tw`absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 blur-[120px] rounded-full`} />
+            </div>
+
+            <h2 css={tw`text-4xl text-center text-neutral-100 font-black uppercase tracking-tighter py-8`}>Login to {name}</h2>
+            <FlashMessageRender css={tw`mb-4 px-1`} />
+            <div css={tw`w-full bg-neutral-900/40 backdrop-blur-xl border border-neutral-700/50 shadow-2xl rounded-3xl p-10 relative z-10`}>
+                <div css={tw`flex flex-col md:flex-row items-center gap-10`}>
+                    <div css={tw`flex-none select-none`}>
+                        <img
+                            src={'https://assets-global.website-files.com/6257adef93867e3c84519eb1/6257adef93867e61ba519eec_Discord_Icon_Full_Color.svg'}
+                            css={tw`block w-32 md:w-40 transition-transform duration-500 hover:scale-110`}
+                            alt={'Discord'}
+                        />
                     </div>
-                    <div css={tw`flex-1`}>{children}</div>
+                    <div css={tw`flex-1 w-full`}>{children}</div>
                 </div>
-                <p css={tw`text-neutral-500 text-xs mt-6 sm:float-left`}>
-                    &copy; <a href={'https://Trexzactyl.com'}>Trexzactyl,</a> built on{' '}
-                    <a href={'https://pterodactyl.io'}>Pterodactyl.</a>
+            </div>
+            <div css={tw`mt-8 flex flex-col sm:flex-row justify-between items-center text-[10px] font-black uppercase tracking-widest text-neutral-500 gap-4`}>
+                <p>
+                    &copy; <a href={'https://host.trexz.xyz'} css={tw`text-blue-400 hover:text-blue-300 transition-colors`}>Trexzactyl</a>
+                    &nbsp;&bull;&nbsp;
+                    <a href={'https://github.com/ryanwtf88'} css={tw`hover:text-neutral-400 transition-colors`}>Designed by RY4N</a>
                 </p>
-                <p css={tw`text-neutral-500 text-xs mt-6 sm:float-right`}>
-                    <a href={'https://Trexzactyl.com'}> Site </a>
-                    &bull;
-                    <a href={'https://github.com/Trexzactyl/Trexzactyl'}> GitHub </a>
-                </p>
-            </Wrapper>
-        </div>
+                <div css={tw`flex gap-4`}>
+                    <a href={'https://host.trexz.xyz'} css={tw`hover:text-neutral-400 transition-colors`}> Site </a>
+                    <span css={tw`opacity-30`}>&bull;</span>
+                    <a href={'https://github.com/Trexzactyl/Trexzactyl'} css={tw`hover:text-neutral-400 transition-colors`}> GitHub </a>
+                </div>
+            </div>
+        </Wrapper>
     );
 };
 

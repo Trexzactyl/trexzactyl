@@ -22,14 +22,14 @@ interface Values {
 }
 
 const ServerResult = styled(Link)`
-    ${tw`flex items-center bg-neutral-900 p-4 rounded border-l-4 border-neutral-900 no-underline transition-all duration-150`};
+    ${tw`flex items-center bg-neutral-900/50 backdrop-blur-md p-4 rounded-xl border border-neutral-700 no-underline transition-all duration-200`};
 
     &:hover {
-        ${tw`shadow border-cyan-500`};
+        ${tw`shadow-lg border-blue-500/50 -translate-y-0.5`};
     }
 
     &:not(:last-of-type) {
-        ${tw`mb-2`};
+        ${tw`mb-3`};
     }
 `;
 
@@ -107,8 +107,8 @@ export default ({ ...props }: Props) => {
                                     onClick={() => props.onDismissed()}
                                 >
                                     <div css={tw`flex-1 mr-4`}>
-                                        <p css={tw`text-sm`}>{server.name}</p>
-                                        <p css={tw`mt-1 text-xs text-neutral-400`}>
+                                        <p css={tw`text-sm font-black text-neutral-100 uppercase tracking-widest leading-none`}>{server.name}</p>
+                                        <p css={tw`mt-1.5 text-[10px] font-bold text-neutral-500 font-mono tracking-tighter opacity-80`}>
                                             {server.allocations
                                                 .filter((alloc) => alloc.isDefault)
                                                 .map((allocation) => (
@@ -119,7 +119,7 @@ export default ({ ...props }: Props) => {
                                         </p>
                                     </div>
                                     <div css={tw`flex-none text-right`}>
-                                        <span css={tw`text-xs py-1 px-2 bg-cyan-800 text-cyan-100 rounded`}>
+                                        <span css={tw`text-[10px] font-black uppercase tracking-widest py-1 px-2.5 bg-blue-500/10 text-blue-400 rounded-lg border border-blue-500/30`}>
                                             {server.node}
                                         </span>
                                     </div>

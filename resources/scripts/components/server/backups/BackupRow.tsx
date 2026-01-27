@@ -7,95 +7,90 @@ import { ServerBackup } from '@/api/server/types';
 import Spinner from '@/components/elements/Spinner';
 import { format, formatDistanceToNow } from 'date-fns';
 import { SocketEvent } from '@/components/server/events';
-import GreyRowBox from '@/components/elements/GreyRowBox';
 import getServerBackups from '@/api/swr/getServerBackups';
 import useWebsocketEvent from '@/plugins/useWebsocketEvent';
 import BackupContextMenu from '@/components/server/backups/BackupContextMenu';
+import styled from 'styled-components/macro';
 
-interface Props {
-    backup: ServerBackup;
-    className?: string;
-}
+const BackupCard = styled.div`
+    ${tw`flex flex-wrap md:flex-nowrap items-center p-4 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md mb-3 transition-all duration-300`};
+    ${tw`hover:border-blue-500/50 hover:shadow-lg hover:-translate-y-0.5`};
+`;
 
-export default ({ backup, className }: Props) => {
+const LockIcon = styled.div<{ $locked?: boolean }>`
+    ${tw`flex-none p-2 rounded-xl transition-colors duration-200`};
+    ${({ $locked }) => $locked ? tw`bg-yellow-500/10 text-yellow-500` : tw`bg-neutral-800 text-neutral-500 group-hover:bg-blue-500/10 group-hover:text-blue-400`};
+`;
+
+export default ({ backup, className }: { backup: ServerBackup; className?: string }) => {
     const { mutate } = getServerBackups();
 
     useWebsocketEvent(`${SocketEvent.BACKUP_COMPLETED}:${backup.uuid}` as SocketEvent, (data) => {
         try {
             const parsed = JSON.parse(data);
-
-            mutate(
-                (data) => ({
-                    ...data,
-                    items: data.items.map((b) =>
-                        b.uuid !== backup.uuid
-                            ? b
-                            : {
-                                  ...b,
-                                  isSuccessful: parsed.is_successful || true,
-                                  checksum: (parsed.checksum_type || '') + ':' + (parsed.checksum || ''),
-                                  bytes: parsed.file_size || 0,
-                                  completedAt: new Date(),
-                              }
-                    ),
+            mutate((data) => ({
+                ...data,
+                items: data.items.map((b) => b.uuid !== backup.uuid ? b : {
+                    ...b,
+                    isSuccessful: parsed.is_successful || true,
+                    checksum: (parsed.checksum_type || '') + ':' + (parsed.checksum || ''),
+                    bytes: parsed.file_size || 0,
+                    completedAt: new Date(),
                 }),
-                false
-            );
+            }), false);
         } catch (e) {
             console.warn(e);
         }
     });
 
     return (
-        <GreyRowBox css={tw`flex-wrap md:flex-nowrap items-center`} className={className}>
+        <BackupCard className={`group ${className || ''}`}>
             <div css={tw`flex items-center truncate w-full md:flex-1`}>
-                <div css={tw`mr-4`}>
+                <LockIcon $locked={backup.isLocked}>
                     {backup.completedAt !== null ? (
-                        backup.isLocked ? (
-                            <Icon.Lock css={tw`text-yellow-500`} />
-                        ) : (
-                            <Icon.Unlock css={tw`text-neutral-300`} />
-                        )
+                        backup.isLocked ? <Icon.Lock size={18} /> : <Icon.Unlock size={18} />
                     ) : (
                         <Spinner size={'small'} />
                     )}
-                </div>
-                <div css={tw`flex flex-col truncate`}>
+                </LockIcon>
+                <div css={tw`flex flex-col truncate ml-4`}>
                     <div css={tw`flex items-center text-sm mb-1`}>
                         {backup.completedAt !== null && !backup.isSuccessful && (
-                            <span
-                                css={tw`bg-red-500 py-px px-2 rounded-full text-white text-xs uppercase border border-red-600 mr-2`}
-                            >
+                            <span css={tw`bg-red-500/10 text-red-400 py-0.5 px-2 rounded-full text-[10px] font-bold uppercase border border-red-500/20 mr-2`}>
                                 Failed
                             </span>
                         )}
-                        <p css={tw`break-words truncate`}>{backup.name}</p>
+                        <p css={tw`font-bold text-neutral-100 group-hover:text-blue-400 transition-colors duration-200 truncate`}>{backup.name}</p>
                         {backup.completedAt !== null && backup.isSuccessful && (
-                            <span css={tw`ml-3 text-neutral-300 text-xs font-extralight hidden sm:inline`}>
+                            <span css={tw`ml-3 text-neutral-500 text-xs font-medium`}>
                                 {bytesToString(backup.bytes)}
                             </span>
                         )}
                     </div>
-                    <p css={tw`mt-1 md:mt-0 text-xs text-neutral-400 font-mono truncate`}>{backup.checksum}</p>
+                    <p css={tw`text-[10px] text-neutral-600 font-mono truncate tracking-tight uppercase`}>{backup.checksum}</p>
                 </div>
             </div>
-            <div css={tw`flex-1 md:flex-none md:w-48 mt-4 md:mt-0 md:ml-8 md:text-center`}>
-                <p title={format(backup.createdAt, 'ddd, MMMM do, yyyy HH:mm:ss')} css={tw`text-sm`}>
-                    {formatDistanceToNow(backup.createdAt, { includeSeconds: true, addSuffix: true })}
-                </p>
-                <p css={tw`text-2xs text-neutral-500 uppercase mt-1`}>Created</p>
-            </div>
-            <Can action={['backup.download', 'backup.restore', 'backup.delete']} matchAny>
-                <div css={tw`mt-4 md:mt-0 ml-6`} style={{ marginRight: '-0.5rem' }}>
-                    {!backup.completedAt ? (
-                        <div css={tw`p-2 invisible`}>
-                            <Icon.MoreHorizontal />
-                        </div>
-                    ) : (
-                        <BackupContextMenu backup={backup} />
-                    )}
+
+            <div css={tw`flex items-center gap-6 mt-4 md:mt-0 md:ml-8`}>
+                <div css={tw`text-right`}>
+                    <p title={format(backup.createdAt, 'eee, MMMM do, yyyy HH:mm:ss')} css={tw`text-sm text-neutral-100 font-semibold uppercase tracking-tight`}>
+                        {formatDistanceToNow(backup.createdAt, { addSuffix: true })}
+                    </p>
+                    <p css={tw`text-[10px] text-neutral-500 uppercase font-black`}>Archived</p>
                 </div>
-            </Can>
-        </GreyRowBox>
+
+                <Can action={['backup.download', 'backup.restore', 'backup.delete']} matchAny>
+                    <div css={tw`ml-2`}>
+                        {!backup.completedAt ? (
+                            <div css={tw`p-2 opacity-0 hover:opacity-100 transition-opacity`}>
+                                <Icon.MoreVertical size={18} />
+                            </div>
+                        ) : (
+                            <BackupContextMenu backup={backup} />
+                        )}
+                    </div>
+                </Can>
+            </div>
+        </BackupCard>
     );
 };
