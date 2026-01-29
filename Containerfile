@@ -8,7 +8,7 @@ WORKDIR     /var/www/pterodactyl
 
 COPY        --chown=1001:0 public ./public
 COPY        --chown=1001:0 resources/scripts ./resources/scripts
-COPY        --chown=1001:0 .eslintignore .eslintrc.js .npmrc .prettierrc.json package.json package-lock.json tailwind.config.js tsconfig.json vite.config.ts ./
+COPY        --chown=1001:0 .eslintignore .eslintrc.js .npmrc .prettierrc.json package.json package-lock.json tailwind.config.js tsconfig.json vite.config.ts babel.config.js webpack.config.js ./
 
 RUN         npm install --legacy-peer-deps \
     && npm run build \
