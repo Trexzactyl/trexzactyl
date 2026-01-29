@@ -10,7 +10,7 @@ COPY        --chown=1001:0 public ./public
 COPY        --chown=1001:0 resources/scripts ./resources/scripts
 COPY        --chown=1001:0 .eslintignore .eslintrc.js .npmrc .prettierrc.json package.json package-lock.json tailwind.config.js tsconfig.json vite.config.ts ./
 
-RUN         npm ci --legacy-peer-deps \
+RUN         npm install --legacy-peer-deps \
     && npm run build \
     && rm -rf resources/scripts .eslintignore .eslintrc.yml .npmrc package.json package-lock.json tailwind.config.js tsconfig.json vite.config.ts node_modules
 
