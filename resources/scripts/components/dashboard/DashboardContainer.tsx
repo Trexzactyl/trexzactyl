@@ -52,7 +52,7 @@ export default () => {
     }, [error]);
 
     return (
-        <PageContentBlock title={'Dashboard'} css={tw`-mt-10 md:mt-10`} showFlashKey={'dashboard'}>
+        <PageContentBlock title={'Dashboard'} css={tw`-mt-5 md:mt-10`} showFlashKey={'dashboard'}>
             <OverviewStats />
             <div
                 css={tw`mb-10 px-8 py-5 md:py-7 rounded-sm border border-neutral-700 bg-neutral-900 bg-opacity-40 backdrop-blur-xl flex justify-between items-center relative overflow-hidden mt-8 md:mt-0`}

@@ -9,13 +9,14 @@ import { NavLink, Route, Switch } from 'react-router-dom';
 import { NotFound } from '@/components/elements/ScreenBlock';
 import SubNavigation from '@/components/elements/SubNavigation';
 import NavigationBar from '@/components/elements/NavigationBar';
-import ReferralContainer from '@/components/dashboard/ReferralContainer';
-import DashboardContainer from '@/components/dashboard/DashboardContainer';
-import AccountApiContainer from '@/components/dashboard/AccountApiContainer';
-import AccountSSHContainer from '@/components/dashboard/ssh/AccountSSHContainer';
-import AccountOverviewContainer from '@/components/dashboard/AccountOverviewContainer';
-import AccountSecurityContainer from '@/components/dashboard/AccountSecurityContainer';
-import CouponContainer from '@/components/dashboard/CouponContainer';
+
+const ReferralContainer = React.lazy(() => import('@/components/dashboard/ReferralContainer'));
+const DashboardContainer = React.lazy(() => import('@/components/dashboard/DashboardContainer'));
+const AccountApiContainer = React.lazy(() => import('@/components/dashboard/AccountApiContainer'));
+const AccountSSHContainer = React.lazy(() => import('@/components/dashboard/ssh/AccountSSHContainer'));
+const AccountOverviewContainer = React.lazy(() => import('@/components/dashboard/AccountOverviewContainer'));
+const AccountSecurityContainer = React.lazy(() => import('@/components/dashboard/AccountSecurityContainer'));
+const CouponContainer = React.lazy(() => import('@/components/dashboard/CouponContainer'));
 
 export default () => {
     const location = useLocation();
@@ -66,7 +67,7 @@ export default () => {
                 </SubNavigation>
             ) : null}
             <TransitionRouter>
-                <React.Suspense fallback={<Spinner centered />}>
+                <Spinner.Suspense>
                     <Switch location={location}>
                         <Route path={'/'} exact>
                             <DashboardContainer />
@@ -97,7 +98,7 @@ export default () => {
                             <NotFound />
                         </Route>
                     </Switch>
-                </React.Suspense>
+                </Spinner.Suspense>
             </TransitionRouter>
         </div>
     );

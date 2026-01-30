@@ -1,6 +1,6 @@
 {
     "name": "trexzactyl/trexzactyl",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "A fast, advanced and customisable game management panel and billing system in one. ",
     "license": "MIT",
     "require": {

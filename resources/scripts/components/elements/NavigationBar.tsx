@@ -39,7 +39,7 @@ const RightNav = styled.div`
 `;
 
 const ActionButton = styled.div`
-    ${tw`bg-white/5 hover:bg-white/10 p-2.5 rounded-sm transition-all duration-300 cursor-pointer text-neutral-400 hover:text-neutral-100 border border-transparent hover:border-white/5 flex items-center justify-center`};
+    ${tw`p-2.5 transition-all duration-300 cursor-pointer text-neutral-400 hover:text-neutral-100 flex items-center justify-center`};
 `;
 
 export default () => {

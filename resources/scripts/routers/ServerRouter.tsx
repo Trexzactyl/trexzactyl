@@ -16,27 +16,28 @@ import ErrorBoundary from '@/components/elements/ErrorBoundary';
 import ExternalConsole from '@/components/server/ExternalConsole';
 import InstallListener from '@/components/server/InstallListener';
 import ServerRestoreSvg from '@/assets/images/server_restore.svg';
-import PluginContainer from '@/components/server/PluginContainer';
-import EditContainer from '@/components/server/edit/EditContainer';
-import TransferListener from '@/components/server/TransferListener';
-import WebsocketHandler from '@/components/server/WebsocketHandler';
 import RequireServerPermission from '@/hoc/RequireServerPermission';
 import ServerInstallSvg from '@/assets/images/server_installing.svg';
-import UsersContainer from '@/components/server/users/UsersContainer';
 import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
-import BackupContainer from '@/components/server/backups/BackupContainer';
-import FileEditContainer from '@/components/server/files/FileEditContainer';
-import NetworkContainer from '@/components/server/network/NetworkContainer';
-import StartupContainer from '@/components/server/startup/StartupContainer';
-import SettingsContainer from '@/components/server/settings/SettingsContainer';
-import ScheduleContainer from '@/components/server/schedules/ScheduleContainer';
-import DatabasesContainer from '@/components/server/databases/DatabasesContainer';
-import FileManagerContainer from '@/components/server/files/FileManagerContainer';
-import AnalyticsContainer from '@/components/server/analytics/AnalyticsContainer';
 import ScreenBlock, { NotFound, ServerError } from '@/components/elements/ScreenBlock';
-import ServerConsoleContainer from '@/components/server/console/ServerConsoleContainer';
-import ScheduleEditContainer from '@/components/server/schedules/ScheduleEditContainer';
-import ServerActivityLogContainer from '@/components/server/ServerActivityLogContainer';
+
+const PluginContainer = React.lazy(() => import('@/components/server/PluginContainer'));
+const EditContainer = React.lazy(() => import('@/components/server/edit/EditContainer'));
+import TransferListener from '@/components/server/TransferListener';
+import WebsocketHandler from '@/components/server/WebsocketHandler';
+const UsersContainer = React.lazy(() => import('@/components/server/users/UsersContainer'));
+const BackupContainer = React.lazy(() => import('@/components/server/backups/BackupContainer'));
+const FileEditContainer = React.lazy(() => import('@/components/server/files/FileEditContainer'));
+const NetworkContainer = React.lazy(() => import('@/components/server/network/NetworkContainer'));
+const StartupContainer = React.lazy(() => import('@/components/server/startup/StartupContainer'));
+const SettingsContainer = React.lazy(() => import('@/components/server/settings/SettingsContainer'));
+const ScheduleContainer = React.lazy(() => import('@/components/server/schedules/ScheduleContainer'));
+const DatabasesContainer = React.lazy(() => import('@/components/server/databases/DatabasesContainer'));
+const FileManagerContainer = React.lazy(() => import('@/components/server/files/FileManagerContainer'));
+const AnalyticsContainer = React.lazy(() => import('@/components/server/analytics/AnalyticsContainer'));
+const ServerConsoleContainer = React.lazy(() => import('@/components/server/console/ServerConsoleContainer'));
+const ScheduleEditContainer = React.lazy(() => import('@/components/server/schedules/ScheduleEditContainer'));
+const ServerActivityLogContainer = React.lazy(() => import('@/components/server/ServerActivityLogContainer'));
 
 const ConflictStateRenderer = () => {
     const status = ServerContext.useStoreState((state) => state.server.data?.status || null);
@@ -224,69 +225,71 @@ export default () => {
                     ) : (
                         <ErrorBoundary>
                             <TransitionRouter>
-                                <Switch location={location}>
-                                    <Route path={`${match.path}`} component={ServerConsoleContainer} exact />
-                                    <Route path={`${match.path}/console`} component={ExternalConsole} exact />
-                                    <Route path={`${match.path}/analytics`} component={AnalyticsContainer} exact />
-                                    <Route path={`${match.path}/activity`} exact>
-                                        <RequireServerPermission permissions={'activity.*'}>
-                                            <ServerActivityLogContainer />
-                                        </RequireServerPermission>
-                                    </Route>
-                                    {eggFeatures?.includes('eula') && (
-                                        <Route path={`${match.path}/plugins`} exact>
-                                            <RequireServerPermission permissions={'plugin.*'}>
-                                                <PluginContainer />
+                                <Spinner.Suspense>
+                                    <Switch location={location}>
+                                        <Route path={`${match.path}`} component={ServerConsoleContainer} exact />
+                                        <Route path={`${match.path}/console`} component={ExternalConsole} exact />
+                                        <Route path={`${match.path}/analytics`} component={AnalyticsContainer} exact />
+                                        <Route path={`${match.path}/activity`} exact>
+                                            <RequireServerPermission permissions={'activity.*'}>
+                                                <ServerActivityLogContainer />
                                             </RequireServerPermission>
                                         </Route>
-                                    )}
-                                    <Route path={`${match.path}/files`} exact>
-                                        <RequireServerPermission permissions={'file.*'}>
-                                            <FileManagerContainer />
-                                        </RequireServerPermission>
-                                    </Route>
-                                    <Route path={`${match.path}/files/:action(edit|new)`} exact>
-                                        <Spinner.Suspense>
-                                            <FileEditContainer />
-                                        </Spinner.Suspense>
-                                    </Route>
-                                    {databasesEnabled && (
-                                        <Route path={`${match.path}/databases`} exact>
-                                            <RequireServerPermission permissions={'database.*'}>
-                                                <DatabasesContainer />
+                                        {eggFeatures?.includes('eula') && (
+                                            <Route path={`${match.path}/plugins`} exact>
+                                                <RequireServerPermission permissions={'plugin.*'}>
+                                                    <PluginContainer />
+                                                </RequireServerPermission>
+                                            </Route>
+                                        )}
+                                        <Route path={`${match.path}/files`} exact>
+                                            <RequireServerPermission permissions={'file.*'}>
+                                                <FileManagerContainer />
                                             </RequireServerPermission>
                                         </Route>
-                                    )}
-                                    <Route path={`${match.path}/schedules`} exact>
-                                        <RequireServerPermission permissions={'schedule.*'}>
-                                            <ScheduleContainer />
-                                        </RequireServerPermission>
-                                    </Route>
-                                    <Route path={`${match.path}/schedules/:id`} exact>
-                                        <ScheduleEditContainer />
-                                    </Route>
-                                    <Route path={`${match.path}/users`} exact>
-                                        <RequireServerPermission permissions={'user.*'}>
-                                            <UsersContainer />
-                                        </RequireServerPermission>
-                                    </Route>
-                                    <Route path={`${match.path}/backups`} exact>
-                                        <RequireServerPermission permissions={'backup.*'}>
-                                            <BackupContainer />
-                                        </RequireServerPermission>
-                                    </Route>
-                                    <Route path={`${match.path}/network`} exact>
-                                        <RequireServerPermission permissions={'allocation.*'}>
-                                            <NetworkContainer />
-                                        </RequireServerPermission>
-                                    </Route>
-                                    <Route path={`${match.path}/startup`} component={StartupContainer} exact />
-                                    <Route path={`${match.path}/settings`} component={SettingsContainer} exact />
-                                    {editEnabled && (
-                                        <Route path={`${match.path}/edit`} component={EditContainer} exact />
-                                    )}
-                                    <Route path={'*'} component={NotFound} />
-                                </Switch>
+                                        <Route path={`${match.path}/files/:action(edit|new)`} exact>
+                                            <Spinner.Suspense>
+                                                <FileEditContainer />
+                                            </Spinner.Suspense>
+                                        </Route>
+                                        {databasesEnabled && (
+                                            <Route path={`${match.path}/databases`} exact>
+                                                <RequireServerPermission permissions={'database.*'}>
+                                                    <DatabasesContainer />
+                                                </RequireServerPermission>
+                                            </Route>
+                                        )}
+                                        <Route path={`${match.path}/schedules`} exact>
+                                            <RequireServerPermission permissions={'schedule.*'}>
+                                                <ScheduleContainer />
+                                            </RequireServerPermission>
+                                        </Route>
+                                        <Route path={`${match.path}/schedules/:id`} exact>
+                                            <ScheduleEditContainer />
+                                        </Route>
+                                        <Route path={`${match.path}/users`} exact>
+                                            <RequireServerPermission permissions={'user.*'}>
+                                                <UsersContainer />
+                                            </RequireServerPermission>
+                                        </Route>
+                                        <Route path={`${match.path}/backups`} exact>
+                                            <RequireServerPermission permissions={'backup.*'}>
+                                                <BackupContainer />
+                                            </RequireServerPermission>
+                                        </Route>
+                                        <Route path={`${match.path}/network`} exact>
+                                            <RequireServerPermission permissions={'allocation.*'}>
+                                                <NetworkContainer />
+                                            </RequireServerPermission>
+                                        </Route>
+                                        <Route path={`${match.path}/startup`} component={StartupContainer} exact />
+                                        <Route path={`${match.path}/settings`} component={SettingsContainer} exact />
+                                        {editEnabled && (
+                                            <Route path={`${match.path}/edit`} component={EditContainer} exact />
+                                        )}
+                                        <Route path={'*'} component={NotFound} />
+                                    </Switch>
+                                </Spinner.Suspense>
                             </TransitionRouter>
                         </ErrorBoundary>
                     )}

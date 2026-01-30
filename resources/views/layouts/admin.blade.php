@@ -37,39 +37,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
     <style>
-        .wrapper,
-        .content-wrapper,
-        .main-sidebar,
-        .box,
-        .box-header,
-        .box-footer,
-        .box-body,
-        .nav-tabs-custom,
-        .nav-tabs-custom>.tab-content,
-        .info-box,
-        .info-box-content,
-        .small-box,
-        .modal-content,
-        .modal-body,
-        .modal-header,
-        .modal-footer {
-            background-color: #201F31 !important;
-            background: #201F31 !important;
-            color: #cad1d8 !important;
-        }
-
-        .form-control,
-        .select2-selection,
-        .select2-dropdown,
-        .select2-search__field {
-            background-color: #201F31 !important;
-            border-color: #33404d !important;
-            color: #cad1d8 !important;
-        }
-
-        .table-hover>tbody>tr:hover {
-            background-color: #33404d !important;
-        }
+        /* Styles migrated to theme CSS */
     </style>
     @show
 </head>
@@ -90,7 +58,7 @@
             </nav>
         </header>
         <aside class="main-sidebar"
-            style="background: rgba(10, 10, 10, 0.4) !important; backdrop-filter: blur(20px); border-right: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 20px 0 50px rgba(0,0,0,0.5);">
+            style="background: #0F172A !important; border-right: 1px solid rgba(255, 255, 255, 0.05);">
             <section class="sidebar">
                 <ul class="sidebar-menu" style="padding-bottom: 60px; padding-top: 20px;">
                     <li class="{{ !starts_with(Route::currentRouteName(), 'admin.index') ?: 'active' }}"

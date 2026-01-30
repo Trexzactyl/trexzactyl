@@ -2,15 +2,16 @@ import React from 'react';
 import { useStoreState } from '@/state/hooks';
 import { ServerContext } from '@/state/server';
 import { history } from '@/components/history';
-import StoreRouter from '@/routers/StoreRouter';
-import TicketRouter from '@/routers/TicketRouter';
-import ServerRouter from '@/routers/ServerRouter';
 import Spinner from '@/components/elements/Spinner';
 import { Router, Switch, Route } from 'react-router';
-import DashboardRouter from '@/routers/DashboardRouter';
-import AuthenticationRouter from '@/routers/AuthenticationRouter';
 import { NotApproved, NotFound } from '@/components/elements/ScreenBlock';
 import AuthenticatedRoute from '@/components/elements/AuthenticatedRoute';
+
+const StoreRouter = React.lazy(() => import('@/routers/StoreRouter'));
+const TicketRouter = React.lazy(() => import('@/routers/TicketRouter'));
+const ServerRouter = React.lazy(() => import('@/routers/ServerRouter'));
+const DashboardRouter = React.lazy(() => import('@/routers/DashboardRouter'));
+const AuthenticationRouter = React.lazy(() => import('@/routers/AuthenticationRouter'));
 
 export default () => {
     const authenticated = useStoreState((state) => state.user?.data);
