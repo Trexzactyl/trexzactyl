@@ -12,7 +12,7 @@ import { motion } from 'framer-motion';
 const isAlarmState = (current: number, limit: number): boolean => limit > 0 && current / (limit * 1024 * 1024) >= 0.9;
 
 const ServerCardContainer = styled.div<{ $bg?: string }>`
-    ${tw`relative flex flex-col px-4 py-[6px] sm:py-[11px] rounded-2xl border border-neutral-700 bg-neutral-900/40 backdrop-blur-xl transition-all duration-300 overflow-hidden`};
+    ${tw`relative flex flex-col px-4 py-[6px] sm:py-[11px] rounded-[2px] border border-neutral-700 bg-neutral-900/40 backdrop-blur-xl transition-all duration-300 overflow-hidden`};
     ${tw`hover:border-blue-500/50 hover:shadow-2xl`};
 
     &::before {
@@ -20,9 +20,9 @@ const ServerCardContainer = styled.div<{ $bg?: string }>`
         position: absolute;
         inset: 0;
         ${({ $bg }) =>
-            $bg
-                ? `background-image: url("${$bg}");`
-                : 'background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%);'}
+        $bg
+            ? `background-image: url("${$bg}");`
+            : 'background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%);'}
         background-position: center;
         background-size: cover;
         opacity: 0.2;
@@ -59,15 +59,15 @@ const StatusIndicator = styled.div<{ $status: ServerPowerState | undefined }>`
         !$status || $status === 'offline'
             ? `background-color: rgba(239, 68, 68, 0.1); color: rgb(248, 113, 113); border-color: rgba(239, 68, 68, 0.2);`
             : $status === 'running'
-            ? `background-color: rgba(34, 197, 94, 0.1); color: rgb(74, 222, 128); border-color: rgba(34, 197, 94, 0.2);`
-            : `background-color: rgba(234, 179, 8, 0.1); color: rgb(250, 204, 21); border-color: rgba(234, 179, 8, 0.2);`};
+                ? `background-color: rgba(34, 197, 94, 0.1); color: rgb(74, 222, 128); border-color: rgba(34, 197, 94, 0.2);`
+                : `background-color: rgba(234, 179, 8, 0.1); color: rgb(250, 204, 21); border-color: rgba(234, 179, 8, 0.2);`};
 
     & .dot {
         ${tw`w-1.5 h-1.5 rounded-full`};
         ${({ $status }) =>
-            !$status || $status === 'offline'
-                ? tw`bg-red-500`
-                : $status === 'running'
+        !$status || $status === 'offline'
+            ? tw`bg-red-500`
+            : $status === 'running'
                 ? tw`bg-green-500 animate-pulse`
                 : tw`bg-yellow-500 animate-pulse`};
     }
@@ -83,9 +83,9 @@ const ProgressBar = styled.div<{ $percent: number; $alarm?: boolean }>`
         width: ${({ $percent }) => $percent}%;
         ${tw`h-full transition-all duration-700 ease-in-out`};
         ${({ $alarm }) =>
-            $alarm
-                ? `background: linear-gradient(90deg, #ef4444, #f87171);`
-                : `background: linear-gradient(90deg, #3b82f6, #60a5fa);`};
+        $alarm
+            ? `background: linear-gradient(90deg, #ef4444, #f87171);`
+            : `background: linear-gradient(90deg, #3b82f6, #60a5fa);`};
         box-shadow: 0 0 8px ${({ $alarm }) => ($alarm ? 'rgba(239, 68, 68, 0.3)' : 'rgba(59, 130, 246, 0.3)')};
     }
 `;
@@ -137,7 +137,7 @@ const ServerRow = ({ server, className }: { server: Server; className?: string }
         : 0;
 
     return (
-        <Link to={`/server/${server.uuid}`} className={`${className || ''} group`}>
+        <Link to={`/server/${server.uuid}`} className={`${className || ''} group`} css={tw`block mb-4 md:mb-0 lg:mx-1`}>
             <ServerCardMotion
                 $bg={server.bg}
                 whileHover={{ scale: 1.02 }}
@@ -208,10 +208,10 @@ const ServerRow = ({ server, className }: { server: Server; className?: string }
                                     $percent={
                                         stats
                                             ? Math.min(
-                                                  (stats.diskUsageInBytes / (server.limits.disk * 1024 * 1024 || 1)) *
-                                                      100,
-                                                  100
-                                              )
+                                                (stats.diskUsageInBytes / (server.limits.disk * 1024 * 1024 || 1)) *
+                                                100,
+                                                100
+                                            )
                                             : 0
                                     }
                                 >
@@ -222,20 +222,7 @@ const ServerRow = ({ server, className }: { server: Server; className?: string }
                     )}
                 </div>
 
-                <div
-                    css={tw`mt-4 pt-3 border-t border-neutral-800/50 flex justify-between items-center text-[9px] text-neutral-500 font-bold tracking-wide`}
-                >
-                    <div css={tw`flex items-center gap-1.5`}>
-                        <Icon.Box size={10} className='text-neutral-600' />
-                        {server.node}
-                    </div>
-                    <div
-                        css={tw`flex items-center gap-1.5 px-2 py-1 rounded bg-neutral-800/30 group-hover:bg-blue-500/10 group-hover:text-blue-400 transition-colors cursor-pointer`}
-                    >
-                        <Icon.Terminal size={9} />
-                        Open Console
-                    </div>
-                </div>
+
             </ServerCardMotion>
         </Link>
     );

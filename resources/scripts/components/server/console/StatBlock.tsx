@@ -16,7 +16,7 @@ interface Props {
 }
 
 const StatCard = styled.div`
-    ${tw`relative flex flex-col p-4 rounded-xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-md transition-all duration-300`};
+    ${tw`relative flex flex-col p-4 rounded-[2px] border border-neutral-700 bg-neutral-900/40 backdrop-blur-xl transition-all duration-300`};
     ${tw`hover:border-blue-500/50 hover:shadow-lg hover:-translate-y-0.5`};
 `;
 

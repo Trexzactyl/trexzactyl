@@ -38,6 +38,10 @@ class ActivityLogController extends ClientApiController
             ->orderBy('timestamp', 'desc')
             ->first();
 
+        if (!$data) {
+            return ['data' => null];
+        }
+
         return $this->fractal->item($data)
             ->transformWith($this->getTransformer(ActivityLogTransformer::class))
             ->toArray();

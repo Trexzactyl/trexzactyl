@@ -215,7 +215,7 @@ export default () => {
         <div className={classNames(styles.terminal, 'relative')}>
             <SpinnerOverlay visible={!connected} size={'large'} />
             <div
-                className={classNames(styles.container, styles.overflows_container, { 'rounded-b': !canSendCommands })}
+                className={classNames(styles.container, styles.overflows_container, { 'rounded-b-[2px]': !canSendCommands })}
             >
                 <div id={styles.terminal} ref={ref} />
             </div>
