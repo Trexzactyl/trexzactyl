@@ -4,6 +4,7 @@ import { breakpoint } from '@/theme';
 import styled from 'styled-components/macro';
 import { useStoreState } from '@/state/hooks';
 import FlashMessageRender from '@/components/FlashMessageRender';
+import GlassCard from '@/components/elements/GlassCard';
 
 const Wrapper = styled.div`
     ${breakpoint('sm')`
@@ -37,20 +38,21 @@ const DiscordFormContainer = ({ children }: { children: React.ReactNode }) => {
                 Login to {name}
             </h2>
             <FlashMessageRender css={tw`mb-4 px-1`} />
-            <div
-                css={tw`w-full bg-neutral-900 bg-opacity-40 backdrop-blur-xl border border-neutral-700 border-opacity-50 shadow-2xl rounded-3xl p-10 relative z-10`}
+            <GlassCard
+                className={'group'}
+                css={tw`w-full p-10 relative z-10`}
             >
                 <div css={tw`flex flex-col md:flex-row items-center gap-10`}>
                     <div css={tw`flex-none select-none`}>
                         <img
                             src={'https://cdn.worldvectorlogo.com/logos/discord-6.svg'}
-                            css={tw`block w-24 md:w-32 transition-transform duration-500 hover:scale-110`}
+                            css={tw`block w-24 md:w-32 transition-transform duration-500 group-hover:scale-110`}
                             alt={'Discord'}
                         />
                     </div>
                     <div css={tw`flex-1 w-full`}>{children}</div>
                 </div>
-            </div>
+            </GlassCard>
             <div
                 css={tw`mt-8 flex flex-col sm:flex-row justify-between items-center text-xs font-black uppercase tracking-wider text-neutral-500 gap-4`}
             >

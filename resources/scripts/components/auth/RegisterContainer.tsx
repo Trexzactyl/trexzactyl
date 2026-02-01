@@ -112,7 +112,7 @@ const RegisterContainer = ({ history }: RouteComponentProps) => {
                     />
                     <Button
                         type={'submit'}
-                        css={tw`mt-8 w-full bg-blue-500 bg-opacity-10 text-blue-400 border border-blue-500 border-opacity-20 hover:bg-blue-500 bg-opacity-20 rounded-xl transition-all font-black uppercase tracking-wider text-xs py-3`}
+                        css={tw`w-full bg-blue-500 bg-opacity-10 text-blue-400 border border-blue-500 border-opacity-20 hover:bg-blue-500 bg-opacity-20 rounded-2xl transition-all duration-300 font-black uppercase tracking-wider text-xs py-4`}
                         size={Button.Sizes.Large}
                         disabled={isSubmitting}
                     >

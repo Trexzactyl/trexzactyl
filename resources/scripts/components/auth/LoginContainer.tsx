@@ -90,7 +90,10 @@ const LoginContainer = ({ history, location }: RouteComponentProps) => {
             })}
         >
             {({ isSubmitting, setSubmitting, submitForm }) => (
-                <LoginFormContainer title={'Login to ' + name} css={tw`w-full flex`}>
+                <LoginFormContainer
+                    title={'Login to ' + name}
+                    css={tw`w-full flex`}
+                >
                     <FlashMessageRender css={tw`mb-4`} />
                     <Field light type={'text'} label={'Username or Email'} name={'username'} disabled={isSubmitting} />
                     <div css={tw`mt-6`}>
@@ -132,7 +135,7 @@ const LoginContainer = ({ history, location }: RouteComponentProps) => {
                             {email && (
                                 <Link
                                     to={'/auth/register'}
-                                    css={tw`flex items-center justify-center gap-3 bg-blue-500 bg-opacity-50 text-blue-400 border border-blue-500 border-opacity-20 py-4 rounded-2xl hover:bg-opacity-50 transition-all font-black text-xs uppercase tracking-wider`}
+                                    css={tw`flex items-center justify-center gap-3 bg-blue-500 bg-opacity-10 text-blue-400 border border-blue-500 border-opacity-20 py-4 rounded-2xl hover:bg-blue-500 bg-opacity-20 transition-all font-black text-xs uppercase tracking-wider`}
                                 >
                                     <Mail size={18} />
                                     Signup with Email
@@ -141,7 +144,7 @@ const LoginContainer = ({ history, location }: RouteComponentProps) => {
                             {discord && (
                                 <Link
                                     to={'/auth/discord'}
-                                    css={tw`flex items-center justify-center gap-3 bg-indigo-500 bg-opacity-50 text-indigo-400 border border-indigo-500 border-opacity-20 py-4 rounded-2xl hover:bg-opacity-50 transition-all font-black text-xs uppercase tracking-wider`}
+                                    css={tw`flex items-center justify-center gap-3 bg-indigo-500 bg-opacity-10 text-indigo-400 border border-indigo-500 border-opacity-20 py-4 rounded-2xl hover:bg-indigo-500 bg-opacity-20 transition-all font-black text-xs uppercase tracking-wider`}
                                 >
                                     <MessageSquare size={18} />
                                     Login with Discord

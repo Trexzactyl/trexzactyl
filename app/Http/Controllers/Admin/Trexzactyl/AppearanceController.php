@@ -36,7 +36,7 @@ class AppearanceController extends Controller
             'name' => config('app.name'),
             'logo' => config('app.logo'),
 
-            'admin' => config('theme.admin'),
+
             'user' => ['background' => config('theme.user.background')],
         ]);
     }

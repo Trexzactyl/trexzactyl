@@ -46,7 +46,7 @@ const LoginCheckpointContainer = () => {
             <div css={tw`mt-8`}>
                 <Button
                     size={Button.Sizes.Large}
-                    css={tw`w-full bg-blue-600 bg-opacity-10 text-blue-400 border border-blue-500 border-opacity-30 hover:bg-blue-600 bg-opacity-20 hover:border-blue-500 border-opacity-60 font-black uppercase tracking-wider text-sm py-4 rounded-xl transition-all shadow-lg`}
+                    css={tw`w-full bg-blue-500 bg-opacity-10 text-blue-400 border border-blue-500 border-opacity-20 hover:bg-blue-500 bg-opacity-20 rounded-2xl transition-all duration-300 font-black uppercase tracking-wider text-xs py-4`}
                     type={'submit'}
                     disabled={isSubmitting}
                 >

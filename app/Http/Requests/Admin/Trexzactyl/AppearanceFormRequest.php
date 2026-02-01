@@ -12,7 +12,7 @@ class AppearanceFormRequest extends AdminFormRequest
             'app:name' => 'required|string|max:191',
             'app:logo' => 'required|string|max:191',
             'theme:user:background' => 'nullable|url',
-            'theme:admin' => 'required|string|in:trexzactyl,dark,light,blue,minecraft',
+
         ];
     }
 }

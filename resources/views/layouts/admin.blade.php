@@ -27,9 +27,8 @@
     {!! Theme::css('vendor/adminlte/colors/skin-blue.min.css?t={cache-version}') !!}
     {!! Theme::css('vendor/sweetalert/sweetalert.min.css?t={cache-version}') !!}
     {!! Theme::css('vendor/animate/animate.min.css?t={cache-version}') !!}
-    <!-- Ability to customize Trexzactyl theme -->
-    <link rel="stylesheet"
-        href="/themes/{{ config('theme.admin', 'Trexzactyl') }}/css/{{ config('theme.admin', 'Trexzactyl') }}.css">
+    <!-- Hardcoded Trexzactyl theme -->
+    <link rel="stylesheet" href="/themes/trexzactyl/css/trexzactyl.css">
     <!-- Mobile responsive fixes -->
     <link rel="stylesheet" href="/css/admin-mobile-fix.css">
 
@@ -58,7 +57,7 @@
             </nav>
         </header>
         <aside class="main-sidebar"
-            style="background: #0F172A !important; border-right: 1px solid rgba(255, 255, 255, 0.05);">
+            style="background: var(--bg-secondary) !important; border-right: 1px solid var(--border-color);">
             <section class="sidebar">
                 <ul class="sidebar-menu" style="padding-bottom: 60px; padding-top: 20px;">
                     <li class="{{ !starts_with(Route::currentRouteName(), 'admin.index') ?: 'active' }}"
@@ -133,9 +132,9 @@
                     </li>
                 </ul>
                 <div class="sidebar-version"
-                    style="padding: 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05);">
+                    style="padding: 20px; text-align: center; border-top: 1px solid var(--border-color);">
                     <small
-                        style="color: rgba(255,255,255,0.3); font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;">v{{ \Trexzactyl\Services\Helpers\VersionService::getCurrentVersion() }}</small>
+                        style="color: var(--text-muted); font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;">v{{ \Trexzactyl\Services\Helpers\VersionService::getCurrentVersion() }}</small>
                 </div>
             </section>
         </aside>
