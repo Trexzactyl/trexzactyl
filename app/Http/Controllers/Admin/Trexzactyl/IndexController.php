@@ -62,7 +62,7 @@ class IndexController extends Controller
             'allocations' => $allocations,
             'used' => [
                 'memory' => $memoryUsed,
-                'disk' => $memoryTotal,
+                'disk' => $diskUsed,
             ],
             'available' => [
                 'memory' => $memoryTotal,

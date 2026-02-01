@@ -177,4 +177,27 @@ return [
         // Should an email be sent to a server owner whenever their server is reinstalled?
         'send_reinstall_notification' => env('Trexzactyl_SEND_REINSTALL_NOTIFICATION', true),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Store Settings
+    |--------------------------------------------------------------------------
+    |
+    | Configuration for the Trexzactyl store and payment gateways.
+    */
+
+    'store' => [
+        'bkash' => [
+            'enabled' => env('BKASH_ENABLED', true),
+            'merchant_number' => env('BKASH_MERCHANT_NUMBER', '01XXXXXXXXX'),
+            'min_amount' => env('BKASH_MIN_AMOUNT', 50),
+            'max_amount' => env('BKASH_MAX_AMOUNT', 10000),
+        ],
+        'nagad' => [
+            'enabled' => env('NAGAD_ENABLED', true),
+            'merchant_number' => env('NAGAD_MERCHANT_NUMBER', '01XXXXXXXXX'),
+            'min_amount' => env('NAGAD_MIN_AMOUNT', 50),
+            'max_amount' => env('NAGAD_MAX_AMOUNT', 10000),
+        ],
+    ],
 ];

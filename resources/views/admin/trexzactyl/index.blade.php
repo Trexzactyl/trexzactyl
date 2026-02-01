@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@include('partials/admin.trexzactyl.nav', ['activeTab' => 'index'])
+@include('partials.admin.trexzactyl.nav', ['activeTab' => 'index'])
 
 @section('title')
     Trexzactyl Settings

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@include('partials/admin.trexzactyl.nav', ['activeTab' => 'advanced'])
+@include('partials.admin.trexzactyl.nav', ['activeTab' => 'advanced'])
 
 @section('title')
     Advanced

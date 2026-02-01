@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@include('partials/admin.trexzactyl.nav', ['activeTab' => 'approvals'])
+@include('partials.admin.trexzactyl.nav', ['activeTab' => 'approvals'])
 
 @section('title')
     User Approvals

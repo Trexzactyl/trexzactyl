@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@include('partials/admin.trexzactyl.nav', ['activeTab' => 'upgrade'])
+@include('partials.admin.trexzactyl.nav', ['activeTab' => 'upgrade'])
 
 @section('title')
     Upgrade to v4

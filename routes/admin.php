@@ -17,35 +17,35 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/', [Trexzactyl\IndexController::class, 'index'])->name('admin.index');
 
     Route::group(['prefix' => '/appearance'], function () {
-        Route::get('/', [Trexzactyl\AppearanceController::class, 'index']);
-        Route::patch('/', [Trexzactyl\AppearanceController::class, 'update'])->name('admin.trexzactyl.appearance');
+        Route::get('/', [Trexzactyl\AppearanceController::class, 'index'])->name('admin.trexzactyl.appearance');
+        Route::patch('/', [Trexzactyl\AppearanceController::class, 'update']);
     });
 
     Route::group(['prefix' => '/mail'], function () {
-        Route::get('/', [Trexzactyl\MailController::class, 'index']);
-        Route::patch('/', [Trexzactyl\MailController::class, 'update'])->name('admin.trexzactyl.mail');
+        Route::get('/', [Trexzactyl\MailController::class, 'index'])->name('admin.trexzactyl.mail');
+        Route::patch('/', [Trexzactyl\MailController::class, 'update']);
         Route::post('/test', [Trexzactyl\MailController::class, 'test'])->name('admin.trexzactyl.mail.test');
     });
 
     Route::group(['prefix' => '/advanced'], function () {
-        Route::get('/', [Trexzactyl\AdvancedController::class, 'index']);
-        Route::patch('/', [Trexzactyl\AdvancedController::class, 'update'])->name('admin.trexzactyl.advanced');
+        Route::get('/', [Trexzactyl\AdvancedController::class, 'index'])->name('admin.trexzactyl.advanced');
+        Route::patch('/', [Trexzactyl\AdvancedController::class, 'update']);
     });
 
     Route::group(['prefix' => '/store'], function () {
-        Route::get('/', [Trexzactyl\StoreController::class, 'index']);
-        Route::patch('/', [Trexzactyl\StoreController::class, 'update'])->name('admin.trexzactyl.store');
+        Route::get('/', [Trexzactyl\StoreController::class, 'index'])->name('admin.trexzactyl.store');
+        Route::patch('/', [Trexzactyl\StoreController::class, 'update']);
     });
 
     Route::group(['prefix' => '/registration'], function () {
-        Route::get('/', [Trexzactyl\RegistrationController::class, 'index']);
-        Route::patch('/', [Trexzactyl\RegistrationController::class, 'update'])->name('admin.trexzactyl.registration');
+        Route::get('/', [Trexzactyl\RegistrationController::class, 'index'])->name('admin.trexzactyl.registration');
+        Route::patch('/', [Trexzactyl\RegistrationController::class, 'update']);
     });
 
     Route::group(['prefix' => '/approvals'], function () {
-        Route::get('/', [Trexzactyl\ApprovalsController::class, 'index']);
+        Route::get('/', [Trexzactyl\ApprovalsController::class, 'index'])->name('admin.trexzactyl.approvals');
 
-        Route::patch('/', [Trexzactyl\ApprovalsController::class, 'update'])->name('admin.trexzactyl.approvals');
+        Route::patch('/', [Trexzactyl\ApprovalsController::class, 'update']);
 
         Route::post('/deny/{id}', [Trexzactyl\ApprovalsController::class, 'deny'])->name('admin.trexzactyl.approvals.deny');
         Route::post('/approve/all/{action}', [Trexzactyl\ApprovalsController::class, 'bulkAction'])->name('admin.trexzactyl.approvals.all');
@@ -59,24 +59,24 @@ Route::group(['prefix' => '/'], function () {
     });
 
     Route::group(['prefix' => '/server'], function () {
-        Route::get('/', [Trexzactyl\ServerController::class, 'index']);
-        Route::patch('/', [Trexzactyl\ServerController::class, 'update'])->name('admin.trexzactyl.server');
+        Route::get('/', [Trexzactyl\ServerController::class, 'index'])->name('admin.trexzactyl.server');
+        Route::patch('/', [Trexzactyl\ServerController::class, 'update']);
     });
 
     Route::group(['prefix' => '/referrals'], function () {
-        Route::get('/', [Trexzactyl\ReferralsController::class, 'index']);
-        Route::patch('/', [Trexzactyl\ReferralsController::class, 'update'])->name('admin.trexzactyl.referrals');
+        Route::get('/', [Trexzactyl\ReferralsController::class, 'index'])->name('admin.trexzactyl.referrals');
+        Route::patch('/', [Trexzactyl\ReferralsController::class, 'update']);
     });
 
     Route::group(['prefix' => '/alerts'], function () {
-        Route::get('/', [Trexzactyl\AlertsController::class, 'index']);
-        Route::patch('/', [Trexzactyl\AlertsController::class, 'update'])->name('admin.trexzactyl.alerts');
+        Route::get('/', [Trexzactyl\AlertsController::class, 'index'])->name('admin.trexzactyl.alerts');
+        Route::patch('/', [Trexzactyl\AlertsController::class, 'update']);
         Route::post('/remove', [Trexzactyl\AlertsController::class, 'remove'])->name('admin.trexzactyl.alerts.remove');
     });
 
     Route::group(['prefix' => '/coupons'], function () {
-        Route::get('/', [Trexzactyl\CouponsController::class, 'index']);
-        Route::patch('/', [Trexzactyl\CouponsController::class, 'update'])->name('admin.trexzactyl.coupons');
+        Route::get('/', [Trexzactyl\CouponsController::class, 'index'])->name('admin.trexzactyl.coupons');
+        Route::patch('/', [Trexzactyl\CouponsController::class, 'update']);
         Route::post('/store', [Trexzactyl\CouponsController::class, 'store'])->name('admin.trexzactyl.coupons.store');
     });
 

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@include('partials/admin.trexzactyl.nav', ['activeTab' => 'alerts'])
+@include('partials.admin.trexzactyl.nav', ['activeTab' => 'alerts'])
 
 @section('title')
     Alert Settings

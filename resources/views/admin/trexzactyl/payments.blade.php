@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@include('partials/admin.trexzactyl.nav', ['activeTab' => 'payments'])
+@include('partials.admin.trexzactyl.nav', ['activeTab' => 'payments'])
 
 @section('title')
     Payment Approvals

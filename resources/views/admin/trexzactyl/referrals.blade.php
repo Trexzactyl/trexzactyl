@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@include('partials/admin.trexzactyl.nav', ['activeTab' => 'referrals'])
+@include('partials.admin.trexzactyl.nav', ['activeTab' => 'referrals'])
 
 @section('title')
     Referral System

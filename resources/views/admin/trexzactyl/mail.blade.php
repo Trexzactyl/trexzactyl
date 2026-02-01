@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@include('partials/admin.trexzactyl.nav', ['activeTab' => 'mail'])
+@include('partials.admin.trexzactyl.nav', ['activeTab' => 'mail'])
 
 @section('title')
     Trexzactyl Mail

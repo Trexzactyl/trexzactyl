@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@include('partials/admin.trexzactyl.nav', ['activeTab' => 'coupons'])
+@include('partials.admin.trexzactyl.nav', ['activeTab' => 'coupons'])
 
 @section('title')
     Coupons
