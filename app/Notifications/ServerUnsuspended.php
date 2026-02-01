@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ServerReinstalled extends Notification implements ShouldQueue
+class ServerUnsuspended extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -25,20 +25,19 @@ class ServerReinstalled extends Notification implements ShouldQueue
     public function toMail(): MailMessage
     {
         return (new MailMessage())
-            ->subject('Server Reinstalled - ' . $this->server->name)
+            ->subject('Server Unsuspended - ' . $this->server->name)
             ->greeting('Hello ' . $this->user->username . ',')
-            ->line('Your server has been successfully reinstalled as requested.')
+            ->line('Great news! Your server has been unsuspended and is now accessible again.')
             ->line('**Server Details:**')
             ->line('Server Name: ' . $this->server->name)
             ->line('Server ID: ' . $this->server->uuidShort)
-            ->line('Reinstall Date: ' . now()->format('F j, Y \a\t g:i A'))
-            ->line('**Important Notes:**')
-            ->line('• All previous server files have been removed')
-            ->line('• The server is being set up with a fresh installation')
-            ->line('• You may need to reconfigure your server settings')
-            ->line('• It may take a few minutes for the server to be fully ready')
+            ->line('Unsuspension Date: ' . now()->format('F j, Y \a\t g:i A'))
+            ->line('**What you can do now:**')
+            ->line('• Start your server from the control panel')
+            ->line('• Access all your files and configurations')
+            ->line('• Resume normal server operations')
             ->action('Access Server', route('server.index', $this->server->uuidShort))
-            ->line('If you experience any issues, please contact our support team.')
-            ->salutation('Thank you for using ' . config('app.name') . '!');
+            ->line('Thank you for resolving the issue. If you have any questions, feel free to contact our support team.')
+            ->salutation('Welcome back to ' . config('app.name') . '!');
     }
 }

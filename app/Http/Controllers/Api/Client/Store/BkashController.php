@@ -39,6 +39,9 @@ class BkashController extends Controller
             'status' => 'pending',
         ]);
 
+        // Send notification to user
+        $user->notify(new \Trexzactyl\Notifications\PaymentPending($payment));
+
         return $this->fractal->item($payment)
             ->transformWith(OrderTransformer::class)
             ->toArray();

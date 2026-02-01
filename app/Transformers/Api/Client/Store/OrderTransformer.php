@@ -30,6 +30,8 @@ class OrderTransformer extends BaseClientTransformer
             'sender_number' => $payment->sender_number,
             'status' => $payment->status,
             'status_label' => $this->getStatusLabel($payment->status),
+            'rejection_reason' => $payment->rejection_reason,
+            'processed_at' => $payment->processed_at?->toISOString(),
             'created_at' => $payment->created_at->toISOString(),
             'updated_at' => $payment->updated_at->toISOString(),
         ];
@@ -56,6 +58,7 @@ class OrderTransformer extends BaseClientTransformer
     {
         return match ($status) {
             'pending' => 'Pending Review',
+            'processing' => 'Processing',
             'approved' => 'Approved',
             'rejected' => 'Rejected',
             default => ucfirst($status),

@@ -54,8 +54,10 @@ Route::group(['prefix' => '/'], function () {
 
     Route::group(['prefix' => '/payments'], function () {
         Route::get('/', [Trexzactyl\ManualPaymentController::class, 'index'])->name('admin.trexzactyl.payments');
+        Route::post('/processing/{id}', [Trexzactyl\ManualPaymentController::class, 'setProcessing'])->name('admin.trexzactyl.payments.processing');
         Route::post('/approve/{id}', [Trexzactyl\ManualPaymentController::class, 'approve'])->name('admin.trexzactyl.payments.approve');
         Route::post('/reject/{id}', [Trexzactyl\ManualPaymentController::class, 'reject'])->name('admin.trexzactyl.payments.reject');
+        Route::post('/bulk-action', [Trexzactyl\ManualPaymentController::class, 'bulkAction'])->name('admin.trexzactyl.payments.bulk');
     });
 
     Route::group(['prefix' => '/server'], function () {

@@ -22,6 +22,15 @@ class ManualPayment extends Model
         'transaction_id',
         'sender_number',
         'status',
+        'rejection_reason',
+        'processed_at',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     */
+    protected $casts = [
+        'processed_at' => 'datetime',
     ];
 
     /**
