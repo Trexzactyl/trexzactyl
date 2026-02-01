@@ -16,7 +16,10 @@ const plugins = [
 if (process.env.VITEST === undefined) {
     plugins.push(
         laravel({
-            input: 'resources/scripts/index.tsx',
+            input: [
+                'resources/scripts/index.tsx',
+                'resources/scripts/admin/index.tsx'
+            ],
         }),
     );
 }

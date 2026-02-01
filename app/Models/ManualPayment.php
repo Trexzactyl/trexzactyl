@@ -22,6 +22,7 @@ class ManualPayment extends Model
         'transaction_id',
         'sender_number',
         'status',
+        'rejection_reason',
     ];
 
     /**

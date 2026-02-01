@@ -10,6 +10,8 @@ import PageContentBlock from '@/components/elements/PageContentBlock';
 import StripePurchaseForm from '@/components/store/forms/StripePurchaseForm';
 import PaypalPurchaseForm from '@/components/store/forms/PaypalPurchaseForm';
 import ManualPurchaseForm from '@/components/store/forms/ManualPurchaseForm';
+import BkashPurchaseForm from '@/components/store/forms/BkashPurchaseForm';
+import NagadPurchaseForm from '@/components/store/forms/NagadPurchaseForm';
 
 export default () => {
     const [resources, setResources] = useState<Resources>();
@@ -26,7 +28,7 @@ export default () => {
     if (!resources || !earn) return <Spinner size={'large'} centered />;
 
     return (
-        <PageContentBlock title={'Account Balance'} description={'Purchase credits easily via Stripe or PayPal.'}>
+        <PageContentBlock title={'Account Balance'} description={'Purchase credits easily via Stripe, PayPal, bKash or Nagad.'}>
             <div css={tw`lg:grid lg:grid-cols-2 my-10 gap-8`}>
                 <div
                     className={'group'}
@@ -64,7 +66,7 @@ export default () => {
                     />
                     <p css={tw`text-xs font-bold text-neutral-500 mb-8`}>Secure Checkout</p>
                     <div css={tw`w-full max-w-sm relative z-10`}>
-                        {!paypal && !stripe ? (
+                        {!paypal && !stripe && !bkash?.enabled && !nagad?.enabled ? (
                             <p className={'text-gray-400 text-sm font-bold'}>Payment gateways are offline.</p>
                         ) : (
                             <div css={tw`space-y-6`}>
@@ -84,19 +86,20 @@ export default () => {
                                         <StripePurchaseForm />
                                     </div>
                                 )}
-                                {(bkash || nagad) && (
+                                {bkash?.enabled && (
                                     <div
                                         className={'group'}
-                                        css={tw`p-6 bg-white/5 rounded-sm border border-white/5 text-left relative overflow-hidden hover:border-blue-500 transition-all`}
+                                        css={tw`shadow-lg hover:shadow-xl transition-all p-1 bg-white/5 rounded-sm border border-white/5 text-left hover:bg-white/10`}
                                     >
-                                        <div
-                                            css={tw`absolute top-0 right-0 w-24 h-24 bg-blue-500 bg-opacity-10 blur-2xl -mr-12 -mt-12 transition-all group-hover:bg-blue-500 bg-opacity-20`}
-                                        />
-                                        <h3 css={tw`text-base text-white font-bold mb-4 flex items-center`}>
-                                            <Icon.CreditCard size={18} css={tw`mr-2 text-blue-400`} strokeWidth={2.5} />
-                                            Manual Gateway
-                                        </h3>
-                                        <ManualPurchaseForm />
+                                        <BkashPurchaseForm />
+                                    </div>
+                                )}
+                                {nagad?.enabled && (
+                                    <div
+                                        className={'group'}
+                                        css={tw`shadow-lg hover:shadow-xl transition-all p-1 bg-white/5 rounded-sm border border-white/5 text-left hover:bg-white/10`}
+                                    >
+                                        <NagadPurchaseForm />
                                     </div>
                                 )}
                             </div>

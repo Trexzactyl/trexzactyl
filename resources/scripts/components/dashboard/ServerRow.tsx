@@ -20,9 +20,9 @@ const ServerCardContainer = styled.div<{ $bg?: string }>`
         position: absolute;
         inset: 0;
         ${({ $bg }) =>
-            $bg
-                ? `background-image: url("${$bg}");`
-                : 'background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%);'}
+        $bg
+            ? `background-image: url("${$bg}");`
+            : 'background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%);'}
         background-position: center;
         background-size: cover;
         opacity: 0.2;
@@ -59,15 +59,15 @@ const StatusIndicator = styled.div<{ $status: ServerPowerState | undefined }>`
         !$status || $status === 'offline'
             ? `background-color: rgba(239, 68, 68, 0.1); color: rgb(248, 113, 113); border-color: rgba(239, 68, 68, 0.2);`
             : $status === 'running'
-            ? `background-color: rgba(34, 197, 94, 0.1); color: rgb(74, 222, 128); border-color: rgba(34, 197, 94, 0.2);`
-            : `background-color: rgba(234, 179, 8, 0.1); color: rgb(250, 204, 21); border-color: rgba(234, 179, 8, 0.2);`};
+                ? `background-color: rgba(34, 197, 94, 0.1); color: rgb(74, 222, 128); border-color: rgba(34, 197, 94, 0.2);`
+                : `background-color: rgba(234, 179, 8, 0.1); color: rgb(250, 204, 21); border-color: rgba(234, 179, 8, 0.2);`};
 
     & .dot {
         ${tw`w-1.5 h-1.5 rounded-full`};
         ${({ $status }) =>
-            !$status || $status === 'offline'
-                ? tw`bg-red-500`
-                : $status === 'running'
+        !$status || $status === 'offline'
+            ? tw`bg-red-500`
+            : $status === 'running'
                 ? tw`bg-green-500 animate-pulse`
                 : tw`bg-yellow-500 animate-pulse`};
     }
@@ -83,9 +83,9 @@ const ProgressBar = styled.div<{ $percent: number; $alarm?: boolean }>`
         width: ${({ $percent }) => $percent}%;
         ${tw`h-full transition-all duration-700 ease-in-out`};
         ${({ $alarm }) =>
-            $alarm
-                ? `background: linear-gradient(90deg, #ef4444, #f87171);`
-                : `background: linear-gradient(90deg, #3b82f6, #60a5fa);`};
+        $alarm
+            ? `background: linear-gradient(90deg, #ef4444, #f87171);`
+            : `background: linear-gradient(90deg, #3b82f6, #60a5fa);`};
         box-shadow: 0 0 8px ${({ $alarm }) => ($alarm ? 'rgba(239, 68, 68, 0.3)' : 'rgba(59, 130, 246, 0.3)')};
     }
 `;
@@ -171,7 +171,11 @@ const ServerRow = ({ server, className }: { server: Server; className?: string }
                 </div>
 
                 <div css={tw`flex-1 h-16`}>
-                    {!stats && !isSuspended && !server.isTransferring && server.status !== 'installing' ? (
+                    {server.status === 'installing' || server.status === 'install_failed' || server.status === 'reinstall_failed' || server.status === 'restoring_backup' ? (
+                        <div css={tw`flex items-center justify-center h-full`}>
+                            <Spinner size={'small'} />
+                        </div>
+                    ) : !stats && !isSuspended && !server.isTransferring ? (
                         <div css={tw`flex items-center justify-center h-full pt-4`}>
                             <Spinner size={'small'} />
                         </div>
@@ -208,10 +212,10 @@ const ServerRow = ({ server, className }: { server: Server; className?: string }
                                     $percent={
                                         stats
                                             ? Math.min(
-                                                  (stats.diskUsageInBytes / (server.limits.disk * 1024 * 1024 || 1)) *
-                                                      100,
-                                                  100
-                                              )
+                                                (stats.diskUsageInBytes / (server.limits.disk * 1024 * 1024 || 1)) *
+                                                100,
+                                                100
+                                            )
                                             : 0
                                     }
                                 >

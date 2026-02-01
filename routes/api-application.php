@@ -139,3 +139,45 @@ Route::group(['prefix' => '/nests'], function () {
         Route::get('/{egg:id}', [Application\Nests\EggController::class, 'view'])->name('api.application.nests.eggs.view');
     });
 });
+
+/*
+|--------------------------------------------------------------------------
+| Payment Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /api/application/payments
+|
+*/
+Route::group(['prefix' => '/payments'], function () {
+    Route::get('/', [Application\Payments\PaymentController::class, 'index'])->name('api.application.payments');
+    Route::post('/{payment:id}/approve', [Application\Payments\PaymentController::class, 'approve'])->name('api.application.payments.approve');
+    Route::post('/{payment:id}/reject', [Application\Payments\PaymentController::class, 'reject'])->name('api.application.payments.reject');
+});
+
+/*
+|--------------------------------------------------------------------------
+| bKash Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /api/application/bkash
+|
+*/
+Route::group(['prefix' => '/bkash'], function () {
+    Route::get('/transactions', [Application\Payments\BkashController::class, 'index'])->name('api.application.bkash.transactions');
+    Route::post('/approve/{transaction:id}', [Application\Payments\BkashController::class, 'approve'])->name('api.application.bkash.approve');
+    Route::post('/reject/{transaction:id}', [Application\Payments\BkashController::class, 'reject'])->name('api.application.bkash.reject');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Nagad Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /api/application/nagad
+|
+*/
+Route::group(['prefix' => '/nagad'], function () {
+    Route::get('/transactions', [Application\Payments\NagadController::class, 'index'])->name('api.application.nagad.transactions');
+    Route::post('/approve/{transaction:id}', [Application\Payments\NagadController::class, 'approve'])->name('api.application.nagad.approve');
+    Route::post('/reject/{transaction:id}', [Application\Payments\NagadController::class, 'reject'])->name('api.application.nagad.reject');
+});

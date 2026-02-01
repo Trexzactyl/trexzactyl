@@ -15,10 +15,13 @@ module.exports = {
     performance: {
         hints: false,
     },
-    entry: './resources/scripts/index.tsx',
+    entry: {
+        main: './resources/scripts/index.tsx',
+        admin: './resources/scripts/admin/index.tsx',
+    },
     output: {
         path: path.join(__dirname, '/public/assets'),
-        filename: isProduction ? 'bundle.[chunkhash:8].js' : 'bundle.[hash:8].js',
+        filename: isProduction ? '[name].[chunkhash:8].js' : '[name].[hash:8].js',
         chunkFilename: isProduction ? '[name].[chunkhash:8].js' : '[name].[hash:8].js',
         publicPath: (process.env.WEBPACK_PUBLIC_PATH || '/assets/'),
         crossOriginLoading: 'anonymous',

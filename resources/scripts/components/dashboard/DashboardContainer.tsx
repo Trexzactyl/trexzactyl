@@ -14,6 +14,7 @@ import Pagination from '@/components/elements/Pagination';
 import { usePersistedState } from '@/plugins/usePersistedState';
 import PageContentBlock from '@/components/elements/PageContentBlock';
 import OverviewStats from '@/components/dashboard/OverviewStats';
+import NotFoundSvg from '@/assets/images/not_found.svg';
 
 export default () => {
     const { search } = useLocation();
@@ -114,9 +115,15 @@ export default () => {
                                 </>
                             </div>
                         ) : (
-                            <p className={'text-gray-400 text-lg font-semibold text-center'}>
-                                Doesn&apos;t look like you have any servers here.
-                            </p>
+                            <div css={tw`flex flex-col items-center justify-center py-20 bg-neutral-900 bg-opacity-40 backdrop-blur-xl border border-neutral-700 rounded-sm mt-10`}>
+                                <img src={NotFoundSvg} css={tw`w-48 h-auto opacity-20 mb-8 animate-pulse`} alt={'Not Found'} />
+                                <h2 css={tw`text-2xl font-black text-neutral-400 uppercase tracking-tighter`}>
+                                    No servers detected.
+                                </h2>
+                                <p className={'text-neutral-500 font-bold mt-2'}>
+                                    Doesn&apos;t look like you have any servers here.
+                                </p>
+                            </div>
                         )
                     }
                 </Pagination>

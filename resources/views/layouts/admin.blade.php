@@ -139,6 +139,7 @@
             </section>
         </aside>
         <div class="content-wrapper">
+            @include('admin.partials.react-admin-link')
             @include('admin.partials.update-notification')
             <section class="content-header">
                 @yield('content-header')

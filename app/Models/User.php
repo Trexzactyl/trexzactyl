@@ -302,6 +302,21 @@ class User extends Model implements
         return $this->morphToMany(ActivityLog::class, 'subject', 'activity_log_subjects');
     }
 
+    public function bkash(): HasMany
+    {
+        return $this->hasMany(\Trexzactyl\Models\Bkash::class);
+    }
+
+    public function nagad(): HasMany
+    {
+        return $this->hasMany(\Trexzactyl\Models\Nagad::class);
+    }
+
+    public function manualPayments(): HasMany
+    {
+        return $this->hasMany(\Trexzactyl\Models\ManualPayment::class);
+    }
+
     /**
      * Returns all the servers that a user can access by way of being the owner of the
      * server, or because they are assigned as a subuser for that server.

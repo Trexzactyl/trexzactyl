@@ -89,6 +89,7 @@ Route::group([
 ], function () {
     Route::get('/', [Client\Store\ResourceController::class, 'user'])->name('api:client:store.user');
     Route::get('/costs', [Client\Store\ResourceController::class, 'costs'])->name('api:client:store.costs');
+    Route::get('/orders', [Client\Store\OrderController::class, 'index'])->name('api:client:store.orders');
     Route::get('/nodes', [Client\Store\ServerController::class, 'nodes'])->name('api:client:store.nodes');
     Route::get('/nests', [Client\Store\ServerController::class, 'nests'])->name('api:client:store.nests');
 
@@ -108,6 +109,16 @@ Route::group([
     Route::group(['prefix' => '/paypal'], function () {
         Route::get('/callback', [Client\Store\PayPalController::class, 'callback'])->name('api:client:store.paypal.callback');
         Route::post('/', [Client\Store\PayPalController::class, 'purchase'])->name('api:client:store.paypal');
+    });
+
+    Route::group(['prefix' => '/bkash'], function () {
+        Route::post('/', [Client\Store\BkashController::class, 'purchase'])->name('api:client:store.bkash');
+        Route::post('/verify', [Client\Store\BkashController::class, 'verify'])->name('api:client:store.bkash.verify');
+    });
+
+    Route::group(['prefix' => '/nagad'], function () {
+        Route::post('/', [Client\Store\NagadController::class, 'purchase'])->name('api:client:store.nagad');
+        Route::post('/verify', [Client\Store\NagadController::class, 'verify'])->name('api:client:store.nagad.verify');
     });
 });
 

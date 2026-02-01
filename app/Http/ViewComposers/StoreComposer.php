@@ -27,8 +27,14 @@ class StoreComposer extends Composer
             'gateways' => [
                 'paypal' => $this->setting('store:paypal:enabled', Composer::TYPE_BOOL),
                 'stripe' => $this->setting('store:stripe:enabled', Composer::TYPE_BOOL),
-                'bkash' => $this->settings->get('trexzactyl::store:bkash:number', config('gateways.bkash.number')),
-                'nagad' => $this->settings->get('trexzactyl::store:nagad:number', config('gateways.nagad.number')),
+                'bkash' => [
+                    'enabled' => $this->setting('store:bkash:enabled', Composer::TYPE_BOOL),
+                    'number' => $this->settings->get('trexzactyl::store:bkash:number', config('gateways.bkash.number')),
+                ],
+                'nagad' => [
+                    'enabled' => $this->setting('store:nagad:enabled', Composer::TYPE_BOOL),
+                    'number' => $this->settings->get('trexzactyl::store:nagad:number', config('gateways.nagad.number')),
+                ],
                 'conversion_rate' => $this->settings->get('trexzactyl::store:conversion_rate', 115),
             ],
 

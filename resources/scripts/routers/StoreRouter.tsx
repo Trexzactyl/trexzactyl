@@ -11,6 +11,7 @@ import OverviewContainer from '@/components/store/OverviewContainer';
 import NavigationBar from '@/components/elements/NavigationBar';
 import ResourcesContainer from '@/components/store/ResourcesContainer';
 import SubNavigation from '@/components/elements/SubNavigation';
+import OrdersContainer from '@/components/store/OrdersContainer';
 
 export default () => {
     const location = useLocation();
@@ -42,6 +43,11 @@ export default () => {
                                 Create Server <Icon.Server className={'ml-1'} size={18} />
                             </div>
                         </NavLink>
+                        <NavLink to={`${match.path}/orders`}>
+                            <div className={'flex items-center justify-between'}>
+                                Orders <Icon.List className={'ml-1'} size={18} />
+                            </div>
+                        </NavLink>
                     </div>
                 </SubNavigation>
                 <TransitionRouter>
@@ -57,6 +63,9 @@ export default () => {
                         </Route>
                         <Route path={`${match.path}/create`} exact>
                             <CreateContainer />
+                        </Route>
+                        <Route path={`${match.path}/orders`} exact>
+                            <OrdersContainer />
                         </Route>
                         <Route path={'*'}>
                             <NotFound />

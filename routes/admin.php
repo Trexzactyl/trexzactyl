@@ -15,6 +15,11 @@ use Trexzactyl\Http\Middleware\Admin\Servers\ServerInstalled;
 */
 Route::group(['prefix' => '/'], function () {
     Route::get('/', [Trexzactyl\IndexController::class, 'index'])->name('admin.index');
+    
+    // React Admin Panel (New)
+    Route::get('/react/{any?}', [Admin\ReactController::class, 'index'])
+        ->where('any', '.*')
+        ->name('admin.react');
 
     Route::group(['prefix' => '/appearance'], function () {
         Route::get('/', [Trexzactyl\AppearanceController::class, 'index']);
@@ -55,7 +60,16 @@ Route::group(['prefix' => '/'], function () {
     Route::group(['prefix' => '/payments'], function () {
         Route::get('/', [Trexzactyl\ManualPaymentController::class, 'index'])->name('admin.trexzactyl.payments');
         Route::post('/approve/{id}', [Trexzactyl\ManualPaymentController::class, 'approve'])->name('admin.trexzactyl.payments.approve');
+        Route::post('/process/{id}', [Trexzactyl\ManualPaymentController::class, 'process'])->name('admin.trexzactyl.payments.process');
         Route::post('/reject/{id}', [Trexzactyl\ManualPaymentController::class, 'reject'])->name('admin.trexzactyl.payments.reject');
+
+        Route::post('/bkash/approve/{id}', [Trexzactyl\ManualPaymentController::class, 'approveBkash'])->name('admin.trexzactyl.payments.bkash.approve');
+        Route::post('/bkash/process/{id}', [Trexzactyl\ManualPaymentController::class, 'processBkash'])->name('admin.trexzactyl.payments.bkash.process');
+        Route::post('/bkash/reject/{id}', [Trexzactyl\ManualPaymentController::class, 'rejectBkash'])->name('admin.trexzactyl.payments.bkash.reject');
+
+        Route::post('/nagad/approve/{id}', [Trexzactyl\ManualPaymentController::class, 'approveNagad'])->name('admin.trexzactyl.payments.nagad.approve');
+        Route::post('/nagad/process/{id}', [Trexzactyl\ManualPaymentController::class, 'processNagad'])->name('admin.trexzactyl.payments.nagad.process');
+        Route::post('/nagad/reject/{id}', [Trexzactyl\ManualPaymentController::class, 'rejectNagad'])->name('admin.trexzactyl.payments.nagad.reject');
     });
 
     Route::group(['prefix' => '/server'], function () {

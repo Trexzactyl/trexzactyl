@@ -31,8 +31,14 @@ export interface StorefrontSettings {
     gateways: {
         paypal: boolean;
         stripe: boolean;
-        bkash?: string;
-        nagad?: string;
+        bkash?: {
+            enabled: boolean;
+            number: string;
+        };
+        nagad?: {
+            enabled: boolean;
+            number: string;
+        };
         conversion_rate: number;
     };
     earn: {
