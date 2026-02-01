@@ -67,6 +67,9 @@ class SettingsController extends ClientApiController
 
         Activity::event('server:reinstall')->log();
 
+        // Send notification to server owner
+        $server->user->notify(new \Trexzactyl\Notifications\ServerReinstalled($server, $server->user));
+
         return new JsonResponse([], Response::HTTP_ACCEPTED);
     }
 

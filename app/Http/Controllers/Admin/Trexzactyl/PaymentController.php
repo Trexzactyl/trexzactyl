@@ -4,7 +4,7 @@ namespace Trexzactyl\Http\Controllers\Admin\Trexzactyl;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Trexzactyl\Models\ManualPayment;
+use Trexzactyl\Models\Payment;
 use Illuminate\Http\RedirectResponse;
 use Prologue\Alerts\AlertsMessageBag;
 use Trexzactyl\Traits\NotificationHelper;
@@ -14,7 +14,7 @@ use Trexzactyl\Notifications\PaymentRejected;
 use Trexzactyl\Notifications\PaymentProcessing;
 use Trexzactyl\Http\Requests\Admin\Payments\RejectPaymentRequest;
 
-class ManualPaymentController extends Controller
+class PaymentController extends Controller
 {
     use NotificationHelper;
 
@@ -27,24 +27,24 @@ class ManualPaymentController extends Controller
         $status = $request->get('status', 'pending');
         $currency = $request->get('currency');
         
-        $query = ManualPayment::with('user')->orderBy('created_at', 'desc');
+        $query = Payment::with('user')->orderBy('created_at', 'desc');
         
         if ($status !== 'all') {
             $query->where('status', $status);
         }
         
         if ($currency) {
-            $query->where('currency', $currency);
+            $query->where('payment_method', $currency);
         }
         
         $payments = $query->paginate(25);
         
         $stats = [
-            'pending' => ManualPayment::where('status', 'pending')->count(),
-            'processing' => ManualPayment::where('status', 'processing')->count(),
-            'approved' => ManualPayment::where('status', 'approved')->count(),
-            'rejected' => ManualPayment::where('status', 'rejected')->count(),
-            'total' => ManualPayment::count(),
+            'pending' => Payment::where('status', 'pending')->count(),
+            'processing' => Payment::where('status', 'processing')->count(),
+            'approved' => Payment::where('status', 'approved')->count(),
+            'rejected' => Payment::where('status', 'rejected')->count(),
+            'total' => Payment::count(),
         ];
 
         return view('admin.trexzactyl.payments', [
@@ -57,7 +57,7 @@ class ManualPaymentController extends Controller
 
     public function setProcessing(int $id): RedirectResponse
     {
-        $payment = ManualPayment::findOrFail($id);
+        $payment = Payment::findOrFail($id);
 
         if (!in_array($payment->status, ['pending'])) {
             $this->alert->danger('This payment cannot be set to processing from its current status.')->flash();
@@ -83,7 +83,7 @@ class ManualPaymentController extends Controller
 
     public function approve(int $id): RedirectResponse
     {
-        $payment = ManualPayment::findOrFail($id);
+        $payment = Payment::findOrFail($id);
 
         if (!in_array($payment->status, ['pending', 'processing'])) {
             $this->alert->danger('This payment has already been processed.')->flash();
@@ -97,13 +97,13 @@ class ManualPaymentController extends Controller
 
         // Add credits to user
         $user = $payment->user;
-        $user->store_balance += $payment->credit_amount;
+        $user->store_balance += $payment->amount;
         $user->save();
 
         // Notify user
         $this->sendNotificationIfEnabled(
             $user,
-            new PaymentApproved($payment->credit_amount, $payment->currency),
+            new PaymentApproved($payment->amount, $payment->currency),
             'payments',
             'approved'
         );
@@ -114,7 +114,7 @@ class ManualPaymentController extends Controller
 
     public function reject(RejectPaymentRequest $request, int $id): RedirectResponse
     {
-        $payment = ManualPayment::findOrFail($id);
+        $payment = Payment::findOrFail($id);
 
         if (!in_array($payment->status, ['pending', 'processing'])) {
             $this->alert->danger('This payment has already been processed.')->flash();
@@ -149,7 +149,7 @@ class ManualPaymentController extends Controller
             return redirect()->back();
         }
 
-        $payments = ManualPayment::whereIn('id', $paymentIds)->get();
+        $payments = Payment::whereIn('id', $paymentIds)->get();
         $processed = 0;
 
         foreach ($payments as $payment) {
@@ -162,10 +162,10 @@ class ManualPaymentController extends Controller
                         ]);
                         
                         $user = $payment->user;
-                        $user->store_balance += $payment->credit_amount;
+                        $user->store_balance += $payment->amount;
                         $user->save();
                         
-                        $user->notify(new PaymentApproved($payment->credit_amount, $payment->currency));
+                        $user->notify(new PaymentApproved($payment->amount, $payment->currency));
                         $processed++;
                     }
                     break;

@@ -99,7 +99,6 @@ Route::group([
 
     Route::post('/eggs', [Client\Store\ServerController::class, 'eggs'])->name('api:client:store.eggs');
     Route::post('/stripe', [Client\Store\StripeController::class, 'purchase'])->name('api:client:store.stripe');
-    Route::post('/manual', [Client\Store\ManualPaymentController::class, 'store'])->name('api:client:store.manual');
     Route::post('/resources', [Client\Store\ResourceController::class, 'purchase'])->name('api:client:store.resources');
 
     Route::group(['prefix' => '/earn', 'middleware' => 'throttle:earn'], function () {

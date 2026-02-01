@@ -85,6 +85,8 @@ class Node extends Model
     protected $fillable = [
         'public',
         'name',
+        'console_name',
+        'daemon_branding',
         'location_id',
         'fqdn',
         'scheme',
@@ -100,10 +102,13 @@ class Node extends Model
         'deploy_fee',
         'description',
         'maintenance_mode',
+        'deployable',
     ];
 
     public static array $validationRules = [
         'name' => 'required|regex:/^([\w .-]{1,100})$/',
+        'console_name' => 'nullable|string|max:100',
+        'daemon_branding' => 'nullable|string|max:100',
         'description' => 'string|nullable',
         'location_id' => 'required|exists:locations,id',
         'deployable' => 'required|boolean',

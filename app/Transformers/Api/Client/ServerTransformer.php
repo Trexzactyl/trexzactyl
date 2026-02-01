@@ -43,6 +43,8 @@ class ServerTransformer extends BaseClientTransformer
             'uuid' => $server->uuid,
             'name' => $server->name,
             'node' => $server->node->name,
+            'node_console_name' => $server->node->console_name ?? 'pterodactyl',
+            'node_daemon_branding' => $server->node->daemon_branding ?? 'Pterodactyl Daemon',
             'is_node_under_maintenance' => $server->node->isUnderMaintenance(),
             'sftp_details' => [
                 'ip' => $server->node->fqdn,

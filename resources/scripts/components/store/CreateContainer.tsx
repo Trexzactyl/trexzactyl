@@ -92,9 +92,20 @@ export default () => {
 
         getResources().then((resources) => setResources(resources));
 
-        getEggs().then((eggs) => setEggs(eggs));
-        getNests().then((nests) => setNests(nests));
-        getNodes().then((nodes) => setNodes(nodes));
+        getEggs().then((eggs) => {
+            setEggs(eggs);
+            if (eggs.length > 0) setEgg(eggs[0].id);
+        });
+        
+        getNests().then((nests) => {
+            setNests(nests);
+            if (nests.length > 0) setNest(nests[0].id);
+        });
+        
+        getNodes().then((nodes) => {
+            setNodes(nodes);
+            if (nodes.length > 0) setNode(nodes[0].id);
+        });
     }, []);
 
     const changeNest = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -158,9 +169,9 @@ export default () => {
                     ports: resources.ports,
                     backups: resources.backups,
                     databases: resources.databases,
-                    nest: 1,
-                    egg: 1,
-                    node: 1,
+                    nest: nest || 1,
+                    egg: egg || 1,
+                    node: node || 1,
                 }}
                 validationSchema={object().shape({
                     name: string().required().min(3),

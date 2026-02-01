@@ -4,12 +4,12 @@ namespace Trexzactyl\Http\Controllers\Api\Client\Store;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Trexzactyl\Models\ManualPayment;
-use Trexzactyl\Http\Controllers\Controller;
+use Trexzactyl\Models\Payment;
+use Trexzactyl\Http\Controllers\Api\Client\ClientApiController;
 use Trexzactyl\Http\Requests\Api\Client\Store\BkashPaymentRequest;
 use Trexzactyl\Transformers\Api\Client\Store\OrderTransformer;
 
-class BkashController extends Controller
+class BkashController extends ClientApiController
 {
     /**
      * Process a bKash payment.
@@ -19,8 +19,8 @@ class BkashController extends Controller
         $user = $request->user();
 
         // Check if transaction ID already exists
-        $existingPayment = ManualPayment::where('transaction_id', $request->input('transaction_id'))
-            ->where('currency', 'bkash')
+        $existingPayment = Payment::where('transaction_id', $request->input('transaction_id'))
+            ->where('payment_method', 'bkash')
             ->first();
 
         if ($existingPayment) {
@@ -30,10 +30,11 @@ class BkashController extends Controller
         }
 
         // Create the payment record
-        $payment = ManualPayment::create([
+        $payment = Payment::create([
             'user_id' => $user->id,
-            'credit_amount' => $request->input('amount'),
-            'currency' => 'bkash',
+            'amount' => $request->input('amount'),
+            'currency' => 'BDT',
+            'payment_method' => 'bkash',
             'transaction_id' => $request->input('transaction_id'),
             'sender_number' => $request->input('sender_number'),
             'status' => 'pending',
@@ -43,7 +44,7 @@ class BkashController extends Controller
         $user->notify(new \Trexzactyl\Notifications\PaymentPending($payment));
 
         return $this->fractal->item($payment)
-            ->transformWith(OrderTransformer::class)
+            ->transformWith($this->getTransformer(OrderTransformer::class))
             ->toArray();
     }
 

@@ -6,13 +6,13 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Trexzactyl\Models\ManualPayment;
+use Trexzactyl\Models\Payment;
 
 class PaymentRejected extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public ManualPayment $payment, public ?string $reason = null)
+    public function __construct(public Payment $payment, public ?string $reason = null)
     {
     }
 

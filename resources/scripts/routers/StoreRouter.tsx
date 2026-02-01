@@ -10,6 +10,7 @@ import PurchaseContainer from '@/components/store/PurchaseContainer';
 import OverviewContainer from '@/components/store/OverviewContainer';
 import NavigationBar from '@/components/elements/NavigationBar';
 import ResourcesContainer from '@/components/store/ResourcesContainer';
+import OrdersContainer from '@/components/store/OrdersContainer';
 import SubNavigation from '@/components/elements/SubNavigation';
 
 export default () => {
@@ -34,7 +35,12 @@ export default () => {
                         </NavLink>
                         <NavLink to={`${match.path}/credits`}>
                             <div className={'flex items-center justify-between'}>
-                                Balance <Icon.DollarSign className={'ml-1'} size={18} />
+                                Credits <Icon.DollarSign className={'ml-1'} size={18} />
+                            </div>
+                        </NavLink>
+                        <NavLink to={`${match.path}/orders`}>
+                            <div className={'flex items-center justify-between'}>
+                                Orders <Icon.List className={'ml-1'} size={18} />
                             </div>
                         </NavLink>
                         <NavLink to={`${match.path}/create`}>
@@ -51,6 +57,9 @@ export default () => {
                         </Route>
                         <Route path={`${match.path}/credits`} exact>
                             <PurchaseContainer />
+                        </Route>
+                        <Route path={`${match.path}/orders`} exact>
+                            <OrdersContainer />
                         </Route>
                         <Route path={`${match.path}/resources`} exact>
                             <ResourcesContainer />

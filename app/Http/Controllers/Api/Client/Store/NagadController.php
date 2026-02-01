@@ -4,12 +4,12 @@ namespace Trexzactyl\Http\Controllers\Api\Client\Store;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Trexzactyl\Models\ManualPayment;
-use Trexzactyl\Http\Controllers\Controller;
+use Trexzactyl\Models\Payment;
+use Trexzactyl\Http\Controllers\Api\Client\ClientApiController;
 use Trexzactyl\Http\Requests\Api\Client\Store\NagadPaymentRequest;
 use Trexzactyl\Transformers\Api\Client\Store\OrderTransformer;
 
-class NagadController extends Controller
+class NagadController extends ClientApiController
 {
     /**
      * Process a Nagad payment.
@@ -19,8 +19,8 @@ class NagadController extends Controller
         $user = $request->user();
 
         // Check if transaction ID already exists
-        $existingPayment = ManualPayment::where('transaction_id', $request->input('transaction_id'))
-            ->where('currency', 'nagad')
+        $existingPayment = Payment::where('transaction_id', $request->input('transaction_id'))
+            ->where('payment_method', 'nagad')
             ->first();
 
         if ($existingPayment) {
@@ -30,10 +30,11 @@ class NagadController extends Controller
         }
 
         // Create the payment record
-        $payment = ManualPayment::create([
+        $payment = Payment::create([
             'user_id' => $user->id,
-            'credit_amount' => $request->input('amount'),
-            'currency' => 'nagad',
+            'amount' => $request->input('amount'),
+            'currency' => 'BDT',
+            'payment_method' => 'nagad',
             'transaction_id' => $request->input('transaction_id'),
             'sender_number' => $request->input('sender_number'),
             'status' => 'pending',
@@ -43,7 +44,7 @@ class NagadController extends Controller
         $user->notify(new \Trexzactyl\Notifications\PaymentPending($payment));
 
         return $this->fractal->item($payment)
-            ->transformWith(OrderTransformer::class)
+            ->transformWith($this->getTransformer(OrderTransformer::class))
             ->toArray();
     }
 

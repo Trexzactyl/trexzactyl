@@ -153,10 +153,10 @@
                                                         {{ $payment->user->username }}
                                                     </a>
                                                 </td>
-                                                <td>{{ number_format($payment->credit_amount) }} BDT</td>
+                                                <td>{{ number_format($payment->amount) }} BDT</td>
                                                 <td>
                                                     <span class="label label-info">
-                                                        {{ $payment->currency === 'bkash' ? 'bKash' : 'Nagad' }}
+                                                        {{ $payment->payment_method === 'bkash' ? 'bKash' : ucfirst($payment->payment_method) }}
                                                     </span>
                                                 </td>
                                                 <td>{{ $payment->sender_number }}</td>

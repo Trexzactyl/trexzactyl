@@ -54,6 +54,26 @@
                             </div>
                         </div>
                         <div class="form-group col-xs-12">
+                            <label for="console_name" class="control-label">Console Username <sup><a
+                                        data-toggle="tooltip" data-placement="top"
+                                        title="The username shown in server console (e.g., container@pterodactyl)">?</a></sup></label>
+                            <div>
+                                <input type="text" autocomplete="off" name="console_name" class="form-control"
+                                    value="{{ old('console_name', $node->console_name ?? 'pterodactyl') }}" />
+                                <p class="text-muted"><small>This will appear as <code>container@[value]</code> in the server console. Leave empty to use default "pterodactyl".</small></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label for="daemon_branding" class="control-label">Daemon Branding <sup><a
+                                        data-toggle="tooltip" data-placement="top"
+                                        title="The name shown in daemon messages (e.g., [Pterodactyl Daemon])">?</a></sup></label>
+                            <div>
+                                <input type="text" autocomplete="off" name="daemon_branding" class="form-control"
+                                    value="{{ old('daemon_branding', $node->daemon_branding ?? 'Pterodactyl Daemon') }}" />
+                                <p class="text-muted"><small>This will appear as <code>[value]:</code> in daemon installation messages. Leave empty to use default "Pterodactyl Daemon".</small></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
                             <label for="name" class="control-label">Location</label>
                             <div>
                                 <select name="location_id" class="form-control">

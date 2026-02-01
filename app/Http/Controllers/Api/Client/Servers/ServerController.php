@@ -67,11 +67,18 @@ class ServerController extends ClientApiController
             throw new DisplayException('This feature has been locked by administrators.');
         }
 
+        // Store server details before deletion
+        $serverName = $server->name;
+        $username = $user->username;
+
         try {
             $this->deletionService->returnResources(true)->handle($server);
         } catch (DisplayException $ex) {
             throw new DisplayException('Unable to delete the server from the system.');
         }
+
+        // Send notification after successful deletion
+        $user->notify(new \Trexzactyl\Notifications\ServerDeleted($serverName, $username));
 
         return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }

@@ -63,6 +63,7 @@ export default () => {
     const [canSendCommands] = usePermissions(['control.console']);
     const serverId = ServerContext.useStoreState((state) => state.server.data!.id);
     const nodeConsoleName = ServerContext.useStoreState((state) => state.server.data!.nodeConsoleName);
+    const nodeDaemonBranding = ServerContext.useStoreState((state) => state.server.data!.nodeDaemonBranding);
     const TERMINAL_PRELUDE = nodeConsoleName
         ? `\u001b[1m\u001b[33m[ ${nodeConsoleName} ] \u001b[0m`
         : '\u001b[1m\u001b[33mTrexzactyl: \u001b[0m';
@@ -75,8 +76,19 @@ export default () => {
         z-index: 10;
     }`;
 
-    const handleConsoleOutput = (line: string, prelude = false) =>
-        terminal.writeln((prelude ? TERMINAL_PRELUDE : '') + line.replace(/(?:\r\n|\r|\n)$/im, '') + '\u001b[0m');
+    // Function to replace daemon branding and console username in messages
+    const replaceBranding = (line: string): string => {
+        // Replace [Pterodactyl Daemon]: with custom branding
+        line = line.replace(/\[Pterodactyl Daemon\]:/g, `[${nodeDaemonBranding}]:`);
+        // Replace container@pterodactyl with custom console name
+        line = line.replace(/container@pterodactyl/g, `container@${nodeConsoleName}`);
+        return line;
+    };
+
+    const handleConsoleOutput = (line: string, prelude = false) => {
+        const replacedLine = replaceBranding(line);
+        terminal.writeln((prelude ? TERMINAL_PRELUDE : '') + replacedLine.replace(/(?:\r\n|\r|\n)$/im, '') + '\u001b[0m');
+    };
 
     const handleTransferStatus = (status: string) => {
         switch (status) {

@@ -17,6 +17,8 @@ export interface Server {
     uuid: string;
     name: string;
     node: string;
+    nodeConsoleName: string;
+    nodeDaemonBranding: string;
     isNodeUnderMaintenance: boolean;
     status: ServerStatus;
     sftpDetails: {
@@ -54,6 +56,8 @@ export const rawDataToServerObject = ({ attributes: data }: FractalResponseData)
     uuid: data.uuid,
     name: data.name,
     node: data.node,
+    nodeConsoleName: data.node_console_name || 'pterodactyl',
+    nodeDaemonBranding: data.node_daemon_branding || 'Pterodactyl Daemon',
     isNodeUnderMaintenance: data.is_node_under_maintenance,
     status: data.status,
     invocation: data.invocation,

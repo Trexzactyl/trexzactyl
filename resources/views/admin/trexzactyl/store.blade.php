@@ -104,10 +104,26 @@
                                 <p class="text-muted"><small>Your Stripe Webhook Signing Secret.</small></p>
                             </div>
                             <div class="form-group col-md-4">
+                                <label class="control-label">bKash Enabled</label>
+                                <select name="store:bkash:enabled" class="form-control">
+                                    <option @if ($bkash_enabled == 'false') selected @endif value="false">Disabled</option>
+                                    <option @if ($bkash_enabled == 'true') selected @endif value="true">Enabled</option>
+                                </select>
+                                <p class="text-muted"><small>Allow credit purchases via bKash.</small></p>
+                            </div>
+                            <div class="form-group col-md-4">
                                 <label class="control-label">bKash Number</label>
                                 <input type="text" class="form-control" name="store:bkash:number"
                                     value="{{ $bkash_number }}" />
                                 <p class="text-muted"><small>Personal bKash wallet number.</small></p>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label">Nagad Enabled</label>
+                                <select name="store:nagad:enabled" class="form-control">
+                                    <option @if ($nagad_enabled == 'false') selected @endif value="false">Disabled</option>
+                                    <option @if ($nagad_enabled == 'true') selected @endif value="true">Enabled</option>
+                                </select>
+                                <p class="text-muted"><small>Allow credit purchases via Nagad.</small></p>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="control-label">Nagad Number</label>
