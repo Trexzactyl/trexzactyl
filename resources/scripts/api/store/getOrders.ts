@@ -16,7 +16,7 @@ export interface Order {
     updated_at: string;
 }
 
-export interface OrdersResponse extends PaginatedResult<Order> {}
+export type OrdersResponse = PaginatedResult<Order>;
 
 /**
  * Get all orders for the authenticated user.

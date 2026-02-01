@@ -90,10 +90,7 @@ const LoginContainer = ({ history, location }: RouteComponentProps) => {
             })}
         >
             {({ isSubmitting, setSubmitting, submitForm }) => (
-                <LoginFormContainer
-                    title={'Login to ' + name}
-                    css={tw`w-full flex`}
-                >
+                <LoginFormContainer title={'Login to ' + name} css={tw`w-full flex`}>
                     <FlashMessageRender css={tw`mb-4`} />
                     <Field light type={'text'} label={'Username or Email'} name={'username'} disabled={isSubmitting} />
                     <div css={tw`mt-6`}>

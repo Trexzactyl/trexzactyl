@@ -27,7 +27,7 @@ export default function BkashPurchaseForm() {
 
     const submit = (values: Values, { resetForm }: FormikHelpers<Values>) => {
         setSubmitting(true);
-        
+
         submitBkashPayment(values)
             .then(() => {
                 setSubmitting(false);
@@ -69,12 +69,20 @@ export default function BkashPurchaseForm() {
                 {({ values }) => (
                     <Form css={tw`space-y-4`}>
                         <SpinnerOverlay size={'large'} visible={submitting} />
-                        
+
                         <Select name={'amount'} disabled={submitting}>
-                            <option value={100}>Purchase {((100 / 100) * conversionRate).toFixed(0)} BDT (100 Credits)</option>
-                            <option value={200}>Purchase {((200 / 100) * conversionRate).toFixed(0)} BDT (200 Credits)</option>
-                            <option value={500}>Purchase {((500 / 100) * conversionRate).toFixed(0)} BDT (500 Credits)</option>
-                            <option value={1000}>Purchase {((1000 / 100) * conversionRate).toFixed(0)} BDT (1000 Credits)</option>
+                            <option value={100}>
+                                Purchase {((100 / 100) * conversionRate).toFixed(0)} BDT (100 Credits)
+                            </option>
+                            <option value={200}>
+                                Purchase {((200 / 100) * conversionRate).toFixed(0)} BDT (200 Credits)
+                            </option>
+                            <option value={500}>
+                                Purchase {((500 / 100) * conversionRate).toFixed(0)} BDT (500 Credits)
+                            </option>
+                            <option value={1000}>
+                                Purchase {((1000 / 100) * conversionRate).toFixed(0)} BDT (1000 Credits)
+                            </option>
                         </Select>
 
                         <div css={tw`bg-neutral-800 rounded p-4 text-sm`}>
@@ -83,23 +91,26 @@ export default function BkashPurchaseForm() {
                                 <span css={tw`font-medium text-white`}>Payment Instructions</span>
                             </div>
                             <ol css={tw`text-gray-300 space-y-1 ml-6 list-decimal`}>
-                                <li>Send {((values.amount / 100) * conversionRate).toFixed(0)} BDT to: <strong css={tw`text-white`}>{storefront.gateways.bkash}</strong></li>
+                                <li>
+                                    Send {((values.amount / 100) * conversionRate).toFixed(0)} BDT to:{' '}
+                                    <strong css={tw`text-white`}>{storefront.gateways.bkash}</strong>
+                                </li>
                                 <li>Copy the transaction ID from your bKash app</li>
                                 <li>Fill in the form below and submit</li>
                             </ol>
                         </div>
 
                         <Field
-                            name="sender_number"
-                            label="Your bKash Number"
-                            placeholder="01XXXXXXXXX"
+                            name='sender_number'
+                            label='Your bKash Number'
+                            placeholder='01XXXXXXXXX'
                             disabled={submitting}
                         />
-                        
+
                         <Field
-                            name="transaction_id"
-                            label="Transaction ID"
-                            placeholder="Enter transaction ID from bKash"
+                            name='transaction_id'
+                            label='Transaction ID'
+                            placeholder='Enter transaction ID from bKash'
                             disabled={submitting}
                         />
 

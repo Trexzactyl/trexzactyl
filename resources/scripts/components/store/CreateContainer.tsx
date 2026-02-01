@@ -96,12 +96,12 @@ export default () => {
             setEggs(eggs);
             if (eggs.length > 0) setEgg(eggs[0].id);
         });
-        
+
         getNests().then((nests) => {
             setNests(nests);
             if (nests.length > 0) setNest(nests[0].id);
         });
-        
+
         getNodes().then((nodes) => {
             setNodes(nodes);
             if (nodes.length > 0) setNode(nodes[0].id);

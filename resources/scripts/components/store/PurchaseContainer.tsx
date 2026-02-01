@@ -28,9 +28,13 @@ export default () => {
     return (
         <PageContentBlock title={'Account Balance'} description={'Purchase credits easily via Stripe or PayPal.'}>
             <div css={tw`lg:grid lg:grid-cols-2 my-10 gap-8`}>
-                <GlassCard css={tw`p-10 flex flex-col items-center justify-center text-center relative overflow-hidden`}>
+                <GlassCard
+                    css={tw`p-10 flex flex-col items-center justify-center text-center relative overflow-hidden`}
+                >
                     <div css={tw`relative z-10`}>
-                        <div css={tw`bg-blue-600 bg-opacity-10 w-16 h-16 rounded-sm flex items-center justify-center mx-auto mb-6 border border-blue-500 border-opacity-20 group-hover:scale-110 transition-transform duration-500 shadow-lg`}>
+                        <div
+                            css={tw`bg-blue-600 bg-opacity-10 w-16 h-16 rounded-sm flex items-center justify-center mx-auto mb-6 border border-blue-500 border-opacity-20 group-hover:scale-110 transition-transform duration-500 shadow-lg`}
+                        >
                             <Icon.DollarSign size={32} css={tw`text-blue-400`} strokeWidth={2.5} />
                         </div>
                         <p css={tw`text-neutral-500 font-bold text-xs mb-2`}>Total Available Assets</p>
@@ -41,7 +45,9 @@ export default () => {
                     </div>
                 </GlassCard>
 
-                <GlassCard css={tw`p-10 flex flex-col items-center justify-center text-center relative overflow-hidden`}>
+                <GlassCard
+                    css={tw`p-10 flex flex-col items-center justify-center text-center relative overflow-hidden`}
+                >
                     <p css={tw`text-xs font-bold text-neutral-500 mb-8`}>Secure Checkout</p>
                     <div css={tw`w-full max-w-sm relative z-10`}>
                         {!paypal && !stripe && !bkash && !nagad ? (
@@ -49,22 +55,30 @@ export default () => {
                         ) : (
                             <div css={tw`space-y-6`}>
                                 {paypal && (
-                                    <div css={tw`shadow-lg hover:shadow-xl transition-all p-1 bg-white/5 rounded-sm border border-white/5 hover:bg-white/10`}>
+                                    <div
+                                        css={tw`shadow-lg hover:shadow-xl transition-all p-1 bg-white/5 rounded-sm border border-white/5 hover:bg-white/10`}
+                                    >
                                         <PaypalPurchaseForm />
                                     </div>
                                 )}
                                 {stripe && (
-                                    <div css={tw`shadow-lg hover:shadow-xl transition-all p-1 bg-white/5 rounded-sm border border-white/5 text-left hover:bg-white/10`}>
+                                    <div
+                                        css={tw`shadow-lg hover:shadow-xl transition-all p-1 bg-white/5 rounded-sm border border-white/5 text-left hover:bg-white/10`}
+                                    >
                                         <StripePurchaseForm />
                                     </div>
                                 )}
                                 {bkash && (
-                                    <div css={tw`shadow-lg hover:shadow-xl transition-all bg-white/5 rounded-sm border border-white/5 text-left hover:bg-white/10 overflow-hidden`}>
+                                    <div
+                                        css={tw`shadow-lg hover:shadow-xl transition-all bg-white/5 rounded-sm border border-white/5 text-left hover:bg-white/10 overflow-hidden`}
+                                    >
                                         <BkashPurchaseForm />
                                     </div>
                                 )}
                                 {nagad && (
-                                    <div css={tw`shadow-lg hover:shadow-xl transition-all bg-white/5 rounded-sm border border-white/5 text-left hover:bg-white/10 overflow-hidden`}>
+                                    <div
+                                        css={tw`shadow-lg hover:shadow-xl transition-all bg-white/5 rounded-sm border border-white/5 text-left hover:bg-white/10 overflow-hidden`}
+                                    >
                                         <NagadPurchaseForm />
                                     </div>
                                 )}
@@ -84,8 +98,12 @@ export default () => {
                     </div>
 
                     <div css={tw`lg:grid lg:grid-cols-2 gap-8`}>
-                        <GlassCard css={tw`p-12 flex flex-col items-center justify-center text-center relative overflow-hidden`}>
-                            <div css={tw`bg-green-600 bg-opacity-10 w-20 h-20 rounded-sm flex items-center justify-center mb-8 border border-green-500 border-opacity-20 group-hover:rotate-12 transition-transform duration-500 shadow-lg`}>
+                        <GlassCard
+                            css={tw`p-12 flex flex-col items-center justify-center text-center relative overflow-hidden`}
+                        >
+                            <div
+                                css={tw`bg-green-600 bg-opacity-10 w-20 h-20 rounded-sm flex items-center justify-center mb-8 border border-green-500 border-opacity-20 group-hover:rotate-12 transition-transform duration-500 shadow-lg`}
+                            >
                                 <Icon.Zap size={40} css={tw`text-green-400 animate-pulse`} strokeWidth={2.5} />
                             </div>
                             <p css={tw`text-neutral-500 font-bold text-xs mb-4`}>Live Accumulation Rate</p>
@@ -103,7 +121,9 @@ export default () => {
                                 <p css={tw`text-neutral-400 text-sm leading-loose`}>
                                     Your account balance increases automatically while you remain active on the panel.
                                 </p>
-                                <div css={tw`bg-blue-600 bg-opacity-10 rounded-sm p-6 border border-blue-500 border-opacity-20 group-hover:bg-blue-600 bg-opacity-20 transition-all`}>
+                                <div
+                                    css={tw`bg-blue-600 bg-opacity-10 rounded-sm p-6 border border-blue-500 border-opacity-20 group-hover:bg-blue-600 bg-opacity-20 transition-all`}
+                                >
                                     <p css={tw`text-sm text-blue-300 tracking-wide italic leading-relaxed`}>
                                         <span css={tw`text-white font-bold mr-1.5`}>{earn.amount} Credits</span>
                                         will be deposited for every 60 seconds of uptime.

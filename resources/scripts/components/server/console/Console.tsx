@@ -87,7 +87,9 @@ export default () => {
 
     const handleConsoleOutput = (line: string, prelude = false) => {
         const replacedLine = replaceBranding(line);
-        terminal.writeln((prelude ? TERMINAL_PRELUDE : '') + replacedLine.replace(/(?:\r\n|\r|\n)$/im, '') + '\u001b[0m');
+        terminal.writeln(
+            (prelude ? TERMINAL_PRELUDE : '') + replacedLine.replace(/(?:\r\n|\r|\n)$/im, '') + '\u001b[0m'
+        );
     };
 
     const handleTransferStatus = (status: string) => {

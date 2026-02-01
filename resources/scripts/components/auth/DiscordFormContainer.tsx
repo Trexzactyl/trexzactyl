@@ -38,10 +38,7 @@ const DiscordFormContainer = ({ children }: { children: React.ReactNode }) => {
                 Login to {name}
             </h2>
             <FlashMessageRender css={tw`mb-4 px-1`} />
-            <GlassCard
-                className={'group'}
-                css={tw`w-full p-10 relative z-10`}
-            >
+            <GlassCard className={'group'} css={tw`w-full p-10 relative z-10`}>
                 <div css={tw`flex flex-col md:flex-row items-center gap-10`}>
                     <div css={tw`flex-none select-none`}>
                         <img

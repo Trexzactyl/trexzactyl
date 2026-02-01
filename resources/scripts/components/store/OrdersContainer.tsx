@@ -81,7 +81,7 @@ export default function OrdersContainer() {
             case 'pending':
                 return <Icon.Clock size={16} />;
             case 'processing':
-                return <Icon.Loader size={16} className="animate-spin" />;
+                return <Icon.Loader size={16} className='animate-spin' />;
             case 'approved':
                 return <Icon.CheckCircle size={16} />;
             case 'rejected':
@@ -103,17 +103,17 @@ export default function OrdersContainer() {
 
     const formatAmount = (amount: number, paymentMethod: string, currency: string) => {
         const method = paymentMethod.toLowerCase();
-        
+
         // For bKash and Nagad, show BDT
         if (method === 'bkash' || method === 'nagad') {
             return `${amount} BDT`;
         }
-        
+
         // For Stripe and PayPal, show credits (amount is already in credits)
         if (method === 'stripe' || method === 'paypal') {
             return `${amount} Credits ($${(amount / 100).toFixed(2)})`;
         }
-        
+
         // Fallback: use the currency field
         return `${amount} ${currency}`;
     };
@@ -122,7 +122,7 @@ export default function OrdersContainer() {
         return (
             <PageContentBlock title={'Payment History'}>
                 <div css={tw`flex items-center justify-center py-12`}>
-                    <Spinner size="large" />
+                    <Spinner size='large' />
                 </div>
             </PageContentBlock>
         );
@@ -133,7 +133,7 @@ export default function OrdersContainer() {
             <div css={tw`space-y-6`}>
                 {loading ? (
                     <div css={tw`flex items-center justify-center py-8`}>
-                        <Spinner size="large" />
+                        <Spinner size='large' />
                     </div>
                 ) : orders && orders.items.length > 0 ? (
                     <>
@@ -158,7 +158,7 @@ export default function OrdersContainer() {
                                                 order.status === 'rejected' && tw`bg-red-500`,
                                             ]}
                                         />
-                                        
+
                                         <div css={tw`flex items-start justify-between mb-4`}>
                                             <div css={tw`flex items-center space-x-3`}>
                                                 <div css={tw`flex items-center space-x-2`}>
@@ -175,32 +175,26 @@ export default function OrdersContainer() {
                                                 <div css={tw`text-xl font-bold text-white`}>
                                                     {formatAmount(order.amount, order.payment_method, order.currency)}
                                                 </div>
-                                                <div css={tw`text-sm text-gray-400`}>
-                                                    Order #{order.id}
-                                                </div>
+                                                <div css={tw`text-sm text-gray-400`}>Order #{order.id}</div>
                                             </div>
                                         </div>
 
                                         <div css={tw`grid grid-cols-1 md:grid-cols-2 gap-4 text-sm`}>
                                             <div>
                                                 <span css={tw`text-gray-400`}>Transaction ID:</span>
-                                                <div css={tw`text-white font-mono mt-1`}>
-                                                    {order.transaction_id}
-                                                </div>
+                                                <div css={tw`text-white font-mono mt-1`}>{order.transaction_id}</div>
                                             </div>
-                                            {(order.payment_method.toLowerCase() === 'bkash' || order.payment_method.toLowerCase() === 'nagad') && order.sender_number && (
-                                                <div>
-                                                    <span css={tw`text-gray-400`}>Sender Number:</span>
-                                                    <div css={tw`text-white mt-1`}>
-                                                        {order.sender_number}
+                                            {(order.payment_method.toLowerCase() === 'bkash' ||
+                                                order.payment_method.toLowerCase() === 'nagad') &&
+                                                order.sender_number && (
+                                                    <div>
+                                                        <span css={tw`text-gray-400`}>Sender Number:</span>
+                                                        <div css={tw`text-white mt-1`}>{order.sender_number}</div>
                                                     </div>
-                                                </div>
-                                            )}
+                                                )}
                                             <div>
                                                 <span css={tw`text-gray-400`}>Submitted:</span>
-                                                <div css={tw`text-white mt-1`}>
-                                                    {formatDate(order.created_at)}
-                                                </div>
+                                                <div css={tw`text-white mt-1`}>{formatDate(order.created_at)}</div>
                                             </div>
                                             {order.processed_at && (
                                                 <div>
@@ -215,7 +209,10 @@ export default function OrdersContainer() {
                                         {order.rejection_reason && (
                                             <div css={tw`mt-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg`}>
                                                 <div css={tw`flex items-start space-x-2`}>
-                                                    <Icon.AlertCircle size={16} css={tw`text-red-400 mt-0.5 flex-shrink-0`} />
+                                                    <Icon.AlertCircle
+                                                        size={16}
+                                                        css={tw`text-red-400 mt-0.5 flex-shrink-0`}
+                                                    />
                                                     <div>
                                                         <div css={tw`text-red-400 font-medium text-sm`}>
                                                             Rejection Reason:
@@ -248,7 +245,7 @@ export default function OrdersContainer() {
                         <Icon.CreditCard size={48} css={tw`text-gray-600 mx-auto mb-4`} />
                         <h3 css={tw`text-xl font-bold text-white mb-2`}>No Payment History</h3>
                         <p css={tw`text-gray-400`}>
-                            You haven't made any payments yet. Start by purchasing credits!
+                            You haven&apos;t made any payments yet. Start by purchasing credits!
                         </p>
                     </GlassCard>
                 )}
