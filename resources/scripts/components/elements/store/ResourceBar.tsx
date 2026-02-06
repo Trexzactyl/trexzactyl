@@ -51,12 +51,14 @@ const ResourceTitle = styled.h4`
 `;
 
 const ResourceValue = styled.div`
-    ${tw`flex items-baseline mt-1`};
+    ${tw`flex items-baseline mt-1 flex-wrap`};
     & .amount {
-        ${tw`text-2xl font-black text-white tabular-nums tracking-tighter`};
+        ${tw`text-xl sm:text-2xl font-black text-white tabular-nums tracking-tighter break-all`};
+        word-break: break-word;
+        max-width: 100%;
     }
     & .suffix {
-        ${tw`text-xs text-neutral-500 font-black ml-1 uppercase`};
+        ${tw`text-xs text-neutral-500 font-black ml-1 uppercase whitespace-nowrap`};
     }
 `;
 

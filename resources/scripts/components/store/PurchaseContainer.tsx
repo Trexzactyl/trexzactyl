@@ -38,9 +38,13 @@ export default () => {
                             <Icon.DollarSign size={32} css={tw`text-blue-400`} strokeWidth={2.5} />
                         </div>
                         <p css={tw`text-neutral-500 font-bold text-xs mb-2`}>Total Available Assets</p>
-                        <h1 css={tw`text-6xl md:text-7xl font-black text-white flex items-baseline justify-center`}>
-                            {resources.balance.toLocaleString()}{' '}
-                            <span css={tw`text-neutral-500 text-2xl ml-4 font-bold`}>Credits</span>
+                        <h1
+                            css={tw`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white flex flex-wrap items-baseline justify-center gap-2`}
+                        >
+                            <span css={tw`break-all`}>{resources.balance.toLocaleString()}</span>
+                            <span css={tw`text-xl sm:text-2xl text-neutral-500 font-bold whitespace-nowrap`}>
+                                Credits
+                            </span>
                         </h1>
                     </div>
                 </GlassCard>
@@ -89,49 +93,67 @@ export default () => {
             </div>
 
             {earn.enabled && (
-                <div css={tw`mt-32 mb-20`}>
-                    <div css={tw`flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6`}>
-                        <div>
-                            <h1 css={tw`text-5xl font-black text-white mr-4`}>Idle Earning</h1>
-                            <h3 css={tw`text-xl text-neutral-500 font-bold mt-2`}>Rewards for active sessions</h3>
-                        </div>
-                    </div>
-
-                    <div css={tw`lg:grid lg:grid-cols-2 gap-8`}>
-                        <GlassCard
-                            css={tw`p-12 flex flex-col items-center justify-center text-center relative overflow-hidden`}
-                        >
-                            <div
-                                css={tw`bg-green-600 bg-opacity-10 w-20 h-20 rounded-sm flex items-center justify-center mb-8 border border-green-500 border-opacity-20 group-hover:rotate-12 transition-transform duration-500 shadow-lg`}
-                            >
-                                <Icon.Zap size={40} css={tw`text-green-400 animate-pulse`} strokeWidth={2.5} />
+                <div css={tw`mt-16 mb-20`}>
+                    <GlassCard css={tw`p-8 sm:p-12 mb-8`}>
+                        <div css={tw`flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8`}>
+                            <div>
+                                <h1 css={tw`text-3xl sm:text-4xl md:text-5xl font-black text-white`}>
+                                    Idle Earning
+                                </h1>
+                                <h3 css={tw`text-base sm:text-lg md:text-xl text-neutral-500 font-bold mt-2`}>
+                                    Rewards for active sessions
+                                </h3>
                             </div>
-                            <p css={tw`text-neutral-500 font-bold text-xs mb-4`}>Live Accumulation Rate</p>
-                            <h1 css={tw`text-7xl font-black text-white flex items-baseline tracking-tighter`}>
-                                {earn.amount} <span css={tw`text-2xl ml-4 font-bold text-green-400`}>Cr / Min</span>
-                            </h1>
-                        </GlassCard>
+                            <div
+                                css={tw`bg-green-600 bg-opacity-10 w-16 h-16 sm:w-20 sm:h-20 rounded-sm flex items-center justify-center border border-green-500 border-opacity-20 shadow-lg flex-shrink-0`}
+                            >
+                                <Icon.Zap
+                                    size={32}
+                                    css={tw`text-green-400 animate-pulse`}
+                                    strokeWidth={2.5}
+                                />
+                            </div>
+                        </div>
 
-                        <GlassCard css={tw`p-12 flex flex-col justify-center relative overflow-hidden`}>
-                            <h3 css={tw`text-xl font-bold text-white mb-6 flex items-center`}>
-                                <Icon.Info css={tw`mr-3 text-blue-400`} size={24} strokeWidth={2.5} />
-                                Protocol Manual
-                            </h3>
-                            <div css={tw`space-y-6 relative z-10 font-bold`}>
-                                <p css={tw`text-neutral-400 text-sm leading-loose`}>
-                                    Your account balance increases automatically while you remain active on the panel.
+                        <div css={tw`grid grid-cols-1 lg:grid-cols-2 gap-6`}>
+                            <div
+                                css={tw`p-6 sm:p-8 rounded-sm bg-white/5 border border-white/10 flex flex-col items-center justify-center text-center`}
+                            >
+                                <p css={tw`text-neutral-500 font-bold text-xs mb-4 uppercase tracking-wider`}>
+                                    Live Accumulation Rate
                                 </p>
-                                <div
-                                    css={tw`bg-blue-600 bg-opacity-10 rounded-sm p-6 border border-blue-500 border-opacity-20 group-hover:bg-blue-600 bg-opacity-20 transition-all`}
+                                <h1
+                                    css={tw`text-4xl sm:text-5xl md:text-6xl font-black text-white flex flex-wrap items-baseline justify-center gap-2`}
                                 >
-                                    <p css={tw`text-sm text-blue-300 tracking-wide italic leading-relaxed`}>
-                                        <span css={tw`text-white font-bold mr-1.5`}>{earn.amount} Credits</span>
-                                        will be deposited for every 60 seconds of uptime.
+                                    <span>{earn.amount}</span>
+                                    <span css={tw`text-lg sm:text-xl md:text-2xl font-bold text-green-400 whitespace-nowrap`}>
+                                        Cr / Min
+                                    </span>
+                                </h1>
+                            </div>
+
+                            <div css={tw`p-6 sm:p-8 rounded-sm bg-white/5 border border-white/10`}>
+                                <h3 css={tw`text-lg sm:text-xl font-bold text-white mb-4 flex items-center gap-3`}>
+                                    <Icon.Info css={tw`text-blue-400 flex-shrink-0`} size={20} strokeWidth={2.5} />
+                                    <span>How It Works</span>
+                                </h3>
+                                <div css={tw`space-y-4`}>
+                                    <p css={tw`text-neutral-400 text-sm leading-relaxed`}>
+                                        Your account balance increases automatically while you remain active on the
+                                        panel.
                                     </p>
+                                    <div
+                                        css={tw`bg-blue-600 bg-opacity-10 rounded-sm p-4 border border-blue-500 border-opacity-20`}
+                                    >
+                                        <p css={tw`text-xs sm:text-sm text-blue-300 leading-relaxed`}>
+                                            <span css={tw`text-white font-bold`}>{earn.amount} Credits</span> will be
+                                            deposited for every 60 seconds of uptime.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </GlassCard>
-                    </div>
+                        </div>
+                    </GlassCard>
                 </div>
             )}
         </PageContentBlock>

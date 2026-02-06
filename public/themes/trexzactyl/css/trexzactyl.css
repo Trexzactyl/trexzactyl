@@ -645,3 +645,80 @@ a:hover {
     background: rgba(239, 68, 68, 0.1) !important;
     border-left-color: var(--accent-red) !important;
 }
+
+/* Force dark theme overrides */
+body.skin-blue {
+    background-color: var(--bg-main) !important;
+}
+
+.skin-blue .wrapper,
+.skin-blue .content-wrapper,
+.skin-blue .main-footer {
+    background-color: var(--bg-main) !important;
+}
+
+.skin-blue .content {
+    background-color: transparent !important;
+}
+
+/* Force text colors */
+.skin-blue .content-wrapper,
+.skin-blue .content-wrapper p,
+.skin-blue .content-wrapper span,
+.skin-blue .content-wrapper div {
+    color: var(--text-primary) !important;
+}
+
+/* Override any white backgrounds */
+.bg-white,
+.box.box-solid,
+.box.box-primary,
+.box.box-info,
+.box.box-warning,
+.box.box-success,
+.box.box-danger {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(20px);
+}
+
+/* Force dark theme overrides for AdminLTE */
+.skin-blue .wrapper,
+.skin-blue .main-sidebar,
+.skin-blue .left-side {
+    background-color: var(--bg-secondary) !important;
+}
+
+.skin-blue .content-wrapper,
+.skin-blue .right-side,
+.content {
+    background-color: var(--bg-main) !important;
+}
+
+.skin-blue .main-header .navbar,
+.skin-blue .main-header .logo {
+    background-color: var(--bg-secondary) !important;
+}
+
+/* Override any white backgrounds */
+.bg-white {
+    background-color: var(--bg-accent) !important;
+}
+
+/* Fix text colors */
+p, span, div, td, th, li {
+    color: var(--text-primary);
+}
+
+/* Fix input text visibility */
+input, textarea, select {
+    color: var(--text-primary) !important;
+}
+
+/* Fix select2 text */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: var(--text-primary) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: var(--text-muted) !important;
+}
