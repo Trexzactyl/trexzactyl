@@ -13,10 +13,15 @@ const BarFill = styled.div`
 type Timer = ReturnType<typeof setTimeout>;
 
 export default () => {
+    // All refs must be declared first
     const nodeRef = useRef<HTMLDivElement>(null);
     const interval = useRef<Timer>(null) as React.MutableRefObject<Timer>;
     const timeout = useRef<Timer>(null) as React.MutableRefObject<Timer>;
+    
+    // Then state hooks
     const [visible, setVisible] = useState(false);
+    
+    // Then store hooks
     const progress = useStoreState((state) => state.progress.progress);
     const continuous = useStoreState((state) => state.progress.continuous);
     const setProgress = useStoreActions((actions) => actions.progress.setProgress);
@@ -34,7 +39,7 @@ export default () => {
         if (progress === 100) {
             timeout.current = setTimeout(() => setProgress(undefined), 500);
         }
-    }, [progress]);
+    }, [progress, setProgress]);
 
     useEffect(() => {
         if (!continuous) {
@@ -45,7 +50,7 @@ export default () => {
         if (!progress || progress === 0) {
             setProgress(randomInt(20, 30));
         }
-    }, [continuous]);
+    }, [continuous, progress, setProgress]);
 
     useEffect(() => {
         if (continuous) {
@@ -56,7 +61,7 @@ export default () => {
                 interval.current = setTimeout(() => setProgress((progress || 0) + randomInt(1, 5)), 500);
             }
         }
-    }, [progress, continuous]);
+    }, [progress, continuous, setProgress]);
 
     return (
         <div css={tw`w-20 fixed`} style={{ height: '3px' }}>
