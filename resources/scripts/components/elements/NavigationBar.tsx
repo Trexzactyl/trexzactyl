@@ -25,7 +25,9 @@ export default () => {
     };
 
     return (
-        <nav css={tw`fixed top-0 left-0 right-0 z-50 bg-neutral-900 bg-opacity-40 backdrop-blur-xl border-b border-white/5`}>
+        <nav
+            css={tw`fixed top-0 left-0 right-0 z-50 bg-neutral-900 bg-opacity-40 backdrop-blur-xl border-b border-white/5`}
+        >
             <ProgressBar />
             <SpinnerOverlay visible={isLoggingOut} />
             <div css={tw`max-w-7xl mx-auto h-16 flex items-center justify-between px-4 sm:px-6`}>
@@ -71,7 +73,7 @@ export default () => {
                                 border-radius: 0.125rem;
                                 box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
                             }
-                            `
+                            `,
                         ]}
                     >
                         <NavLink to={'/'} exact>
@@ -85,13 +87,17 @@ export default () => {
                 </div>
 
                 <div css={tw`flex items-center space-x-3`}>
-                    <div css={tw`p-2.5 transition-all duration-300 cursor-pointer text-neutral-400 hover:text-neutral-100 flex items-center justify-center`}>
+                    <div
+                        css={tw`p-2.5 transition-all duration-300 cursor-pointer text-neutral-400 hover:text-neutral-100 flex items-center justify-center`}
+                    >
                         <SearchContainer size={18} />
                     </div>
 
                     <button onClick={onTriggerLogout} css={tw`focus:outline-none mr-2 sm:mr-0`}>
                         <Tooltip placement={'bottom'} content={'Logout'}>
-                            <div css={tw`p-2.5 transition-all duration-300 cursor-pointer text-red-400 text-opacity-80 hover:text-red-400 flex items-center justify-center`}>
+                            <div
+                                css={tw`p-2.5 transition-all duration-300 cursor-pointer text-red-400 text-opacity-80 hover:text-red-400 flex items-center justify-center`}
+                            >
                                 <Icon.LogOut size={18} />
                             </div>
                         </Tooltip>

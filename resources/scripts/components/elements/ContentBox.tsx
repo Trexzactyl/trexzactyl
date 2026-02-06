@@ -13,7 +13,15 @@ type Props = Readonly<
     }
 >;
 
-const ContentBox = ({ title, borderColor, showFlashes, showLoadingOverlay, children, isLight, ...props }: Props) => (
+const ContentBox = ({
+    title,
+    borderColor,
+    showFlashes,
+    showLoadingOverlay,
+    children,
+    isLight: _isLight,
+    ...props
+}: Props) => (
     <div {...props}>
         {title && <h2 css={tw`text-sm font-bold text-neutral-300 mb-4 px-4`}>{title}</h2>}
         {showFlashes && (

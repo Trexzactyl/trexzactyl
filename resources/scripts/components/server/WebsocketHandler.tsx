@@ -12,13 +12,13 @@ const reconnectErrors = ['jwt: exp claim is invalid', 'jwt: created too far in p
 export default () => {
     // All refs must be declared FIRST before any other hooks
     const nodeRef = React.useRef(null);
-    
+
     // Then regular variables
     let updatingToken = false;
-    
+
     // Then state hooks
     const [error, setError] = useState<'connecting' | string>('');
-    
+
     // Then store hooks
     const { connected, instance } = ServerContext.useStoreState((state) => state.socket);
     const uuid = ServerContext.useStoreState((state) => state.server.data?.uuid);

@@ -8,7 +8,7 @@ interface Props extends Omit<CSSTransitionProps, 'timeout' | 'classNames'> {
 
 const Fade: React.FC<Props> = ({ timeout, children, ...props }) => {
     const nodeRef = React.useRef<HTMLDivElement>(null);
-    
+
     return (
         <div
             css={[
@@ -41,7 +41,7 @@ const Fade: React.FC<Props> = ({ timeout, children, ...props }) => {
                     transition: opacity ease-in;
                     transition-duration: ${timeout}ms;
                 }
-                `
+                `,
             ]}
         >
             <CSSTransition timeout={timeout} classNames={'fade'} {...props} nodeRef={nodeRef}>
