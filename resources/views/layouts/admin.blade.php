@@ -30,6 +30,7 @@
     <!-- Hardcoded Trexzactyl theme -->
     <link rel="stylesheet" href="/themes/trexzactyl/css/trexzactyl.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/themes/trexzactyl/css/admin-override.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/themes/trexzactyl/css/admin-mobile.css?v=<?php echo time(); ?>">
     <!-- Mobile responsive fixes -->
     <link rel="stylesheet" href="/css/admin-mobile-fix.css">
 
