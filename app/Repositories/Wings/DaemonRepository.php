@@ -46,11 +46,11 @@ abstract class DaemonRepository
     /**
      * Return an instance of the Guzzle HTTP Client to be used for requests.
      */
-    public function getHttpClient(array $headers = []): Client
+    public function getHttpClient(array $headers = [], array $options = []): Client
     {
         Assert::isInstanceOf($this->node, Node::class);
 
-        return new Client([
+        $defaultOptions = [
             'verify' => $this->app->environment('production'),
             'base_uri' => $this->node->getConnectionAddress(),
             'timeout' => config('trexzactyl.guzzle.timeout'),
@@ -60,6 +60,8 @@ abstract class DaemonRepository
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ]),
-        ]);
+        ];
+
+        return new Client(array_merge($defaultOptions, $options));
     }
 }

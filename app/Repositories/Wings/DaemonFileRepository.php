@@ -78,7 +78,7 @@ class DaemonFileRepository extends DaemonRepository
         Assert::isInstanceOf($this->server, Server::class);
 
         try {
-            $response = $this->getHttpClient()->get(
+            $response = $this->getHttpClient([], ['timeout' => 30])->get(
                 sprintf('/api/servers/%s/files/list-directory', $this->server->uuid),
                 [
                     'query' => ['directory' => $path],
