@@ -67,7 +67,13 @@ export default () => {
     const match = useRouteMatch<{ id: string }>();
     const location = useLocation();
 
+    // All refs must be declared first
+    const nodeRef = React.useRef(null);
+
+    // Then state hooks
     const [error, setError] = useState('');
+
+    // Then store hooks
     const rootAdmin = useStoreState((state) => state.user.data!.rootAdmin);
     const databasesEnabled = useStoreState((state) => state.settings.data!.databases);
 
@@ -95,8 +101,6 @@ export default () => {
             clearServerState();
         };
     }, [match.params.id]);
-
-    const nodeRef = React.useRef(null);
 
     return (
         <div css={tw`pt-20`} key={'server-router'}>
