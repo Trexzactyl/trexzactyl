@@ -1,14 +1,8 @@
 import tw from 'twin.macro';
 import { randomInt } from '@/helpers';
-import styled from 'styled-components/macro';
 import { CSSTransition } from 'react-transition-group';
 import React, { useEffect, useRef, useState } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-
-const BarFill = styled.div`
-    ${tw`h-full bg-green-400 animate-pulse`};
-    transition: 500ms ease-in-out;
-`;
 
 type Timer = ReturnType<typeof setTimeout>;
 
@@ -66,7 +60,14 @@ export default () => {
     return (
         <div css={tw`w-20 fixed`} style={{ height: '3px' }}>
             <CSSTransition timeout={150} appear in={visible} unmountOnExit classNames={'fade'} nodeRef={nodeRef}>
-                <BarFill ref={nodeRef} style={{ width: progress === undefined ? '100%' : `${progress}%` }} />
+                <div 
+                    ref={nodeRef} 
+                    css={tw`h-full bg-green-400 animate-pulse`}
+                    style={{ 
+                        width: progress === undefined ? '100%' : `${progress}%`,
+                        transition: '500ms ease-in-out'
+                    }} 
+                />
             </CSSTransition>
         </div>
     );
