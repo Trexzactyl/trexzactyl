@@ -13,6 +13,7 @@ const BarFill = styled.div`
 type Timer = ReturnType<typeof setTimeout>;
 
 export default () => {
+    const nodeRef = useRef<HTMLDivElement>(null);
     const interval = useRef<Timer>(null) as React.MutableRefObject<Timer>;
     const timeout = useRef<Timer>(null) as React.MutableRefObject<Timer>;
     const [visible, setVisible] = useState(false);
@@ -56,8 +57,6 @@ export default () => {
             }
         }
     }, [progress, continuous]);
-
-    const nodeRef = useRef(null);
 
     return (
         <div css={tw`w-20 fixed`} style={{ height: '3px' }}>
