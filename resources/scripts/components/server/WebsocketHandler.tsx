@@ -16,6 +16,9 @@ export default () => {
     const uuid = ServerContext.useStoreState((state) => state.server.data?.uuid);
     const setServerStatus = ServerContext.useStoreActions((actions) => actions.status.setServerStatus);
     const { setInstance, setConnectionState } = ServerContext.useStoreActions((actions) => actions.socket);
+    
+    // All hooks must be called before any conditional returns
+    const nodeRef = React.useRef(null);
 
     const updateToken = (uuid: string, socket: Websocket) => {
         if (updatingToken) return;
@@ -103,8 +106,6 @@ export default () => {
 
         connect(uuid);
     }, [uuid]);
-
-    const nodeRef = React.useRef(null);
 
     return error ? (
         <CSSTransition timeout={150} in appear classNames={'fade'} nodeRef={nodeRef}>
