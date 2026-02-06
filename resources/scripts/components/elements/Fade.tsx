@@ -36,7 +36,8 @@ const Container = styled.div<{ timeout: number }>`
 `;
 
 const Fade: React.FC<Props> = ({ timeout, children, ...props }) => {
-    const nodeRef = React.useRef(null);
+    const nodeRef = React.useRef<HTMLDivElement>(null);
+    
     return (
         <Container timeout={timeout}>
             <CSSTransition timeout={timeout} classNames={'fade'} {...props} nodeRef={nodeRef}>
