@@ -3,44 +3,11 @@ import tw from 'twin.macro';
 import http from '@/api/http';
 import * as Icon from 'react-feather';
 import { useStoreState } from 'easy-peasy';
-import styled from 'styled-components/macro';
 import { NavLink, Link } from 'react-router-dom';
 import ProgressBar from '@/components/elements/ProgressBar';
 import Tooltip from '@/components/elements/tooltip/Tooltip';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import SearchContainer from '@/components/dashboard/search/SearchContainer';
-
-const Nav = styled.nav`
-    ${tw`fixed top-0 left-0 right-0 z-50 bg-neutral-900 bg-opacity-40 backdrop-blur-xl border-b border-white/5`};
-`;
-
-const NavContent = styled.div`
-    ${tw`max-w-7xl mx-auto h-16 flex items-center justify-between px-4 sm:px-6`};
-`;
-
-const NavLinks = styled.div`
-    ${tw`hidden md:flex items-center space-x-1 h-full ml-8`};
-
-    & > a {
-        ${tw`inline-block py-3 px-4 text-neutral-400 no-underline whitespace-nowrap transition-all duration-300 font-bold text-xs`};
-
-        &.active {
-            ${tw`text-blue-400`};
-            &::after {
-                content: '';
-                ${tw`absolute bottom-0 left-4 right-4 h-0.5 bg-blue-500 rounded-sm shadow-lg`};
-            }
-        }
-    }
-`;
-
-const RightNav = styled.div`
-    ${tw`flex items-center space-x-3`};
-`;
-
-const ActionButton = styled.div`
-    ${tw`p-2.5 transition-all duration-300 cursor-pointer text-neutral-400 hover:text-neutral-100 flex items-center justify-center`};
-`;
 
 export default () => {
     const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -58,10 +25,10 @@ export default () => {
     };
 
     return (
-        <Nav>
+        <nav css={tw`fixed top-0 left-0 right-0 z-50 bg-neutral-900 bg-opacity-40 backdrop-blur-xl border-b border-white/5`}>
             <ProgressBar />
             <SpinnerOverlay visible={isLoggingOut} />
-            <NavContent>
+            <div css={tw`max-w-7xl mx-auto h-16 flex items-center justify-between px-4 sm:px-6`}>
                 <div css={tw`flex items-center h-full`}>
                     <Link
                         to={'/'}
@@ -75,7 +42,38 @@ export default () => {
                         />
                     </Link>
 
-                    <NavLinks>
+                    <div
+                        css={[
+                            tw`hidden md:flex items-center space-x-1 h-full ml-8`,
+                            `
+                            & > a {
+                                display: inline-block;
+                                padding: 0.75rem 1rem;
+                                color: rgb(163 163 163);
+                                text-decoration: none;
+                                white-space: nowrap;
+                                transition: all 300ms;
+                                font-weight: 700;
+                                font-size: 0.75rem;
+                                position: relative;
+                            }
+                            & > a.active {
+                                color: rgb(96 165 250);
+                            }
+                            & > a.active::after {
+                                content: '';
+                                position: absolute;
+                                bottom: 0;
+                                left: 1rem;
+                                right: 1rem;
+                                height: 0.125rem;
+                                background-color: rgb(59 130 246);
+                                border-radius: 0.125rem;
+                                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                            }
+                            `
+                        ]}
+                    >
                         <NavLink to={'/'} exact>
                             SERVERS
                         </NavLink>
@@ -83,19 +81,19 @@ export default () => {
                         {store && <NavLink to={'/store'}>STORE</NavLink>}
                         {tickets && <NavLink to={'/tickets'}>TICKETS</NavLink>}
                         {rootAdmin && <a href={'/admin'}>ADMIN</a>}
-                    </NavLinks>
+                    </div>
                 </div>
 
-                <RightNav>
-                    <ActionButton>
+                <div css={tw`flex items-center space-x-3`}>
+                    <div css={tw`p-2.5 transition-all duration-300 cursor-pointer text-neutral-400 hover:text-neutral-100 flex items-center justify-center`}>
                         <SearchContainer size={18} />
-                    </ActionButton>
+                    </div>
 
                     <button onClick={onTriggerLogout} css={tw`focus:outline-none mr-2 sm:mr-0`}>
                         <Tooltip placement={'bottom'} content={'Logout'}>
-                            <ActionButton css={tw`text-red-400 text-opacity-80 hover:text-red-400`}>
+                            <div css={tw`p-2.5 transition-all duration-300 cursor-pointer text-red-400 text-opacity-80 hover:text-red-400 flex items-center justify-center`}>
                                 <Icon.LogOut size={18} />
-                            </ActionButton>
+                            </div>
                         </Tooltip>
                     </button>
 
@@ -123,8 +121,8 @@ export default () => {
                             </a>
                         )}
                     </div>
-                </RightNav>
-            </NavContent>
-        </Nav>
+                </div>
+            </div>
+        </nav>
     );
 };
