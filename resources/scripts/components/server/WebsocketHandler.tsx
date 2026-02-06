@@ -10,15 +10,20 @@ import ContentContainer from '@/components/elements/ContentContainer';
 const reconnectErrors = ['jwt: exp claim is invalid', 'jwt: created too far in past (denylist)'];
 
 export default () => {
+    // All refs must be declared FIRST before any other hooks
+    const nodeRef = React.useRef(null);
+    
+    // Then regular variables
     let updatingToken = false;
+    
+    // Then state hooks
     const [error, setError] = useState<'connecting' | string>('');
+    
+    // Then store hooks
     const { connected, instance } = ServerContext.useStoreState((state) => state.socket);
     const uuid = ServerContext.useStoreState((state) => state.server.data?.uuid);
     const setServerStatus = ServerContext.useStoreActions((actions) => actions.status.setServerStatus);
     const { setInstance, setConnectionState } = ServerContext.useStoreActions((actions) => actions.socket);
-    
-    // All hooks must be called before any conditional returns
-    const nodeRef = React.useRef(null);
 
     const updateToken = (uuid: string, socket: Websocket) => {
         if (updatingToken) return;
