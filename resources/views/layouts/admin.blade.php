@@ -28,7 +28,8 @@
     {!! Theme::css('vendor/sweetalert/sweetalert.min.css?t={cache-version}') !!}
     {!! Theme::css('vendor/animate/animate.min.css?t={cache-version}') !!}
     <!-- Hardcoded Trexzactyl theme -->
-    <link rel="stylesheet" href="/themes/trexzactyl/css/trexzactyl.css">
+    <link rel="stylesheet" href="/themes/trexzactyl/css/trexzactyl.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/themes/trexzactyl/css/admin-override.css?v=<?php echo time(); ?>">
     <!-- Mobile responsive fixes -->
     <link rel="stylesheet" href="/css/admin-mobile-fix.css">
 
