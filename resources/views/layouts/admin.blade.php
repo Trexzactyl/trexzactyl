@@ -27,19 +27,11 @@
     {!! Theme::css('vendor/adminlte/colors/skin-blue.min.css?t={cache-version}') !!}
     {!! Theme::css('vendor/sweetalert/sweetalert.min.css?t={cache-version}') !!}
     {!! Theme::css('vendor/animate/animate.min.css?t={cache-version}') !!}
-    <!-- Hardcoded Trexzactyl theme -->
+    <!-- Trexzactyl Unified Theme -->
     <link rel="stylesheet" href="/themes/trexzactyl/css/trexzactyl.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/themes/trexzactyl/css/admin-override.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/themes/trexzactyl/css/admin-mobile.css?v=<?php echo time(); ?>">
-    <!-- Mobile responsive fixes -->
-    <link rel="stylesheet" href="/css/admin-mobile-fix.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-
-    <style>
-        /* Styles migrated to theme CSS */
-    </style>
     @show
 </head>
 
