@@ -1,11 +1,10 @@
 import tw from 'twin.macro';
 import * as Icon from 'react-feather';
-import { Form, Formik, FieldProps } from 'formik';
+import { Form, Formik } from 'formik';
 import useFlash from '@/plugins/useFlash';
 import { useStoreState } from 'easy-peasy';
 import { number, object, string } from 'yup';
 import Field from '@/components/elements/Field';
-import Input from '@/components/elements/Input';
 import Select from '@/components/elements/Select';
 import { Egg, getEggs } from '@/api/store/getEggs';
 import createServer from '@/api/store/createServer';
@@ -16,10 +15,9 @@ import { Button } from '@/components/elements/button';
 import InputSpinner from '@/components/elements/InputSpinner';
 import StoreError from '@/components/elements/store/StoreError';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import FlashMessageRender from '@/components/FlashMessageRender';
 import { getResources, Resources } from '@/api/store/getResources';
 import PageContentBlock from '@/components/elements/PageContentBlock';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 const PremiumBox = styled(motion.div)`

@@ -92,7 +92,7 @@ const FileObjectRow = ({ file }: { file: FileObject }) => (
 );
 
 export default memo(FileObjectRow, (prevProps, nextProps) => {
-    const { isArchiveType, isEditable, ...prevFile } = prevProps.file;
-    const { isArchiveType: nextIsArchiveType, isEditable: nextIsEditable, ...nextFile } = nextProps.file;
+    const { isArchiveType: _isArchiveType, _isEditable, ...prevFile } = prevProps.file;
+    const { isArchiveType: _nextIsArchiveType, _isEditable: _nextIsEditable, ...nextFile } = nextProps.file;
     return isEqual(prevFile, nextFile);
 });

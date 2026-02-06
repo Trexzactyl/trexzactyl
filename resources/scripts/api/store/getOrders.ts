@@ -1,4 +1,4 @@
-import http, { FractalResponseData, FractalResponseList, getPaginationSet, PaginatedResult } from '@/api/http';
+import http, { FractalResponseData, getPaginationSet, PaginatedResult } from '@/api/http';
 
 export interface Order {
     id: number;

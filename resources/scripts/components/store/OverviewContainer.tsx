@@ -7,7 +7,7 @@ import StoreBanner from '@/components/elements/store/StoreBanner';
 import PageContentBlock from '@/components/elements/PageContentBlock';
 
 export default () => {
-    const { width } = useWindowDimensions();
+    const { width: _width } = useWindowDimensions();
     const username = useStoreState((state) => state.user.data!.username);
 
     return (

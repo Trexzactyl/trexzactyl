@@ -20,7 +20,7 @@ const LimitText = styled.span`
     ${tw`ml-1 text-neutral-500 text-xs font-bold tracking-wider`};
 `;
 
-const ProgressBar = styled.div<{ $percent: number; $alarm?: boolean }>`
+const _ProgressBar = styled.div<{ $percent: number; $alarm?: boolean }>`
     ${tw`h-1 w-full bg-neutral-800 rounded-full mt-2 overflow-hidden`};
     & .fill {
         width: ${({ $percent }) => $percent}%;
@@ -74,9 +74,9 @@ export default ({ className }: { className?: string }) => {
         });
     });
 
-    const cpuUsed = stats.cpu / (limits.cpu || 100);
-    const diskUsed = (stats.disk / 1024 / 1024 / (limits.disk || 1)) * 100;
-    const memoryUsed = (stats.memory / 1024 / 1024 / (limits.memory || 1)) * 100;
+    const _cpuUsed = stats.cpu / (limits.cpu || 100);
+    const _diskUsed = (stats.disk / 1024 / 1024 / (limits.disk || 1)) * 100;
+    const _memoryUsed = (stats.memory / 1024 / 1024 / (limits.memory || 1)) * 100;
 
     return (
         <div className={classNames('flex flex-col gap-2', className)}>

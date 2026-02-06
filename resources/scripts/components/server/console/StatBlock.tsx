@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import useFitText from 'use-fit-text';
 import Icon from '@/components/elements/Icon';
 import CopyOnClick from '@/components/elements/CopyOnClick';
@@ -20,7 +19,7 @@ const StatCard = styled.div`
     ${tw`hover:border-blue-500 border-opacity-50 hover:shadow-lg hover:-translate-y-0.5`};
 `;
 
-const IconWrapper = styled.div`
+const _IconWrapper = styled.div`
     ${tw`absolute top-4 right-4 text-neutral-500 opacity-50`};
 `;
 

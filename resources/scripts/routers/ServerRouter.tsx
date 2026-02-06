@@ -22,7 +22,6 @@ import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
 import ScreenBlock, { NotFound, ServerError } from '@/components/elements/ScreenBlock';
 
 const PluginContainer = React.lazy(() => import('@/components/server/PluginContainer'));
-const EditContainer = React.lazy(() => import('@/components/server/edit/EditContainer'));
 import TransferListener from '@/components/server/TransferListener';
 import WebsocketHandler from '@/components/server/WebsocketHandler';
 const UsersContainer = React.lazy(() => import('@/components/server/users/UsersContainer'));
@@ -71,7 +70,6 @@ export default () => {
     const [error, setError] = useState('');
     const rootAdmin = useStoreState((state) => state.user.data!.rootAdmin);
     const databasesEnabled = useStoreState((state) => state.settings.data!.databases);
-    const editEnabled = useStoreState((state) => state.storefront.data!.editing.enabled);
 
     const id = ServerContext.useStoreState((state) => state.server.data?.id);
     const uuid = ServerContext.useStoreState((state) => state.server.data?.uuid);
@@ -198,15 +196,6 @@ export default () => {
                                         </div>
                                     </NavLink>
                                 </Can>
-                                {editEnabled && (
-                                    <Can action={['settings.*']} matchAny>
-                                        <NavLink to={`${match.url}/edit`}>
-                                            <div css={tw`flex items-center justify-between`}>
-                                                Edit <Icon.Edit css={tw`ml-1`} size={18} />
-                                            </div>
-                                        </NavLink>
-                                    </Can>
-                                )}
                                 {rootAdmin && (
                                     <a href={'/admin/servers/view/' + serverId} rel='noreferrer' target={'_blank'}>
                                         <div css={tw`flex items-center justify-between`}>
@@ -284,9 +273,6 @@ export default () => {
                                         </Route>
                                         <Route path={`${match.path}/startup`} component={StartupContainer} exact />
                                         <Route path={`${match.path}/settings`} component={SettingsContainer} exact />
-                                        {editEnabled && (
-                                            <Route path={`${match.path}/edit`} component={EditContainer} exact />
-                                        )}
                                         <Route path={'*'} component={NotFound} />
                                     </Switch>
                                 </Spinner.Suspense>

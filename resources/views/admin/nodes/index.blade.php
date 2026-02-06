@@ -22,11 +22,11 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box box-primary">
-                <div class="box-header with-border">
+                <div class="box-header with-border" style="padding: 10px 10px 10px 10px !important; position: relative;">
                     <h3 class="box-title">Node List</h3>
-                    <div class="box-tools search01">
+                    <div class="box-tools search01" style="position: absolute; right: 100px !important;">
                         <form action="{{ route('admin.nodes') }}" method="GET">
-                            <div class="input-group input-group-sm">
+                            <div class="input-group input-group-sm" style="width: 350px !important;">
                                 <input type="text" name="filter[name]" class="form-control pull-right"
                                     value="{{ request()->input('filter.name') }}" placeholder="Search Nodes">
                                 <div class="input-group-btn">

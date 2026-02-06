@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="box
-                    @if($editing == 'true')
+                    @if($deletion == 'true')
                         box-success
                     @else
                         box-danger
@@ -75,16 +75,6 @@
                     </div>
                     <div class="box-body">
                         <div class="row">
-                            <div class="form-group col-md-4">
-                                <label class="control-label">Server Resource Editing</label>
-                                <div>
-                                    <select name="editing" class="form-control">
-                                        <option @if ($editing == 'false') selected @endif value="false">Disabled</option>
-                                        <option @if ($editing == 'true') selected @endif value="true">Enabled</option>
-                                    </select>
-                                    <p class="text-muted"><small>Determines whether users can edit the amount of resources assigned to their server.</small></p>
-                                </div>
-                            </div>
                             <div class="form-group col-md-4">
                                 <label class="control-label">Allow Server Deletion</label>
                                 <div>

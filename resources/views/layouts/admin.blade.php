@@ -38,11 +38,11 @@
 <body class="skin-blue fixed">
     <div class="wrapper">
         <header class="main-header">
-            <a href="{{ route('index') }}" class="logo">
+            <a href="{{ route('index') }}" class="logo" style="padding-top: 10px !important; padding-bottom: 0 !important;">
                 <img src="{{ config('app.logo') }}" width="48" height="48" />
             </a>
             <nav class="navbar navbar-static-top" role="navigation">
-                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" style="margin-left: auto;">
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" style="float: right; margin-right: 15px;">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -50,86 +50,70 @@
                 </a>
             </nav>
         </header>
-        <aside class="main-sidebar"
-            style="background: var(--bg-secondary) !important; border-right: 1px solid var(--border-color);">
+        <aside class="main-sidebar">
             <section class="sidebar">
-                <ul class="sidebar-menu" style="padding-bottom: 60px; padding-top: 20px;">
-                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.index') ?: 'active' }}"
-                        style="margin-bottom: 8px;">
-                        <a href="{{ route('admin.index')}}"
-                            style="border-radius: 12px; margin: 0 12px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; height: 48px;">
-                            <i data-feather="tool" style="width: 20px; height: 20px; stroke-width: 2.5px;"></i>
+                <ul class="sidebar-menu">
+                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.index') ?: 'active' }}">
+                        <a href="{{ route('admin.index')}}">
+                            <i data-feather="tool"></i>
+                            <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.tickets') ?: 'active' }}"
-                        style="margin-bottom: 8px;">
-                        <a href="{{ route('admin.tickets.index')}}"
-                            style="border-radius: 12px; margin: 0 12px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; height: 48px;">
-                            <i data-feather="help-circle" style="width: 20px; height: 20px; stroke-width: 2.5px;"></i>
+                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.tickets') ?: 'active' }}">
+                        <a href="{{ route('admin.tickets.index')}}">
+                            <i data-feather="help-circle"></i>
+                            <span>Tickets</span>
                         </a>
                     </li>
-                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.api') ?: 'active' }}"
-                        style="margin-bottom: 8px;">
-                        <a href="{{ route('admin.api.index')}}"
-                            style="border-radius: 12px; margin: 0 12px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; height: 48px;">
-                            <i data-feather="git-branch" style="width: 20px; height: 20px; stroke-width: 2.5px;"></i>
+                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.api') ?: 'active' }}">
+                        <a href="{{ route('admin.api.index')}}">
+                            <i data-feather="git-branch"></i>
+                            <span>API</span>
                         </a>
                     </li>
-                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.databases') ?: 'active' }}"
-                        style="margin-bottom: 8px;">
-                        <a href="{{ route('admin.databases') }}"
-                            style="border-radius: 12px; margin: 0 12px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; height: 48px;">
-                            <i data-feather="database" style="width: 20px; height: 20px; stroke-width: 2.5px;"></i>
+                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.databases') ?: 'active' }}">
+                        <a href="{{ route('admin.databases') }}">
+                            <i data-feather="database"></i>
+                            <span>Databases</span>
                         </a>
                     </li>
-                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.locations') ?: 'active' }}"
-                        style="margin-bottom: 8px;">
-                        <a href="{{ route('admin.locations') }}"
-                            style="border-radius: 12px; margin: 0 12px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; height: 48px;">
-                            <i data-feather="navigation" style="width: 20px; height: 20px; stroke-width: 2.5px;"></i>
+                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.locations') ?: 'active' }}">
+                        <a href="{{ route('admin.locations') }}">
+                            <i data-feather="navigation"></i>
+                            <span>Locations</span>
                         </a>
                     </li>
-                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.nodes') ?: 'active' }}"
-                        style="margin-bottom: 8px;">
-                        <a href="{{ route('admin.nodes') }}"
-                            style="border-radius: 12px; margin: 0 12px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; height: 48px;">
-                            <i data-feather="layers" style="width: 20px; height: 20px; stroke-width: 2.5px;"></i>
+                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.nodes') ?: 'active' }}">
+                        <a href="{{ route('admin.nodes') }}">
+                            <i data-feather="layers"></i>
+                            <span>Nodes</span>
                         </a>
                     </li>
-                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.servers') ?: 'active' }}"
-                        style="margin-bottom: 8px;">
-                        <a href="{{ route('admin.servers') }}"
-                            style="border-radius: 12px; margin: 0 12px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; height: 48px;">
-                            <i data-feather="server" style="width: 20px; height: 20px; stroke-width: 2.5px;"></i>
+                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.servers') ?: 'active' }}">
+                        <a href="{{ route('admin.servers') }}">
+                            <i data-feather="server"></i>
+                            <span>Servers</span>
                         </a>
                     </li>
-                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.users') ?: 'active' }}"
-                        style="margin-bottom: 8px;">
-                        <a href="{{ route('admin.users') }}"
-                            style="border-radius: 12px; margin: 0 12px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; height: 48px;">
-                            <i data-feather="users" style="width: 20px; height: 20px; stroke-width: 2.5px;"></i>
+                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.users') ?: 'active' }}">
+                        <a href="{{ route('admin.users') }}">
+                            <i data-feather="users"></i>
+                            <span>Users</span>
                         </a>
                     </li>
-                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.mounts') ?: 'active' }}"
-                        style="margin-bottom: 8px;">
-                        <a href="{{ route('admin.mounts') }}"
-                            style="border-radius: 12px; margin: 0 12px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; height: 48px;">
-                            <i data-feather="hard-drive" style="width: 20px; height: 20px; stroke-width: 2.5px;"></i>
+                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.mounts') ?: 'active' }}">
+                        <a href="{{ route('admin.mounts') }}">
+                            <i data-feather="hard-drive"></i>
+                            <span>Mounts</span>
                         </a>
                     </li>
-                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.nests') ?: 'active' }}"
-                        style="margin-bottom: 8px;">
-                        <a href="{{ route('admin.nests') }}"
-                            style="border-radius: 12px; margin: 0 12px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; height: 48px;">
-                            <i data-feather="archive" style="width: 20px; height: 20px; stroke-width: 2.5px;"></i>
+                    <li class="{{ !starts_with(Route::currentRouteName(), 'admin.nests') ?: 'active' }}">
+                        <a href="{{ route('admin.nests') }}">
+                            <i data-feather="archive"></i>
+                            <span>Nests</span>
                         </a>
                     </li>
                 </ul>
-                <div class="sidebar-version"
-                    style="padding: 20px; text-align: center; border-top: 1px solid var(--border-color);">
-                    <small
-                        style="color: var(--text-muted); font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;">v{{ \Trexzactyl\Services\Helpers\VersionService::getCurrentVersion() }}</small>
-                </div>
             </section>
         </aside>
         <div class="content-wrapper">

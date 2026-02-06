@@ -97,9 +97,7 @@ export default () => {
                     <GlassCard css={tw`p-8 sm:p-12 mb-8`}>
                         <div css={tw`flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8`}>
                             <div>
-                                <h1 css={tw`text-3xl sm:text-4xl md:text-5xl font-black text-white`}>
-                                    Idle Earning
-                                </h1>
+                                <h1 css={tw`text-3xl sm:text-4xl md:text-5xl font-black text-white`}>Idle Earning</h1>
                                 <h3 css={tw`text-base sm:text-lg md:text-xl text-neutral-500 font-bold mt-2`}>
                                     Rewards for active sessions
                                 </h3>
@@ -107,11 +105,7 @@ export default () => {
                             <div
                                 css={tw`bg-green-600 bg-opacity-10 w-16 h-16 sm:w-20 sm:h-20 rounded-sm flex items-center justify-center border border-green-500 border-opacity-20 shadow-lg flex-shrink-0`}
                             >
-                                <Icon.Zap
-                                    size={32}
-                                    css={tw`text-green-400 animate-pulse`}
-                                    strokeWidth={2.5}
-                                />
+                                <Icon.Zap size={32} css={tw`text-green-400 animate-pulse`} strokeWidth={2.5} />
                             </div>
                         </div>
 
@@ -126,7 +120,9 @@ export default () => {
                                     css={tw`text-4xl sm:text-5xl md:text-6xl font-black text-white flex flex-wrap items-baseline justify-center gap-2`}
                                 >
                                     <span>{earn.amount}</span>
-                                    <span css={tw`text-lg sm:text-xl md:text-2xl font-bold text-green-400 whitespace-nowrap`}>
+                                    <span
+                                        css={tw`text-lg sm:text-xl md:text-2xl font-bold text-green-400 whitespace-nowrap`}
+                                    >
                                         Cr / Min
                                     </span>
                                 </h1>

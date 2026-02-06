@@ -16,11 +16,11 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
-            <div class="box-header with-border">
+            <div class="box-header with-border" style="padding: 10px 10px 10px 10px !important; position: relative;">
                 <h3 class="box-title">Server List</h3>
-                <div class="box-tools search01">
+                <div class="box-tools search01" style="position: absolute; right: 100px !important;">
                     <form action="{{ route('admin.servers') }}" method="GET">
-                        <div class="input-group input-group-sm">
+                        <div class="input-group input-group-sm" style="width: 350px !important;">
                             <input type="text" name="filter[*]" class="form-control pull-right" value="{{ request()->input()['filter']['*'] ?? '' }}" placeholder="Search Servers">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>

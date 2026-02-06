@@ -16,8 +16,6 @@ import { FileObject } from '@/api/server/files/loadDirectory';
 import { useStoreActions, useStoreState } from '@/state/hooks';
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { ServerError } from '@/components/elements/ScreenBlock';
-import ErrorBoundary from '@/components/elements/ErrorBoundary';
-import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import UploadButton from '@/components/server/files/UploadButton';
 import PullFileModal from '@/components/server/files/PullFileModal';
 import FileObjectRow from '@/components/server/files/FileObjectRow';

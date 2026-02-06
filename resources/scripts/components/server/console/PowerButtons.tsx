@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
-import Can from '@/components/elements/Can';
 import { ServerContext } from '@/state/server';
 export type PowerAction = 'start' | 'stop' | 'restart' | 'kill';
 import { Dialog } from '@/components/elements/dialog';

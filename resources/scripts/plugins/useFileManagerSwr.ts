@@ -16,19 +16,19 @@ export default () => {
             focusThrottleInterval: 30000,
             revalidateOnMount: false,
             refreshInterval: 0,
-            errorRetryCount: 3,
-            errorRetryInterval: 2000,
+            errorRetryCount: 5,
+            errorRetryInterval: 3000,
             dedupingInterval: 2000,
             shouldRetryOnError: true,
             onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
                 // Don't retry on 404
                 if (error?.response?.status === 404) return;
 
-                // Max 3 retries
-                if (retryCount >= 3) return;
+                // Max 5 retries
+                if (retryCount >= 5) return;
 
-                // Exponential backoff: 2s, 4s, 8s
-                setTimeout(() => revalidate({ retryCount }), 2000 * Math.pow(2, retryCount));
+                // Exponential backoff: 3s, 6s, 12s, 24s, 48s
+                setTimeout(() => revalidate({ retryCount }), 3000 * Math.pow(2, retryCount));
             },
         }
     );

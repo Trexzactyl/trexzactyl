@@ -12,7 +12,7 @@ import getServerBackups, { Context as ServerBackupContext } from '@/api/swr/getS
 import * as Icon from 'react-feather';
 
 const BackupContainer = () => {
-    const { page, setPage } = useContext(ServerBackupContext);
+    const { page: _page, setPage } = useContext(ServerBackupContext);
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const { data: backups, error, isValidating } = getServerBackups();
     const backupLimit = ServerContext.useStoreState((state) => state.server.data!.featureLimits.backups);
@@ -84,7 +84,7 @@ const BackupContainer = () => {
 };
 
 export default () => {
-    const [page, setPage] = useState<number>(1);
+    const [_page, setPage] = useState<number>(1);
     return (
         <ServerBackupContext.Provider value={{ page, setPage }}>
             <BackupContainer />

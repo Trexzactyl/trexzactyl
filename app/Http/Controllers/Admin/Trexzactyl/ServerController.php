@@ -31,7 +31,6 @@ class ServerController extends Controller
             'enabled' => $this->settings->get($prefix . 'enabled', false),
             'default' => $this->settings->get($prefix . 'default', 7),
             'cost' => $this->settings->get($prefix . 'cost', 20),
-            'editing' => $this->settings->get($prefix . 'editing', false),
             'deletion' => $this->settings->get($prefix . 'deletion', true),
         ]);
     }

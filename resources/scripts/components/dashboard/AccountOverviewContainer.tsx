@@ -1,7 +1,5 @@
 import tw from 'twin.macro';
 import * as React from 'react';
-import { breakpoint } from '@/theme';
-import styled from 'styled-components/macro';
 import { useStoreState } from '@/state/hooks';
 import { useLocation } from 'react-router-dom';
 import Alert from '@/components/elements/alert/Alert';
@@ -11,22 +9,6 @@ import DiscordAccountForm from '@/components/dashboard/forms/DiscordAccountForm'
 import UpdateUsernameForm from '@/components/dashboard/forms/UpdateUsernameForm';
 import AddReferralCodeForm from '@/components/dashboard/forms/AddReferralCodeForm';
 import UpdateEmailAddressForm from '@/components/dashboard/forms/UpdateEmailAddressForm';
-
-const Container = styled.div`
-    ${tw`flex flex-wrap`};
-
-    & > div {
-        ${tw`w-full`};
-
-        ${breakpoint('sm')`
-        width: calc(50% - 1rem);
-      `}
-
-        ${breakpoint('md')`
-        ${tw`w-auto flex-1`};
-      `}
-    }
-`;
 
 export default () => {
     const { state } = useLocation<undefined | { twoFactorRedirect?: boolean }>();
